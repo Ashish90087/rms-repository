@@ -40,6 +40,7 @@ import { ServerComponent } from './server/server.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workorder.component';
 import { DeptDialogComponent } from './dept-dialog/dept-dialog.component';
+import { IssueFormComponent } from './issue-form/issue-form.component';
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -64,7 +65,8 @@ import { DeptDialogComponent } from './dept-dialog/dept-dialog.component';
     ServerComponent,
     EmployeeComponent,
     MapUserWorkorderComponent,
-    DeptDialogComponent
+    DeptDialogComponent,
+    IssueFormComponent
   ],
   imports: [
     BrowserModule,
