@@ -41,6 +41,7 @@ export class ServerComponent implements OnInit {
   dataSource: any = [];
   version_data: any = [];
   x:any='';
+  flag : any='';
   machine: any =[];
   model : any=[];
   os_data: any =[];
@@ -175,6 +176,8 @@ getServerDetails() {
     this.getModel();
     this.getDepartment();
 
+    console.log(this.serverForm.value,"Kuchh v");
+
     //this.getServer();
   }
 
@@ -219,12 +222,20 @@ getServerDetails() {
       va_score : this.temp.va_score
 
       })
+      if(this.serverForm.value.va=="Y"){
+        this.flag=1;
+        }
+     else{
+         this.flag=0;
+        }
 
       // console.log("Which ID is this :" ,user_id);
       // console.log("Stock Update insert ID is :" ,this.userForm.value.insertId);
       // console.log("Indide stock update form", this.userForm.value);
     });
-  }
 
+
+
+  }
 
 }

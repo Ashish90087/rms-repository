@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  rootUrl: '/'
+  rootUrl: 'http://localhost:3000/'
+  //rootUrl: '/'
 };
 
 /*

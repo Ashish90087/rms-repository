@@ -56,8 +56,7 @@
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">
             <mat-label>Choose Version</mat-label>
-            <mat-select formControlName="version" placeholder="Version"
-            >
+            <mat-select formControlName="version" placeholder="Version">
             <mat-option *ngFor="let i of version_data" [value]="i.version" >
               {{i.version}}
             </mat-option>
@@ -116,7 +115,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-md-4"  *ngIf="selected == 'Yes'">
+        <div class="col-md-4"  *ngIf="selected == 'Yes' || flag=='1'">
           <mat-form-field appearance="outline" style="width: 80%;" >
             <mat-label>VA Score</mat-label>
             <input formControlName="va_score" matInput placeholder="VA Score" >
