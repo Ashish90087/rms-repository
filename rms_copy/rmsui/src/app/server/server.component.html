@@ -44,8 +44,8 @@
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">
             <mat-label>Choose OS</mat-label>
-            <mat-select formControlName="os" placeholder="Operating System" (selectionChange)="getVersion($event)">
-            <mat-option *ngFor="let i of os_data" [value]="i.os" >
+            <mat-select formControlName="os" placeholder="Operating System" >
+            <mat-option *ngFor="let i of os_data" [value]="i.os" (click)="getVersion(i.os)" >
               {{i.os }}
             </mat-option>
           </mat-select>

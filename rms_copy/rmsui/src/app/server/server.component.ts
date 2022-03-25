@@ -110,8 +110,8 @@ export class ServerComponent implements OnInit {
   });
  }
 
- getVersion(event : any) {
-  this.selectedType = event.source.triggerValue;
+ getVersion(event:any) {
+  this.selectedType = event;
   console.log(this.selectedType);
    if(this.selectedType=='Windows') {
 
@@ -222,6 +222,8 @@ getServerDetails() {
       va_score : this.temp.va_score
 
       })
+       this.getVersion(this.serverForm.value.os);
+
       if(this.serverForm.value.va=="Y"){
         this.flag=1;
         }
