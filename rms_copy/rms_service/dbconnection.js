@@ -6,7 +6,7 @@ var connection = mysql.createPool({
   // database: 'rms'
   host: 'localhost',
   user: 'root',
-  password: 'ashish123',
+  password: 'nic',
   database: 'rms'
 
 });
