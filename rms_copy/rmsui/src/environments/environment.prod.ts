@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  rootUrl: '/'
+  rootUrl: 'http://localhost:3000/'
+  //rootUrl: '/'
 };

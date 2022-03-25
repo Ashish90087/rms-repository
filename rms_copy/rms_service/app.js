@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 //app.use(express.static(path.join(__dirname, 'public')));
 
 app.use( '/rms/',express.static(path.join(__dirname, 'dist')));
+//app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/', commonRouter);
 app.use('/users', usersRouter);
