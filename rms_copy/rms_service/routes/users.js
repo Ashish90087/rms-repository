@@ -243,6 +243,15 @@ router.post('/issuedstocks', function (req, res) {
     return res.json(rows1);
   });
 });
+router.get('/getStocks', function(req, res, next) {
+  //res.send('respond with a resource');
+  return db.query('SELECT r.stock_id from stock_receive_mas r' ,function(err,rows1){
+    if(err){
+      return res.json(err);
+    }
+    return res.json(rows1);
+  });
+});
 
 
 
