@@ -111,6 +111,29 @@ getFunction8( functionName : any){
   }));
 
 }
+getFunction9( functionName : any){
+
+  return this.http.get('http://localhost:3000/users/getStocks').pipe(tap(res=>{res}),
+  catchError(e=>{
+    throw new Error(e);
+  }));
+
+}
+issueStocks(data: any)
+    {
+        console.log(data)
+          return this.http.post('http://localhost:3000/users/issuedstocks',data).pipe(tap(res=>{res}),
+          catchError(e=>{
+            throw new Error(e);
+          }));
+
+    }
+    getIssueStocks(functionName:any){
+      return this.http.get('http://localhost:3000/users/issuestocks').pipe(tap(res=>{res}),
+      catchError(e=>{
+        throw new Error(e);
+      }));
+    }
 
 
 getHardwares(functionName:any){

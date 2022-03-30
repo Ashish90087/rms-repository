@@ -12,6 +12,7 @@ import { ReceiveFormComponent } from './receive-form/receive-form.component';
 import { ServerComponent } from './server/server.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workorder.component';
+import { IssueFormComponent } from './issue-form/issue-form.component';
 
 const routes: Routes = [
 
@@ -25,7 +26,8 @@ const routes: Routes = [
 { path : 'receive' , component: ReceiveFormComponent},
 { path : 'server' , component: ServerComponent},
 { path : 'emp' , component: EmployeeComponent},
-{ path : 'mapwo' , component: MapUserWorkorderComponent}
+{ path : 'mapwo' , component: MapUserWorkorderComponent},
+{ path : 'issue' , component: IssueFormComponent}
 
 ];
 
