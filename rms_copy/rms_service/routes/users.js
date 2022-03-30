@@ -222,6 +222,28 @@ router.post('/receiving_stocks', function (req, res) {
     return res.json(rows1);
   });
 });
+router.get('/issuestocks', function(req, res, next) {
+  //res.send('respond with a resource');
+  return db.query('SELECT i.issued_to,u.name, i.stock_id, i.issued_date,i.marked_no,i.remark,i.i_form_no,i.g_form_no,i.status_id,i.ilocation, s.status_id, s.status_name from issued_details i inner join user_mas u on i.issued_to=u.user_id INNER JOIN stock_receive_mas sr ON i.stock_id=sr.stock_id INNER JOIN  status_mas s ON i.status_id=s.status_id ' ,function(err,rows1){
+    if(err){
+      return res.json(err);
+    }
+    return res.json(rows1);
+  });
+});
+
+router.post('/issuedstocks', function (req, res) {
+  
+  return db.query('insert into issued_details (issued_to, stock_id,issued_date,marked_no,remark,i_form_no,g_form_no,status_id,ilocation) values (?,?,?,?,?,?,?,?,?)',[req.body.issued_to,req.body.stock_id, req.body.issued_date,req.body.marked_no,req.body.remark,req.body.i_form_no, req.body.g_form_no,req.body.status_id,req.body.ilocation], function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
+
 
 
 module.exports = router;
