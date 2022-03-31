@@ -67,7 +67,7 @@ router.put('/', function (req, res) {
 
 router.post('/usermas', function (req, res) {
   
-  return db.query('insert into user_mas (name, dept_code,mob_no,email_id) values (?,?,?,?)',[req.body.name,req.body.dept_code,req.body.mob_no,req.body.email_id], function (err, rows1) {
+  return db.query('insert into mas_user (name, dept_code,mob_no,email_id) values (?,?,?,?)',[req.body.name,req.body.dept_code,req.body.mob_no,req.body.email_id], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -78,7 +78,7 @@ router.post('/usermas', function (req, res) {
 });
 router.get('/usermas', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('Select * from user_mas',function(err,rows1){
+  return db.query('Select * from mas_user',function(err,rows1){
     if(err){
       return res.json(err);
     }
@@ -224,7 +224,7 @@ router.post('/receiving_stocks', function (req, res) {
 });
 router.get('/issuestocks', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('SELECT i.issued_to,u.name, i.stock_id, i.issued_date,i.marked_no,i.remark,i.i_form_no,i.g_form_no,i.status_id,i.ilocation, s.status_id, s.status_name from issued_details i inner join user_mas u on i.issued_to=u.user_id INNER JOIN stock_receive_mas sr ON i.stock_id=sr.stock_id INNER JOIN  status_mas s ON i.status_id=s.status_id ' ,function(err,rows1){
+  return db.query('SELECT i.issued_to,u.name, i.stock_id, i.issued_date,i.marked_no,i.remark,i.i_form_no,i.g_form_no,i.status_id,i.ilocation, s.status_id, s.status_name from issued_details i inner join mas_user u on i.issued_to=u.user_id INNER JOIN stock_receive_mas sr ON i.stock_id=sr.stock_id INNER JOIN  status_mas s ON i.status_id=s.status_id ' ,function(err,rows1){
     if(err){
       return res.json(err);
     }

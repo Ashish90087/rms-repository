@@ -129,7 +129,7 @@
               </ng-container>
               <ng-container matColumnDef="issued_date">
                   <th mat-header-cell *matHeaderCellDef>Issued Date</th>
-                  <td mat-cell *matCellDef="let row"> {{row.issued_date}} </td>
+                  <td mat-cell *matCellDef="let row"> {{row.issued_date | date}} </td>
               </ng-container>
 
               <ng-container matColumnDef="marked_no">
