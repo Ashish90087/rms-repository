@@ -41,6 +41,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workorder.component';
 import { DeptDialogComponent } from './dept-dialog/dept-dialog.component';
 import { IssueFormComponent } from './issue-form/issue-form.component';
+import { ReturnStockComponent } from './return-stock/return-stock.component';
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -66,7 +67,8 @@ import { IssueFormComponent } from './issue-form/issue-form.component';
     EmployeeComponent,
     MapUserWorkorderComponent,
     DeptDialogComponent,
-    IssueFormComponent
+    IssueFormComponent,
+    ReturnStockComponent
   ],
   imports: [
     BrowserModule,
