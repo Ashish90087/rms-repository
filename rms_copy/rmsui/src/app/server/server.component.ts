@@ -41,13 +41,13 @@ export class ServerComponent implements OnInit {
   dataSource: any = [];
   version_data: any = [];
   x:any='';
-  flag : any='';
+  flag =0;
   machine: any =[];
   model : any=[];
   os_data: any =[];
   server_data : any =[];
 
-
+  y=0;
 
   selectedType = '' ;
   selected = '' ;
@@ -55,6 +55,15 @@ export class ServerComponent implements OnInit {
   onChange(event :any) {
     this.selected = event.source.triggerValue;
     console.log(this.selected);
+    if(this.selected=="Y"){
+      this.y=1;
+    }
+    else{
+      this.flag=0;
+      this.serverForm.patchValue({
+        va_score :null
+       } )
+    }
   }
 
   onSubmit(){
@@ -185,6 +194,7 @@ getServerDetails() {
   onEdit(server_id:any) {
     // window.scroll({ top: 0, left: 0});
   //  this.scroll.nativeElement.scrollTop=this.scroll.nativeElement.scrollHeight;
+  //this.flag=1;
    this.scroll.nativeElement.scrollIntoView();
     // let body={
     //   dept_id: dept_id,
@@ -226,10 +236,14 @@ getServerDetails() {
 
       if(this.serverForm.value.va=="Y"){
         this.flag=1;
+        console.log("yes selected inside edit");
         }
      else{
          this.flag=0;
+         console.log("no selected inside edit");
         }
+
+        //this.onChange(this.serverForm.value.va);
 
       // console.log("Which ID is this :" ,user_id);
       // console.log("Stock Update insert ID is :" ,this.userForm.value.insertId);

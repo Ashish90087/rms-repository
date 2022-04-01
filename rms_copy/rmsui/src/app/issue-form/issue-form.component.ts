@@ -51,20 +51,20 @@ export class IssueFormComponent implements OnInit {
   }
 
   getUsers(){
-    this.commonservice.getFunction2('commonService/getFunction2').subscribe((res:any)=>{
+    this.commonservice.getFunction('users/usermas').subscribe((res:any)=>{
       this.users=res;
       console.log(this.users);
     })
 
   }
   getStatus(){
-    this.commonservice.getFunction7('commonService/getFunction7').subscribe((res:any)=>{
+    this.commonservice.getFunction('users/status').subscribe((res:any)=>{
       this.status=res;
       console.log(this.status);
     })
   }
   getStocks(){
-    this.commonservice.getFunction9('commonService/getFunction9').subscribe((res:any)=>{
+    this.commonservice.getFunction('users/getStocks').subscribe((res:any)=>{
       this.stocks=res;
       console.log(this.stocks);
     })
@@ -114,7 +114,7 @@ export class IssueFormComponent implements OnInit {
       issued_date: this.datePipe.transform(this.issueForm.get("issued_date")?.value, "yyyy-MM-dd")
     });
 
-      this.commonservice.issueStocks(this.issueForm.value).subscribe((res:any)=>
+      this.commonservice.saveDetails('users/issuedstocks',this.issueForm.value).subscribe((res:any)=>
         {
               if(res['affectedRows'])
               {   console.log("inside save",this.issueForm.value);
@@ -125,8 +125,17 @@ export class IssueFormComponent implements OnInit {
         })
     }
 
+    applyFilter(event: Event): void {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+
    refresh():void{
-    this.commonservice.getIssueStocks('commonService/getIssueStocks').subscribe((res:any)=>{
+    this.commonservice.getFunction('users/issuestocks').subscribe((res:any)=>{
        if(res.length){
          this.user_data=res;
          this.dataSource=new MatTableDataSource(this.user_data);

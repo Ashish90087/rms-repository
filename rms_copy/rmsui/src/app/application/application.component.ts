@@ -31,7 +31,7 @@ export class ApplicationComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  displayedColumns: string[] = ['sn', 'app_name', 'plateform', 'server', 'public ip',  'department' , 'action'];
+  displayedColumns: string[] = ['sn', 'app_name', 'plateform', 'server', 'public ip',  'department' ,'url', 'action'];
 
   constructor(private fB : FormBuilder,private cms : CommonService) { }
 
