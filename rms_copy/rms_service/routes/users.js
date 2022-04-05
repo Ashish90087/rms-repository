@@ -78,7 +78,7 @@ router.post('/usermas', function (req, res) {
 });
 router.get('/usermas', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('Select * from user_mas',function(err,rows1){
+  return db.query('Select * from mas_user',function(err,rows1){
     if(err){
       return res.json(err);
     }
