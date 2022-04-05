@@ -183,7 +183,7 @@ router.get('/user', function(req, res, next) {
   });
 
   router.get('/apps', function(req, res, next) {
-    return db.query('select ma.*,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id', function (err, rows1) {
+    return db.query('select ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp ,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -299,7 +299,7 @@ router.post('/mapwo', function (req, res) {
 
 router.post('/apps', function (req, res) {
   
-  return db.query('insert into mas_app (app_name,plateform_id,platform_version,server_id,dept_code,public_ip,url) values (?,?,?,?,?,?,?)',[req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url], function (err, rows1) {
+  return db.query('insert into mas_app (app_name,plateform_id,platform_version,server_id,dept_code,public_ip,url,ssl_expiry) values (?,?,?,?,?,?,?,?)',[req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url,req.body.ssl_expiry], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -391,7 +391,7 @@ router.put('/db', function (req, res) {
 });
 
 router.put('/apps', function (req, res) {
-  return db.query('update mas_app ma set ma.app_name = ?, ma.plateform_id = ?, ma.platform_version = ?, ma.server_id = ?, ma.dept_code = ?, ma.public_ip = ?, ma.url = ? where ma.app_id = ?', [req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url,req.body.app_id], function (err, rows1) {
+  return db.query('update mas_app ma set ma.app_name = ?, ma.plateform_id = ?, ma.platform_version = ?, ma.server_id = ?, ma.dept_code = ?, ma.public_ip = ?, ma.url = ?, ma.ssl_expiry = ? where ma.app_id = ?', [req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url,req.body.ssl_expiry,req.body.app_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });
