@@ -22,7 +22,7 @@ export class IssueFormComponent implements OnInit {
 
   temp_file :any;
   dataSource:any=[];
-  displayedColumns:string[] =['issued_to','stock_id','issued_date','marked_no','remark','i_form_no','woPDF','g_form_no','status_id' ];
+  displayedColumns:string[] =['issued_to','stock_id','issued_date','marked_no','remark','i_form_no','woPDF','status_id' ];
   user_data: any=[];
   public hardwares:any=[];
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
@@ -35,7 +35,6 @@ export class IssueFormComponent implements OnInit {
       marked_no:[],
       remark:[],
       i_form_no:[],
-      g_form_no:[],
       status_id:[],
       ilocation:[]
 

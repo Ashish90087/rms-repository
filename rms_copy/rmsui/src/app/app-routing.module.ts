@@ -13,6 +13,7 @@ import { ServerComponent } from './server/server.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workorder.component';
 import { IssueFormComponent } from './issue-form/issue-form.component';
+import { ReturnStockComponent } from './return-stock/return-stock.component';
 
 const routes: Routes = [
 
@@ -27,7 +28,8 @@ const routes: Routes = [
 { path : 'server' , component: ServerComponent},
 { path : 'emp' , component: EmployeeComponent},
 { path : 'mapwo' , component: MapUserWorkorderComponent},
-{ path : 'issue' , component: IssueFormComponent}
+{ path : 'issue' , component: IssueFormComponent},
+{ path : 'return' , component: ReturnStockComponent}
 
 ];
 

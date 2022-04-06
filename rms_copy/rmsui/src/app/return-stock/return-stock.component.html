@@ -56,7 +56,7 @@
           <mat-form-field appearance="outline" style="width: 60%;">
             <mat-label>Stock ID</mat-label>
             <mat-select formControlName="stock_id"  >
-              <mat-option *ngFor="let stock of user_data" [value]="stock.issued_to" (click)="selectedStock(stock.stock_id)">
+              <mat-option *ngFor="let stock of user_data" [value]="stock.stock_id" (click)="selectedStock(stock.stock_id)">
                 {{stock.stock_id}}
               </mat-option>
             </mat-select>

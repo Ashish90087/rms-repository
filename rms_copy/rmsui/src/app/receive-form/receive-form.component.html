@@ -7,7 +7,7 @@
   <mat-card-content>
     <div class="row">
       <div class="col-md-4">
-        <mat-form-field appearance="outline" class="mat-form-field">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="depts">Office</mat-label>
             <mat-select formControlName="dept_id">
               <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
@@ -19,20 +19,20 @@
 
       </div>
       <div class="col-md-4">
-        <mat-form-field appearance="outline" class="mat-form-field">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="hardware">Hardware</mat-label>
             <mat-select formControlName="hardware_id">
-              <mat-option *ngFor="let h of hardwares" [value]="h.h_id">
+              <mat-option *ngFor="let h of hardwares" [value]="h.h_id" (click)="selectedHardware(h.h_id)">
                 {{h.h_name}}
               </mat-option>
             </mat-select>
         </mat-form-field>
       </div>
       <div class="col-md-4">
-        <mat-form-field appearance="outline" class="mat-form-field">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="brands">Make</mat-label>
           <mat-select formControlName="make_model_id" >
-            <mat-option *ngFor="let br of brands" [value]="br.brand_id" (click)="selectedBrand(br.brand_id)">
+            <mat-option *ngFor="let br of brands" [value]="br.brand_id" >
               {{br.brand_name}}
             </mat-option>
         </mat-select>
@@ -40,42 +40,43 @@
       </div>
 
   </div>
-    <div class="row" *ngIf="brand_id==5;">
-      <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
+    <div class="row" *ngIf="h_id==5;">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="cpu">CPU Serial number</mat-label>
           <input  formControlName="cpu_sno" matInput id="cpu" type="text">
         </mat-form-field>
       </div>
 
-      <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="keyboard">Keyboard Serial Number</mat-label>
           <input formControlName="keyboard_sno" matInput id="keyboard" type="text">
         </mat-form-field>
       </div>
-      <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="mouse">Mouse Serial Number</mat-label>
           <input formControlName="mouse_sno" matInput id="mouse" type="text">
         </mat-form-field>
       </div>
       </div>
       <div class="row">
+      
       <div class="col-md-4">
-        <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="dates">Receive Date</mat-label>
-          <input type="date" formControlName="received_date" matInput id="dates">
-        </mat-form-field>
-      </div>
-      <div class="col-md-4">
-        <mat-form-field appearance="outline" class="mat-form-field">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="monitor">Serial Number</mat-label>
           <input formControlName="monitor_sno" matInput id="monitor" type="text">
         </mat-form-field>
       </div>
       <div class="col-md-4">
-        <mat-form-field appearance="outline" class="mat-form-field">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
+          <mat-label for="dates">Receive Date</mat-label>
+          <input type="date" formControlName="received_date" matInput id="dates">
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
           <mat-label for="status">Status</mat-label>
             <mat-select formControlName="status_id">
               <mat-option *ngFor="let h of status" [value]="h.status_id">

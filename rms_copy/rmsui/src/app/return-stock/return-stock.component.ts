@@ -118,7 +118,7 @@ export class ReturnStockComponent implements OnInit {
     })
   }
   getIssuedUsersStocks(){
-    this.cms.getIssueStocks('cms/getIssueStocks').subscribe((res:any)=>{
+    this.cms.getIssueStocks1('cms/getIssueStocks1').subscribe((res:any)=>{
       this.user_data=res;
       console.log("Issued users and stocks", this.user_data);
       console.log("username is:" ,this.user_data[0].name);
@@ -193,6 +193,7 @@ export class ReturnStockComponent implements OnInit {
   public was_issued_to:any;
   public serial_no:any;
   stock_details(stock_id:any){
+    console.log("user data is :",this.user_data);
     for(let i=0;i<this.user_data.length;i++){
       if(stock_id==this.user_data[i].stock_id){
         this.was_issued_to= this.user_data[i].name;

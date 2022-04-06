@@ -128,13 +128,20 @@ issueStocks(data: any)
           }));
 
     }
-    getIssueStocks(functionName:any){
+getIssueStocks(functionName:any)
+    {
       return this.http.get('http://localhost:3000/users/issuestocks').pipe(tap(res=>{res}),
       catchError(e=>{
         throw new Error(e);
       }));
     }
-
+    getIssueStocks1(functionName:any)
+    {
+      return this.http.get('http://localhost:3000/users/issuestocks1').pipe(tap(res=>{res}),
+      catchError(e=>{
+        throw new Error(e);
+      }));
+    }
 
 getHardwares(functionName:any){
   return this.http.get('http://localhost:3000/users/hardwares').pipe(tap(res=>{res}),

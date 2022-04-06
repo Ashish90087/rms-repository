@@ -222,9 +222,18 @@ router.post('/receiving_stocks', function (req, res) {
     return res.json(rows1);
   });
 });
+router.get('/issuestocks1', function(req, res, next) {
+  //res.send('respond with a resource');
+  return db.query('SELECT i.issued_to,u.name, i.stock_id, i.issued_date,i.marked_no,i.remark,i.i_form_no,i.g_form_no,i.status_id,i.ilocation,sr.dept_id,m.dept_name,sr.monitor_sno, s.status_id, s.status_name from issued_details i inner join mas_user u on i.issued_to=u.user_id INNER JOIN stock_receive_mas sr ON i.stock_id=sr.stock_id INNER JOIN  status_mas s ON i.status_id=s.status_id INNER JOIN mas_dept m ON sr.dept_id=m.dept_code' ,function(err,rows1){
+    if(err){
+      return res.json(err);
+    }
+    return res.json(rows1);
+  });
+});
 router.get('/issuestocks', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('SELECT i.issued_to,u.name, i.stock_id, i.issued_date,i.marked_no,i.remark,i.i_form_no,i.g_form_no,i.status_id,i.ilocation, s.status_id, s.status_name from issued_details i inner join mas_user u on i.issued_to=u.user_id INNER JOIN stock_receive_mas sr ON i.stock_id=sr.stock_id INNER JOIN  status_mas s ON i.status_id=s.status_id ' ,function(err,rows1){
+  return db.query('SELECT id.*, m.name  from issued_details id INNER JOIN mas_user m ON id.issued_to=m.user_id  ' ,function(err,rows1){
     if(err){
       return res.json(err);
     }

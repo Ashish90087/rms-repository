@@ -108,10 +108,10 @@ export class ReceiveFormComponent implements OnInit {
     }
 
    }
-   public brand_id:any;
-   selectedBrand(brand:any){
-     this.brand_id=brand;
-     console.log("brand id is :",this.brand_id );
+   public h_id:any;
+   selectedHardware(hw:any){
+     this.h_id=hw;
+     console.log("brand id is :",this.h_id );
    }
 
    refresh():void{
