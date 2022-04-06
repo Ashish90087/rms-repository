@@ -42,11 +42,31 @@
 
     </div>
     <div class="row">
+
+
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="mat-form-field">
           <mat-label for="remarks">Remark</mat-label>
           <input formControlName="remark" matInput id="remarks" type="text">
         </mat-form-field>
+      </div>
+
+      <!-- <div class="col-md-3">
+        <mat-form-field appearance="outline" class="mat-form-field">
+          <mat-label for="gform">G Form Number</mat-label>
+          <input formControlName="g_form_no" matInput id="gform" type="text">
+        </mat-form-field>
+      </div> -->
+      <div class="col-md-3">
+        <mat-form-field appearance="outline" class="mat-form-field">
+          <mat-label for="status">Status</mat-label>
+          <mat-select formControlName="status_id">
+            <mat-option *ngFor="let status of status" [value]="status.status_id">
+              {{status.status_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="mat-form-field">
@@ -56,26 +76,16 @@
 
       </div>
       <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="gform">G Form Number</mat-label>
-          <input formControlName="g_form_no" matInput id="gform" type="text">
-        </mat-form-field>
+        <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
       </div>
-      <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="status">Status</mat-label>
-          <mat-select formControlName="status_id">
-            <mat-option *ngFor="let status of status" [value]="status.status_id">
-              {{status.status_name}}
-            </mat-option>
-        </mat-select>
-        </mat-form-field>
-      </div>
+      <!-- <div class="col-md-3">Upload I form
+        <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
+      </div> -->
 
     </div>
-    <div class="col-md-4">iform
+    <!-- <div class="col-md-4">Upload I form
       <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
-    </div>
+    </div> -->
     <button mat-raised-button type="submit" color="primary" >Save</button>
    <!-- <button mat-raised-button type="submit" color="primary" (click)="onEdit(dept, received_date, username, cpu_sno, monitor_sno, keyboard_sno, mouse_sno, brand, user, issued_date, marked_no, remark, i_form_no, g_form_no)">Edit</button> -->
   </mat-card-content>

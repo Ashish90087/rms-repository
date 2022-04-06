@@ -108,6 +108,11 @@ export class ReceiveFormComponent implements OnInit {
     }
 
    }
+   public brand_id:any;
+   selectedBrand(brand:any){
+     this.brand_id=brand;
+     console.log("brand id is :",this.brand_id );
+   }
 
    refresh():void{
     this.commonservice.getFunction('users/receiving_stocks').subscribe((res:any)=>{

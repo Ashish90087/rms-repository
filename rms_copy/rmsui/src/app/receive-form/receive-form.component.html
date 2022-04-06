@@ -6,7 +6,7 @@
 
   <mat-card-content>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field">
           <mat-label for="depts">Office</mat-label>
             <mat-select formControlName="dept_id">
@@ -18,7 +18,7 @@
         </mat-form-field>
 
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field">
           <mat-label for="hardware">Hardware</mat-label>
             <mat-select formControlName="hardware_id">
@@ -28,36 +28,26 @@
             </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="brands">Make and Model</mat-label>
-          <mat-select formControlName="make_model_id">
-            <mat-option *ngFor="let br of brands" [value]="br.brand_id">
+          <mat-label for="brands">Make</mat-label>
+          <mat-select formControlName="make_model_id" >
+            <mat-option *ngFor="let br of brands" [value]="br.brand_id" (click)="selectedBrand(br.brand_id)">
               {{br.brand_name}}
             </mat-option>
         </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="dates">Receive Date</mat-label>
-          <input type="date" formControlName="received_date" matInput id="dates">
-        </mat-form-field>
-      </div>
+
   </div>
-    <div class="row">
+    <div class="row" *ngIf="brand_id==5;">
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="mat-form-field">
           <mat-label for="cpu">CPU Serial number</mat-label>
           <input  formControlName="cpu_sno" matInput id="cpu" type="text">
         </mat-form-field>
       </div>
-      <div class="col-md-3">
-        <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="monitor">Monitor Serial Number</mat-label>
-          <input formControlName="monitor_sno" matInput id="monitor" type="text">
-        </mat-form-field>
-      </div>
+
       <div class="col-md-3">
         <mat-form-field appearance="outline" class="mat-form-field">
           <mat-label for="keyboard">Keyboard Serial Number</mat-label>
@@ -70,21 +60,21 @@
           <input formControlName="mouse_sno" matInput id="mouse" type="text">
         </mat-form-field>
       </div>
-
-      <div class="col-md-3">
+      </div>
+      <div class="row">
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="iform">Iform Number</mat-label>
-          <input formControlName="iform_id" matInput id="iform" type="text">
+          <mat-label for="dates">Receive Date</mat-label>
+          <input type="date" formControlName="received_date" matInput id="dates">
         </mat-form-field>
       </div>
-
-      <!-- <div class="col-md-3">
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field">
-          <mat-label for="status">Status</mat-label>
-          <input formControlName="status" matInput id="status" type="text">
+          <mat-label for="monitor">Serial Number</mat-label>
+          <input formControlName="monitor_sno" matInput id="monitor" type="text">
         </mat-form-field>
-      </div> -->
-      <div class="col-md-3">
+      </div>
+      <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field">
           <mat-label for="status">Status</mat-label>
             <mat-select formControlName="status_id">
@@ -94,8 +84,22 @@
             </mat-select>
         </mat-form-field>
       </div>
+    </div>
 
-      </div>
+      <!-- <div class="col-md-3">
+        <mat-form-field appearance="outline" class="mat-form-field">
+          <mat-label for="iform">Iform Number</mat-label>
+          <input formControlName="iform_id" matInput id="iform" type="text">
+        </mat-form-field>
+      </div> -->
+
+      <!-- <div class="col-md-3">
+        <mat-form-field appearance="outline" class="mat-form-field">
+          <mat-label for="status">Status</mat-label>
+          <input formControlName="status" matInput id="status" type="text">
+        </mat-form-field>
+      </div> -->
+
 
     <button mat-raised-button type="submit" color="primary" >Save</button>
    <!-- <button mat-raised-button type="submit" color="primary" (click)="onEdit(dept, received_date, username, cpu_sno, monitor_sno, keyboard_sno, mouse_sno, brand, user, issued_date, marked_no, remark, i_form_no, g_form_no)">Edit</button> -->
