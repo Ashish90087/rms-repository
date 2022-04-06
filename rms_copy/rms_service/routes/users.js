@@ -252,7 +252,26 @@ router.get('/getStocks', function(req, res, next) {
     return res.json(rows1);
   });
 });
-
+router.post('/returnstocks', function (req, res) {
+  
+  return db.query('insert into returned_stock_details (stock_id,was_issued_to,returned_date,serial_no,dept_id,status_id) values (?,?,?,?,?,?)',[req.body.stock_id,req.body.was_issued_to, req.body.returned_date,req.body.serial_no,req.body.dept_id,req.body.status_id], function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
+router.get('/returnstocks', function(req, res, next) {
+  //res.send('respond with a resource');
+  return db.query('SELECT * from returned_stock_details' ,function(err,rows1){
+    if(err){
+      return res.json(err);
+    }
+    return res.json(rows1);
+  });
+});
 
 
 module.exports = router;
