@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,6 +13,10 @@ import { CommonService } from '../services/common.service';
   styleUrls: ['./receive-form.component.scss']
 })
 export class ReceiveFormComponent implements OnInit {
+  wo: any;
+  folder_location:any;
+
+  temp_file :any;
 
   receiveForm : FormGroup;
   public department: any =[];
@@ -20,13 +25,13 @@ export class ReceiveFormComponent implements OnInit {
   public stockData:any=[];
   public status:any=[];
   dataSource:any=[];
-  displayedColumns:string[] =['dept_id','hardware_id','received_date','cpu_sno','monitor_sno','keyboard_sno','mouse_sno','make_model_id','iform','status_id' ];
+  displayedColumns:string[] =['dept_id','hardware_id','received_date','cpu_sno','monitor_sno','keyboard_sno','mouse_sno','make_model_id','i_form_no','woPDF','status_id','remarks' ];
   user_data: any=[];
   public id1 : any=0;
   public hardwares:any=[];
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
 
-  constructor(private fb:FormBuilder ,private commonservice: CommonService,private datePipe: DatePipe) {
+  constructor(private fb:FormBuilder ,private commonservice: CommonService,private http: HttpClient ,private datePipe: DatePipe) {
 
     this.receiveForm = this.fb.group({
       stock_id:[],
@@ -38,8 +43,11 @@ export class ReceiveFormComponent implements OnInit {
       keyboard_sno:[],
       mouse_sno:[],
       make_model_id:[],
+      remarks:[],
       status_id:[1],
-      iform_id : []
+      i_form_no:[],
+      ilocation:[],
+      
 
     })
 
@@ -123,6 +131,41 @@ export class ReceiveFormComponent implements OnInit {
          this.dataSource.paginator=this.paginator;
        }
     })
+  }
+  selectWorkOrder(event:any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.wo = file;
+      this.folder_location = './uploads/' + 'iform' + '/';
+
+    }
+    const formData = new FormData();
+    formData.append('file', this.wo);
+    formData.append('folder_name', this.folder_location);
+
+    this.http.post<any>('http://localhost:3000/upload/file', formData).subscribe(res => {
+      console.log(res);
+      this.temp_file = res;
+      console.log(this.temp_file.path);
+
+      this.receiveForm.patchValue({
+       ilocation: this.temp_file.filepath,
+      }
+
+    );
+    console.log(this.receiveForm.value.ilocation)
+
+    });
+
+
+  }
+  woPDF(ilocation:any){
+    console.log("I am WO PDF");
+    console.log(ilocation)
+  const url= ('http://localhost:3000/' + ilocation );
+  window.open(url);
+  //console.log(url);
+
   }
   public deptdata: any = [];
    onEdit(stock_id: any,event:any) {

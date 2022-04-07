@@ -126,7 +126,7 @@ export class ReturnStockComponent implements OnInit {
   }
   public returned_data:any=[];
   getReturnedStocks(){
-    this.cms.returnedStocks('cms/returnedStocks').subscribe((res:any)=>{
+    this.cms.returnedStocks('cms/returnedStocks',this.returnForm.value).subscribe((res:any)=>{
       this.returned_data=res;
       console.log("Returned users and stocks",this.returned_data);
 
@@ -141,7 +141,7 @@ export class ReturnStockComponent implements OnInit {
     }
   }
   refresh():void{
-    this.cms.returnedStocks('cms/returnedStocks').subscribe((res:any)=>{
+    this.cms.returnedStocks('cms/returnedStocks',this.returnForm.value).subscribe((res:any)=>{
       console.log("now show the returned item from db",res);
        if(res.length){
          this.user_data=res;
@@ -193,7 +193,6 @@ export class ReturnStockComponent implements OnInit {
   public was_issued_to:any;
   public serial_no:any;
   stock_details(stock_id:any){
-    console.log("user data is :",this.user_data);
     for(let i=0;i<this.user_data.length;i++){
       if(stock_id==this.user_data[i].stock_id){
         this.was_issued_to= this.user_data[i].name;

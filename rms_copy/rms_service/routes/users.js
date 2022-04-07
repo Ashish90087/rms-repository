@@ -203,7 +203,7 @@ router.get('/status', function(req, res, next) {
 
 router.get('/receiving_stocks', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('SELECT r.stock_id,r.iform_id, r.dept_id,r.hardware_id,r.received_date ,r.cpu_sno, r.monitor_sno,r.keyboard_sno,r.mouse_sno,r.make_model_id,r.status_id,b.brand_name,h.h_name,m.dept_name, s.status_name from stock_receive_mas r,hardware_mas h, mas_dept m,status_mas s,brand_mas b WHERE r.dept_id=m.dept_code AND r.hardware_id=h.h_id AND r.status_id=s.status_id AND r.make_model_id=b.brand_id' ,function(err,rows1){
+  return db.query('SELECT r.stock_id, r.dept_id,r.hardware_id,r.received_date ,r.cpu_sno, r.monitor_sno,r.keyboard_sno,r.mouse_sno,r.make_model_id,r.i_form_no,r.ilocation,r.status_id,r.remarks,b.brand_name,h.h_name,m.dept_name, s.status_name from stock_receive_mas r,hardware_mas h, mas_dept m,status_mas s,brand_mas b WHERE r.dept_id=m.dept_code AND r.hardware_id=h.h_id AND r.status_id=s.status_id AND r.make_model_id=b.brand_id' ,function(err,rows1){
     if(err){
       return res.json(err);
     }
@@ -213,7 +213,7 @@ router.get('/receiving_stocks', function(req, res, next) {
 
 router.post('/receiving_stocks', function (req, res) {
   
-  return db.query('insert into stock_receive_mas (stock_id, dept_id,hardware_id,received_date ,cpu_sno, monitor_sno,keyboard_sno,mouse_sno,make_model_id,status_id) values (?,?,?,?,?,?,?,?,?,?)',[req.body.stock_id, req.body.dept_id,req.body.hardware_id,req.body.received_date,req.body.cpu_sno, req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.make_model_id,req.body.status_id], function (err, rows1) {
+  return db.query('insert into stock_receive_mas (stock_id, dept_id,hardware_id,received_date ,cpu_sno, monitor_sno,keyboard_sno,mouse_sno,make_model_id,remarks,i_form_no,ilocation,status_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.stock_id, req.body.dept_id,req.body.hardware_id,req.body.received_date,req.body.cpu_sno, req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.make_model_id,req.body.remarks,req.body.i_form_no,req.body.ilocation,req.body.status_id], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -278,6 +278,17 @@ router.get('/returnstocks', function(req, res, next) {
     if(err){
       return res.json(err);
     }
+    return res.json(rows1);
+  });
+});
+router.put('/updateStatus', function (req, res) {
+  
+  return db.query('Update stock_receive_mas set status_id=? where stock_id=?',[req.body.status_id,req.body.stock_id] , function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
     return res.json(rows1);
   });
 });

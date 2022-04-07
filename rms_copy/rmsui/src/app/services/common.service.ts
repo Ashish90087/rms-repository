@@ -230,11 +230,21 @@ save_users(data: any){
           }));
 
     }
-    returnedStocks(functionName:any){
+    returnedStocks(functionName:any,data:any){
       return this.http.get('http://localhost:3000/users/returnstocks').pipe(tap(res=>{res}),
       catchError(e=>{
         throw new Error(e);
       }));
+    }
+    updateStatusInStockReceive(functionName:any,data:any){
+      console.log("updateing Status",data);
+    //console.log("DATA exist in dummy 2",data);
+      return this.http.put('http://localhost:3000/users/updateStatus',data).pipe(tap(res=>{res}),
+      catchError(e=>{
+        throw new Error(e);
+      }));
+
+
     }
 
 }

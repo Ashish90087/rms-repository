@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;" >
-            <mat-label for="issuedto">Issued To</mat-label>
+            <mat-label for="issuedto">Issue To</mat-label>
             <mat-select formControlName="issued_to">
             <mat-option *ngFor="let user of users" [value]="user.user_id">
               {{user.name}}
@@ -31,7 +31,7 @@
 
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
-            <mat-label for="issueddate">Issued Date</mat-label>
+            <mat-label for="issueddate">Issue Date</mat-label>
             <input formControlName="issued_date" matInput id="issueddate" type="date">
             </mat-form-field>
         </div>
@@ -51,7 +51,7 @@
             <input formControlName="remark" matInput id="remarks" type="text">
           </mat-form-field>
         </div>
-        <div class="col-md-4"  >
+        <!-- <div class="col-md-4"  >
           <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
             <mat-label for="status">Status</mat-label>
             <mat-select formControlName="status_id">
@@ -60,10 +60,10 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
 
     </div>
-    <div class="row">
+    <!-- <div class="row">
 
       <div class="col-md-4">
         <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
@@ -75,12 +75,12 @@
       <div class="col-md-4">
         <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
       </div>
+      
+
+    </div> -->
       <!-- <div class="col-md-3">Upload I form
         <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
       </div> -->
-
-    </div>
-      
 
       <!-- <div class="col-md-3">
         <mat-form-field appearance="outline" class="mat-form-field">
@@ -144,7 +144,7 @@
                   <td mat-cell *matCellDef="let row"> {{row.remark}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="i_form_no">
+              <!-- <ng-container matColumnDef="i_form_no">
                   <th mat-header-cell *matHeaderCellDef>IForm No.</th>
                   <td mat-cell *matCellDef="let row">{{row.i_form_no}}</td>
               </ng-container>
@@ -152,12 +152,12 @@
               <ng-container matColumnDef="woPDF">
                   <th mat-header-cell *matHeaderCellDef>IForm File </th>
                   <td mat-cell *matCellDef="let row"><button mat-mini-fab color="basic" (click)="woPDF(row.ilocation)"><mat-icon> cloud_download </mat-icon></button> </td>
-              </ng-container>
+              </ng-container> -->
 
               
 
             <ng-container matColumnDef="status_id">
-              <th mat-header-cell *matHeaderCellDef>Stauts</th>
+              <th mat-header-cell *matHeaderCellDef>Status</th>
               <td mat-cell *matCellDef="let row"> {{row.status_id}} </td>
           </ng-container>
 

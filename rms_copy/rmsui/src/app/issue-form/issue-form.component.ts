@@ -22,7 +22,7 @@ export class IssueFormComponent implements OnInit {
 
   temp_file :any;
   dataSource:any=[];
-  displayedColumns:string[] =['issued_to','stock_id','issued_date','marked_no','remark','i_form_no','woPDF','status_id' ];
+  displayedColumns:string[] =['issued_to','stock_id','issued_date','marked_no','remark','status_id' ];
   user_data: any=[];
   public hardwares:any=[];
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
@@ -34,9 +34,7 @@ export class IssueFormComponent implements OnInit {
       issued_date:[],
       marked_no:[],
       remark:[],
-      i_form_no:[],
-      status_id:[],
-      ilocation:[]
+      status_id:[2],
 
     })
 
@@ -106,22 +104,37 @@ export class IssueFormComponent implements OnInit {
   //console.log(url);
 
   }
-
+public stat:any=[];
   onSubmit(){
     this.issueForm.patchValue({
       date: this.datePipe.transform(this.issueForm.get("date")?.value, "yyyy-MM-dd"),
       issued_date: this.datePipe.transform(this.issueForm.get("issued_date")?.value, "yyyy-MM-dd")
     });
+      console.log("inside submit",this.issueForm.value);
+      this.stat=this.issueForm.value;
+      console.log("status field is ",this.stat.status_id);
 
       this.commonservice.saveDetails('users/issuedstocks',this.issueForm.value).subscribe((res:any)=>
         {
               if(res['affectedRows'])
-              {   console.log("inside save",this.issueForm.value);
+              {   console.log("inside save1",this.issueForm.value);
                   this.refresh();
                   this.issueForm.reset();
                   Swal.fire({icon:'success',text:'saved successfully',timer:2000});
                 }
-        })
+        });
+        this.commonservice.updateStatusInStockReceive('users/updateStatus',this.stat).subscribe((res:any)=>
+        {
+              if(res['affectedRows'])
+              {   console.log("inside update1",this.stat.status_id);
+                  this.refresh();
+                  this.issueForm.reset();
+                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+                }
+        });
+        
+       
+      
     }
 
     applyFilter(event: Event): void {
