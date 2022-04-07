@@ -114,7 +114,7 @@ public stat:any=[];
       this.stat=this.issueForm.value;
       console.log("status field is ",this.stat.status_id);
 
-      this.commonservice.saveDetails('users/issuedstocks',this.issueForm.value).subscribe((res:any)=>
+      this.commonservice.saveDetails('users/issueAndUpdateStock',this.issueForm.value).subscribe((res:any)=>
         {
               if(res['affectedRows'])
               {   console.log("inside save1",this.issueForm.value);
@@ -123,15 +123,15 @@ public stat:any=[];
                   Swal.fire({icon:'success',text:'saved successfully',timer:2000});
                 }
         });
-        this.commonservice.updateStatusInStockReceive('users/updateStatus',this.stat).subscribe((res:any)=>
-        {
-              if(res['affectedRows'])
-              {   console.log("inside update1",this.stat.status_id);
-                  this.refresh();
-                  this.issueForm.reset();
-                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
-                }
-        });
+        // this.commonservice.updateStatusInStockReceive('users/updateStatus',this.stat).subscribe((res:any)=>
+        // {
+        //       if(res['affectedRows'])
+        //       {   console.log("inside update1",this.stat.status_id);
+        //           this.refresh();
+        //           this.issueForm.reset();
+        //           Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+        //         }
+        // });
         
        
       

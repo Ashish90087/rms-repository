@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../dbconnection');
+const users = require('../models/users');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -241,17 +242,30 @@ router.get('/issuestocks', function(req, res, next) {
   });
 });
 
-router.post('/issuedstocks', function (req, res) {
+// router.post('/issuedstocks', function (req, res) {
   
-  return db.query('insert into issued_details (issued_to, stock_id,issued_date,marked_no,remark,i_form_no,g_form_no,status_id,ilocation) values (?,?,?,?,?,?,?,?,?)',[req.body.issued_to,req.body.stock_id, req.body.issued_date,req.body.marked_no,req.body.remark,req.body.i_form_no, req.body.g_form_no,req.body.status_id,req.body.ilocation], function (err, rows1) {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return res.json(err);
-    }
-    //req.session.destroy(); 
-    return res.json(rows1);
-  });
+//   return db.query('insert into issued_details (issued_to, stock_id,issued_date,marked_no,remark,i_form_no,g_form_no,status_id,ilocation) values (?,?,?,?,?,?,?,?,?)',[req.body.issued_to,req.body.stock_id, req.body.issued_date,req.body.marked_no,req.body.remark,req.body.i_form_no, req.body.g_form_no,req.body.status_id,req.body.ilocation], function (err, rows1) {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       return res.json(err);
+//     }
+//     //req.session.destroy(); 
+//     return res.json(rows1);
+//   });
+// });
+router.post('/issueAndUpdateStock', function (req, res) 
+{
+  
+    console.log("Helooo");
+    users.issueAndUpdateStock(req.body, function (err, result) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(result);
+      }
+    });
 });
+
 router.get('/getStocks', function(req, res, next) {
   //res.send('respond with a resource');
   return db.query('SELECT r.stock_id from stock_receive_mas r' ,function(err,rows1){
