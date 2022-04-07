@@ -4,12 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-//import { DatePipe } from '@angular/common';
 import { TestComponent } from './test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsComponent } from './forms/forms.component';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
-
+import { JwtModule } from '@auth0/angular-jwt';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,6 +42,11 @@ import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workord
 import { DeptDialogComponent } from './dept-dialog/dept-dialog.component';
 import { IssueFormComponent } from './issue-form/issue-form.component';
 import { ReturnStockComponent } from './return-stock/return-stock.component';
+import { WeeklyWorkDoneComponent } from './weekly-work-done/weekly-work-done.component';
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
+import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -68,9 +73,15 @@ import { ReturnStockComponent } from './return-stock/return-stock.component';
     MapUserWorkorderComponent,
     DeptDialogComponent,
     IssueFormComponent,
-    ReturnStockComponent
+    ReturnStockComponent,
+    WeeklyWorkDoneComponent,
+    LoginComponent,
+    DashboardComponent,
+    WelcomeAdminComponent,
+    WelcomeUserComponent
   ],
   imports: [
+    NgbDatepickerModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -92,6 +103,16 @@ import { ReturnStockComponent } from './return-stock/return-stock.component';
     MatListModule,
     MatIconModule,
     MatDividerModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function tokenGetter() {
+          return localStorage.getItem('token');
+        },
+        // whitelistedDomains: ['localhost:3000'],
+        // blacklistedRoutes: ['http://localhost:3000/auth/login']
+      }
+    }),
 
     //AngularFileUploaderModule
   ],

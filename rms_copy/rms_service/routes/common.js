@@ -1,6 +1,60 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../dbconnection');
+const common = require("../models/login");
+const jwt = require('jsonwebtoken');
+
+var bcrypt = require('bcryptjs');
+
+router.post('/login', function (req, res) {
+  console.log('kavi');
+  var userid = req.body.userid;
+  var password = req.body.password;
+  // var password = CryptoJS.AES.decrypt(req.body.password, key).toString(CryptoJS.enc.Utf8);
+
+  common.login(userid, function (err, rows) {
+    if (err) {
+      res.json(err);
+    } else {
+      console.log(rows);
+      if (!rows.length) {
+        res.json({
+          success: 0,
+          message: `Wrong credential.`
+        })
+      } else {
+
+        let user = JSON.parse(JSON.stringify(rows[0]));
+
+        bcrypt.compare(req.body.password, user.password, function (err, result) {
+
+          if (err) {
+
+            return res.json({
+              success: 0,
+              message: `Wrong credential.`
+            });
+          } else if (result) {
+
+            let response = {
+              userid: user.user_id,
+              role: user.role,
+              user_name: user.name
+
+            }
+            const token = jwt.sign(response, 'SECreTIsAlwaYSSecRET');
+            res.json({ token: token, success: 1, role: user.role, message: 'Login Success' });
+          } else {
+            res.json({
+              success: 0,
+              message: `Wrong credential.`
+            })
+          }
+        });
+      }
+    }
+  });
+});
 
 /* GET users listing. */
 router.get('/dept', function(req, res, next) {
@@ -351,6 +405,18 @@ router.post('/db', function (req, res) {
 router.post('/server', function (req, res) {
   
   return db.query('insert into mas_server (server_ip,dept_code,os,version,machine_type,ram,disk_space,physical_core,model,va,va_score) values (?,?,?,?,?,?,?,?,?,?,?)',[req.body.server_ip,req.body.dept_code,req.body.os,req.body.version,req.body.machine_type,req.body.ram,req.body.disk_space,req.body.physical_core,req.body.model,req.body.va,req.body.va_score], function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
+
+router.post('/task', function (req, res) {
+  
+  return db.query('insert into mas_weekly_task (user_id,start,end,app_id,work_done) values (?,?,?,?,?)',[req.body.user_id,req.body.start,req.body.end,req.body.app_id,req.body.work_done], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);

@@ -3,47 +3,68 @@
     //<img src="./assets/logo.svg" alt="Company Logo" />
   </div> -->
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/home">
-    <mat-icon>home</mat-icon> Home
-  </a>
-  <mat-divider></mat-divider>
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/user">
+
+  <div  *ngIf="role == '1'">
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/admin">
+      <mat-icon>home</mat-icon> Home
+    </a>
+    <mat-divider></mat-divider>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/user">
     <mat-icon>assignment_ind</mat-icon> Employee
   </a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/department">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/department">
     <mat-icon>business</mat-icon> Department
   </a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/application">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/application">
       <mat-icon>android</mat-icon> Application
   </a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/database">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/database">
     <mat-icon>storage</mat-icon> Database
   </a>
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/server">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/server">
     <mat-icon>cloud</mat-icon> Server
   </a>
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/map-app-user">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/map-app-user">
     <mat-icon>add_box</mat-icon> Map-App-Emp
   </a>
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/receive">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/receive">
     <mat-icon>add_box</mat-icon> Stock Receive
   </a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/issue">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/issue">
     <mat-icon>add_box</mat-icon> Stock Issue
   </a>
+<<<<<<< HEAD
   <a mat-list-item routerLinkActive="list-item-active" routerLink="/return">
     <mat-icon>add_box</mat-icon> Stock Return
   </a>
   <a mat-list-item routerLinkActive="list-item-active" routerLink="/emp">
+=======
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/emp">
+>>>>>>> main
     <mat-icon>add_box</mat-icon> Work Order Details
   </a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/mapwo">
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/mapwo">
     <mat-icon>add_box</mat-icon> Map WorkOrder-Employee
   </a>
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/task">
+    <mat-icon>add_box</mat-icon>Weekly Work Update
+  </a>
+  </div>
+  <div  *ngIf="role == '2'">
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/employee">
+      <mat-icon>home</mat-icon> Home
+    </a>
+    <mat-divider></mat-divider>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/task">
+      <mat-icon>add_box</mat-icon>Weekly Work Update
+    </a>
+  </div>
   <!-- <a mat-list-item> <mat-icon>edit</mat-icon> Link 3 </a>
   <a mat-list-item> <mat-icon>edit</mat-icon> Link 4 </a>
   <a mat-list-item> <mat-icon>edit</mat-icon> Link 5 </a>
