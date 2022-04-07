@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'rmsui';
 
-  sideBarOpen = true;
+  // sideBarOpen = true;
 
-  sideBarToggler() {
-    this.sideBarOpen = !this.sideBarOpen;
-  }
+  // sideBarToggler() {
+  //   this.sideBarOpen = !this.sideBarOpen;
+  // }
 }

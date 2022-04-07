@@ -13,21 +13,39 @@ import { ServerComponent } from './server/server.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workorder.component';
 import { IssueFormComponent } from './issue-form/issue-form.component';
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WeeklyWorkDoneComponent } from './weekly-work-done/weekly-work-done.component';
+import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
+import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
 
 const routes: Routes = [
 
 { path: '', redirectTo: 'home', pathMatch: 'full' },
 { path: 'home', component: HomeComponent },
-{ path: 'user', component: UserComponent },
-{ path: 'department', component: DepartmentComponent },
-{ path: 'application', component: ApplicationComponent },
-{ path : 'database' , component: DatabaseComponent},
-{ path : 'map-app-user' , component: MapAppUserComponent},
-{ path : 'receive' , component: ReceiveFormComponent},
-{ path : 'server' , component: ServerComponent},
-{ path : 'emp' , component: EmployeeComponent},
-{ path : 'mapwo' , component: MapUserWorkorderComponent},
-{ path : 'issue' , component: IssueFormComponent}
+{ path: 'dashboard', component: DashboardComponent ,
+ children: [
+
+  { path: 'user', component: UserComponent },
+  { path: 'department', component: DepartmentComponent },
+  { path: 'application', component: ApplicationComponent },
+  { path : 'database' , component: DatabaseComponent},
+  { path : 'map-app-user' , component: MapAppUserComponent},
+  { path : 'receive' , component: ReceiveFormComponent},
+  { path : 'server' , component: ServerComponent},
+  { path : 'emp' , component: EmployeeComponent},
+  { path : 'mapwo' , component: MapUserWorkorderComponent},
+  { path : 'issue' , component: IssueFormComponent},
+  { path : 'task' , component: WeeklyWorkDoneComponent},
+  { path : 'admin' , component: WelcomeAdminComponent},
+  { path : 'employee' , component: WelcomeUserComponent},
+
+ ]
+
+},
+
+
+{ path : 'login' , component: LoginComponent},
 
 ];
 
