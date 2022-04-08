@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { CommonService } from '../services/common.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-return-stock',
@@ -21,12 +22,16 @@ export class ReturnStockComponent implements OnInit {
   public hardware:any=[];
   public status:any=[];
   dataSource:any=[];
-  displayedColumns:string[] =['stock_id','was_issued_to','returned_date','serial_no','dept_id','status_id' ];
+  displayedColumns:string[] =['stock_id','was_issued_to','returned_date','serial_no','dept_id','status_id','g_form_no','woPDF','remarks' ];
   user_data: any=[];
   public id1 : any=0;
   public hardwares:any=[];
+  public wo: any;
+  public folder_location:any;
+
+  public temp_file :any;
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
-  constructor(private fb:FormBuilder ,private cms: CommonService,private datePipe: DatePipe) {
+  constructor(private fb:FormBuilder ,private cms: CommonService,private datePipe: DatePipe, private http: HttpClient) {
 
     this.returnForm = this.fb.group({
       stock_id:[],
@@ -34,7 +39,10 @@ export class ReturnStockComponent implements OnInit {
       returned_date:[],
       serial_no:[],
       dept_id:[],
-      status_id:[]
+      status_id:[3],
+      g_form_no:[],
+      glocation:[],
+      remarks:[]
 
     })
 
@@ -150,6 +158,43 @@ export class ReturnStockComponent implements OnInit {
        }
     })
   }
+  
+  selectWorkOrder(event:any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.wo = file;
+      this.folder_location = './uploads/' + 'gform' + '/';
+
+    }
+    const formData = new FormData();
+    formData.append('file', this.wo);
+    formData.append('folder_name', this.folder_location);
+
+    this.http.post<any>('http://localhost:3000/upload/file', formData).subscribe(res => {
+      console.log(res);
+      this.temp_file = res;
+      console.log(this.temp_file.path);
+
+      this.returnForm.patchValue({
+       glocation: this.temp_file.filepath,
+      }
+
+    );
+    console.log(this.returnForm.value.glocation)
+
+    });
+
+
+  }
+  woPDF(glocation:any){
+    console.log("I am WO PDF");
+    console.log(glocation)
+  const url= ('http://localhost:3000/' +glocation );
+  window.open(url);
+  //console.log(url);
+
+  }
+
   public deptdata: any = [];
    onEdit(stock_id: any) {
      this.id1=stock_id;

@@ -40,6 +40,7 @@ const routes: Routes = [
   { path : 'task' , component: WeeklyWorkDoneComponent},
   { path : 'admin' , component: WelcomeAdminComponent},
   { path : 'employee' , component: WelcomeUserComponent},
+  { path : 'return' , component: ReturnStockComponent},
 
  ]
 
