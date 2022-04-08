@@ -22,6 +22,10 @@ export class HeaderComponent implements OnInit {
     console.log(user.user_name);
   }
 
+  logout() {
+    this.authservice.logout();
+  }
+
   toggleSidebar() {
     this.toggleSidebarForMe.emit();
   }
