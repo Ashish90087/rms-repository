@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../dbconnection');
 const users = require('../models/users');
+//const returnedusers = require('../models/returnedusers');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -266,6 +267,19 @@ router.post('/issueAndUpdateStock', function (req, res)
     });
 });
 
+router.post('/ReturnAndUpdateStock', function (req, res) 
+{
+  
+    console.log("Helooo Am Here");
+    returnedusers.ReturnAndUpdateStock(req.body, function (err, result) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(result);
+      }
+    });
+});
+
 router.get('/getStocks', function(req, res, next) {
   //res.send('respond with a resource');
   return db.query('SELECT r.stock_id from stock_receive_mas r' ,function(err,rows1){
@@ -277,7 +291,7 @@ router.get('/getStocks', function(req, res, next) {
 });
 router.post('/returnstocks', function (req, res) {
   
-  return db.query('insert into returned_stock_details (stock_id,was_issued_to,returned_date,serial_no,dept_id,status_id) values (?,?,?,?,?,?)',[req.body.stock_id,req.body.was_issued_to, req.body.returned_date,req.body.serial_no,req.body.dept_id,req.body.status_id], function (err, rows1) {
+  return db.query('insert into returned_stock_details (stock_id,was_issued_to,returned_date,serial_no,dept_id,status_id,g_form_no,glocation,remarks) values (?,?,?,?,?,?,?,?,?)',[req.body.stock_id,req.body.was_issued_to, req.body.returned_date,req.body.serial_no,req.body.dept_id,req.body.status_id,req.body.g_form_no,req.body.glocation,req.body.remarks], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -286,6 +300,17 @@ router.post('/returnstocks', function (req, res) {
     return res.json(rows1);
   });
 });
+
+router.get('/stockstoreturn', function(req, res, next) {
+  //res.send('respond with a resource');
+  return db.query('SELECT s.*, m.dept_name from stock_receive_mas s INNER JOIN mas_dept m ON s.dept_id=m.dept_code' ,function(err,rows1){
+    if(err){
+      return res.json(err);
+    }
+    return res.json(rows1);
+  });
+});
+
 router.get('/returnstocks', function(req, res, next) {
   //res.send('respond with a resource');
   return db.query('SELECT * from returned_stock_details' ,function(err,rows1){

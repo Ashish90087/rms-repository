@@ -53,17 +53,17 @@
 
       <div class="row">
         <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 60%;">
+          <mat-form-field appearance="outline" style="width: 80%;">
             <mat-label>Stock ID</mat-label>
             <mat-select formControlName="stock_id"  >
-              <mat-option *ngFor="let stock of user_data" [value]="stock.stock_id" (click)="selectedStock(stock.stock_id)">
+              <mat-option *ngFor="let stock of toReturn" [value]="stock.stock_id" (click)="selectedStock(stock.stock_id)">
                 {{stock.stock_id}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 100%;" >
+          <mat-form-field appearance="outline" style="width: 80%;" >
             <mat-label>Serial Number ID</mat-label>
             <input formControlName="serial_no" matInput placeholder="serial no." [ngModel]="serial_no">
             <!-- <mat-select formControlName="serial_no" >
@@ -73,32 +73,47 @@
             </mat-select> -->
           </mat-form-field>
         </div>
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 100%;" >
-            <mat-label>Was Issued To</mat-label>
-            <!-- <mat-select formControlName="was_issued_to" >
+        <!-- <mat-select formControlName="was_issued_to" >
               <mat-option *ngFor="let user of user_data" [value]="user.issued_to">
                 {{user.name}}
               </mat-option>
             </mat-select> -->
+        <!-- <div class="col-md-4">
+          <mat-form-field appearance="outline" style="width: 80%;" >
+            <mat-label>Was Issued To</mat-label>
+            
             <input formControlName="was_issued_to" matInput placeholder="was issued to" [ngModel]="was_issued_to">
           </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
+        </div> -->
         <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 60%;">
+          <mat-form-field appearance="outline" style="width: 80%;">
             <mat-label>Returned Date</mat-label>
             <input formControlName="returned_date" type="date" matInput placeholder=" returned date" >
           </mat-form-field>
         </div>
+      </div>
+      <div class="row">
+        
         <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 100%;" >
+          <mat-form-field appearance="outline" style="width: 80%;" >
             <mat-label>Department </mat-label>
             <input formControlName="dept_id" type="text" matInput placeholder=" returned date" [ngModel]="dept">
           </mat-form-field>
         </div>
         <div class="col-md-4">
+          <mat-form-field appearance="outline" style="width: 80%;">
+            <mat-label>Remark</mat-label>
+            <input formControlName="remarks" type="text" matInput placeholder=" Remark" >
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
+            <mat-label for="gform">G Form Number</mat-label>
+            <input formControlName="g_form_no" matInput id="gform" type="text">
+          </mat-form-field>
+  
+        </div>
+        <!-- <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 100%;" >
             <mat-label>Status </mat-label>
             <mat-select formControlName="status_id" >
@@ -108,25 +123,14 @@
             </mat-select>
 
           </mat-form-field>
-        </div>
+        </div> -->
       </div>
       <div class="row">
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
-              <mat-label for="gform">G Form Number</mat-label>
-              <input formControlName="g_form_no" matInput id="gform" type="text">
-            </mat-form-field>
-    
-          </div>
+       
           <div class="col-md-4">
             <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
           </div>
-        <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 60%;">
-            <mat-label>Remark</mat-label>
-            <input formControlName="remarks" type="text" matInput placeholder=" Remark" >
-          </mat-form-field>
-        </div>
+       
         <!-- <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 100%;" >
             <mat-label>Status </mat-label>
@@ -192,7 +196,7 @@
                 </ng-container>
               <ng-container matColumnDef="woPDF">
                 <th mat-header-cell *matHeaderCellDef>GForm File </th>
-                <td mat-cell *matCellDef="let row"><button mat-mini-fab color="basic" (click)="woPDF(row.ilocation)"><mat-icon> cloud_download </mat-icon></button> </td>
+                <td mat-cell *matCellDef="let row"><button mat-mini-fab color="basic" (click)="woPDF(row.glocation)"><mat-icon> cloud_download </mat-icon></button> </td>
               </ng-container>
               <ng-container matColumnDef="remarks">
                 <th mat-header-cell *matHeaderCellDef>Remarks</th>

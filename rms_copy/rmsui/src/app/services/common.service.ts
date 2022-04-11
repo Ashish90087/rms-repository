@@ -224,7 +224,7 @@ save_users(data: any){
     returnStocks(data: any)
     {
         console.log(data)
-          return this.http.post('http://localhost:3000/users/returnstocks',data).pipe(tap(res=>{res}),
+          return this.http.post('http://localhost:3000/users/ReturnAndUpdateStock',data).pipe(tap(res=>{res}),
           catchError(e=>{
             throw new Error(e);
           }));
@@ -244,6 +244,13 @@ save_users(data: any){
         throw new Error(e);
       }));
 
+
+    }
+    getStocksToReturn(functionName:any){
+      return this.http.get('http://localhost:3000/users/stockstoreturn').pipe(tap(res=>{res}),
+      catchError(e=>{
+        throw new Error(e);
+      }));
 
     }
 

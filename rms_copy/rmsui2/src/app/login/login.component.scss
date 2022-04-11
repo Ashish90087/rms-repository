@@ -1,0 +1,35 @@
+.card2 {
+  border-top: 1px solid #EEEEEE !important;
+  //margin: 0px 15px;
+  //margin-top: 100px;
+  margin-left: 300px;
+  margin-right: 300px;
+
+}
+
+.card-big-shadow {
+  max-width: 450px;
+  //position: relative;
+}
+
+.coloured-cards .card {
+  margin-top: 30px;
+}
+
+.card[data-radius="none"] {
+  border-radius: 0px;
+}
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+  background-color: #FFFFFF;
+  color: #252422;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+

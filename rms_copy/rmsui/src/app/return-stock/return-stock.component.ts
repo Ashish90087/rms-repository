@@ -23,7 +23,7 @@ export class ReturnStockComponent implements OnInit {
   public status:any=[];
   dataSource:any=[];
   displayedColumns:string[] =['stock_id','was_issued_to','returned_date','serial_no','dept_id','status_id','g_form_no','woPDF','remarks' ];
-  user_data: any=[];
+  public user_data: any=[];
   public id1 : any=0;
   public hardwares:any=[];
   public wo: any;
@@ -39,7 +39,7 @@ export class ReturnStockComponent implements OnInit {
       returned_date:[],
       serial_no:[],
       dept_id:[],
-      status_id:[3],
+      status_id:[5],
       g_form_no:[],
       glocation:[],
       remarks:[]
@@ -57,6 +57,7 @@ export class ReturnStockComponent implements OnInit {
     this.refresh();
     this.getIssuedUsersStocks();
     this.getReturnedStocks();
+    this.stocksToreturn();
   }
   onSubmit(){
     this.returnForm.patchValue({
@@ -67,7 +68,7 @@ export class ReturnStockComponent implements OnInit {
     //console.log("Hi I am inside on submit for edit functionality", this.id1);
 
 
-        console.log("I entered inside for update");
+        console.log("I entered inside for update",this.returnForm.value);
         this.cms.returnStocks(this.returnForm.value).subscribe((res:any)=>{
                 if(res['affectedRows']){
                   this.refresh();
@@ -130,6 +131,13 @@ export class ReturnStockComponent implements OnInit {
       this.user_data=res;
       console.log("Issued users and stocks", this.user_data);
       console.log("username is:" ,this.user_data[0].name);
+    })
+  }
+  public toReturn:any=[];
+  stocksToreturn(){
+    this.cms.getStocksToReturn('cms/getStocksToReturn').subscribe((res:any)=>{
+      this.toReturn=res;
+      console.log("stocks which can be returned",this.toReturn);
     })
   }
   public returned_data:any=[];
@@ -231,20 +239,19 @@ export class ReturnStockComponent implements OnInit {
 
     console.log("event is ",id);
     this.stock_id=id;
-    console.log("event is ");
     this.stock_details(this.stock_id);
   }
   public dept:any;
   public was_issued_to:any;
   public serial_no:any;
   stock_details(stock_id:any){
-    for(let i=0;i<this.user_data.length;i++){
-      if(stock_id==this.user_data[i].stock_id){
-        this.was_issued_to= this.user_data[i].name;
-        this.serial_no = this.user_data[i].monitor_sno;
-        this.dept=this.user_data[i].dept_name;
+    for(let i=0;i<this.toReturn.length;i++){
+      if(stock_id==this.toReturn[i].stock_id){
+        //this.was_issued_to= this.user_data[i].name;
+        this.serial_no = this.toReturn[i].monitor_sno;
+        this.dept=this.toReturn[i].dept_name;
         console.log("serial number",this.serial_no);
-        console.log("was issued to",this.was_issued_to);
+        //console.log("was issued to",this.was_issued_to);
         console.log("was issued to",this.dept);
       }
 

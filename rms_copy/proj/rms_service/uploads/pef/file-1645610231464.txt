@@ -1,0 +1,103 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonserviceService } from '../commonservice.service';
+import { DatePipe } from '@angular/common';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-form5',
+  templateUrl: './form5.component.html',
+  styleUrls: ['./form5.component.scss']
+})
+export class Form5Component implements OnInit {
+
+  constructor(private fb:FormBuilder ,private commonservice: CommonserviceService,private datePipe: DatePipe) {
+    this.stockForm = this.fb.group({
+      dept_id:[],
+      user_id:[],
+      cpu_sno:[]
+
+    })
+   }
+
+  stockForm : FormGroup;
+  public department: any =[];
+  public brands:any=[];
+  public users:any=[];
+  public stockData:any=[];
+  dataSource:any=[];
+  displayedColumns:string[] =['dept_id','user_id','cpu_sno','action' ];
+  user_data: any=[];
+  @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
+
+
+  ngOnInit(): void {
+    this.getDepartment();
+    //this.refresh();
+  }
+  getDepartment(){
+    this.commonservice.getFunction1('commonService/getFunction1').subscribe((res:any)=>{
+      this.department=res;
+      console.log(this.department);
+    })
+  }
+
+  onSubmit(){
+
+    this.commonservice.save_dummy(this.stockForm.value).subscribe((res:any)=>{
+      console.log(res);
+      //alert(res.insertId);
+      if(res['affectedRows']){
+        this.refresh();
+        this.stockForm.reset();
+        Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+      }
+    });
+
+   }
+
+   refresh():void{
+    this.commonservice.getFunction5('commonService/getFunction5').subscribe((res:any)=>{
+       if(res.length){
+         this.user_data=res;
+         this.dataSource=new MatTableDataSource(this.user_data);
+         this.dataSource.paginator=this.paginator;
+       }
+    })
+  }
+  public deptdata: any = [];
+
+  // onEdit(dept_id:any, user_id:any, cpu_sno:any,event:any) {
+    onEdit(id:any) {
+    // let body={
+    //   dept_id: dept_id,
+    //   user_id:user_id,
+    //   cpu_sno:cpu_sno
+    // }
+    console.log("Which ID is this :" ,id);
+    console.log("Which ID is this :" ,this.dataSource.affectedRows);
+    //console.log("Stock Update insert ID is :" ,this.stockForm.value.insertId);
+    console.log("Inside stock update form", );
+    this.commonservice.updateDummy(id).subscribe((res: any)=>{
+      console.log("result of response is res",res);
+      for(let i=0;i<res.length;i++){
+        if(res[i].id==id){
+          console.log("res i is ",res[i]);
+          this.deptdata=res[i];
+        }
+      }
+      console.log("result of id dept data is",this.deptdata);
+      this.stockForm.patchValue({
+      dept_id: this.deptdata.dept_id,
+      user_id:this.deptdata.user_id,
+      cpu_sno:this.deptdata.cpu_sno
+      })
+      console.log("Which ID is this :" ,id);
+      console.log("Stock Update insert ID is :" ,this.stockForm.value.insertId);
+      console.log("Indide stock update form", this.stockForm.value);
+    });
+  }
+
+}
