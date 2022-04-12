@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^11.0.0-beta.2",
     "bootstrap": "^5.1.3",
     "mat-file-upload": "^11.1.2",
+    "ng2-pdf-viewer": "^9.0.0",
     "propellerkit-datetimepicker": "^1.2.0",
     "rxjs": "~6.6.0",
     "swal": "^0.1.0",

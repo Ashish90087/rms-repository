@@ -47,7 +47,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
 import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
@@ -103,6 +103,7 @@ import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
     MatListModule,
     MatIconModule,
     MatDividerModule,
+    PdfViewerModule,
 
     JwtModule.forRoot({
       config: {

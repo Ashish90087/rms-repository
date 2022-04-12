@@ -17,7 +17,7 @@ export class ReceiveFormComponent implements OnInit {
   folder_location:any;
 
   temp_file :any;
-
+  localUrl: any[] | undefined;
   receiveForm : FormGroup;
   public department: any =[];
   public brands:any=[];
@@ -30,6 +30,8 @@ export class ReceiveFormComponent implements OnInit {
   public id1 : any=0;
   public hardwares:any=[];
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
+  file: any;
+  file_name: any = 'NA';
 
   constructor(private fb:FormBuilder ,private commonservice: CommonService,private http: HttpClient ,private datePipe: DatePipe) {
 
@@ -100,6 +102,9 @@ export class ReceiveFormComponent implements OnInit {
                 if(res['affectedRows']){
                   this.refresh();
                   this.receiveForm.reset();
+                  this.file = '';
+                  this.localUrl = undefined;
+                  this.file_name = 'NA';
                   Swal.fire({icon:'success',text:'saved successfully',timer:2000});
                 }
               })
@@ -137,15 +142,24 @@ export class ReceiveFormComponent implements OnInit {
       const file = event.target.files[0];
       this.wo = file;
       this.folder_location = './uploads/' + 'iform' + '/';
+      this.file = event.target.files[0].name;
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    
 
     }
     const formData = new FormData();
     formData.append('file', this.wo);
     formData.append('folder_name', this.folder_location);
+    formData.append('prev_file_name', this.file_name);
 
     this.http.post<any>('http://localhost:3000/upload/file', formData).subscribe(res => {
       console.log(res);
       this.temp_file = res;
+      this.file_name = res.file_name;
       console.log(this.temp_file.path);
 
       this.receiveForm.patchValue({
@@ -158,6 +172,15 @@ export class ReceiveFormComponent implements OnInit {
     });
 
 
+  }
+  zoompdf=0;
+  zomminc(){
+    this.zoompdf+=1;
+  }
+  zommdec(){
+    if(this.zoompdf>1){
+      this.zoompdf-=1;
+    }
   }
   woPDF(ilocation:any){
     console.log("I am WO PDF");

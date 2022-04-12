@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../dbconnection');
 const users = require('../models/users');
-//const returnedusers = require('../models/returnedusers');
+const returnedusers = require('../models/returnedusers');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

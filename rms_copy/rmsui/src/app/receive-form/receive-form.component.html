@@ -109,8 +109,27 @@
 
       </div>
       <div class="col-md-4">
-        <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
+
+        <!-- <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" /> -->
+        <input type="file" name="image" class="file-input" (change)="selectWorkOrder($event)" #fileUpload>
+        <div class="file-upload">
+          {{file || "No file uploaded yet."}}
+            <button mat-mini-fab color="primary" class="upload-btn" type="button"
+              (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+        </div>
+        <!-- end file upload by geshwar -->
       </div>
+      <!-- file updload by geshwar -->
+      <div class="col-md-12">
+        <mat-card *ngIf="localUrl" style="display: block; height:300px;">
+          <a (click)="zomminc();"> <mat-icon>zoom_in</mat-icon> </a>
+          <a (click)="zommdec();"> <mat-icon>zoom_out</mat-icon> </a>
+          <pdf-viewer [src]="localUrl" [render-text]="true" style="display: block; height:100px;" [original-size]="false" [stick-to-page]="true" [zoom]="zoompdf"></pdf-viewer>
+        </mat-card>
+      </div>
+      
       <!-- <div class="col-md-3">Upload I form
         <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
       </div> -->

@@ -30,19 +30,43 @@ router.post('/file', upload.single('file'), (req, res, next) => {
       return next(error)
     }
     else {
-      fs.mkdir(req.body.folder_name, { recursive: true }, function(err) {
-          if (err) {
-              console.log(err)
-          } else {
-              fs.rename('./uploads/' + file.filename, req.body.folder_name + file.filename, function(err) {
-                  console.log(err);
-              });
-          }
-      })
+    //   fs.mkdir(req.body.folder_name, { recursive: true }, function(err) {
+    //       if (err) {
+    //           console.log(err)
+    //       } else {
+    //           fs.rename('./uploads/' + file.filename, req.body.folder_name + file.filename, function(err) {
+    //               console.log(err);
+    //           });
+    //       }
+    //   })
+    fs.exists(req.body.folder_name + req.body.prev_file_name, function(exists) {
+        if(exists) {
+            fs.unlink(req.body.folder_name + req.body.prev_file_name, function (err) {
+                if (err) throw err;
+                // if no error, file has been deleted successfully
+                console.log('File deleted!');
+                fs.rename('./uploads/' + file.filename, req.body.folder_name + file.filename, function(err) {
+                    console.log(err);
+                });
+            });
+        } else {
+            console.log(exists);
+            fs.mkdir(req.body.folder_name, { recursive: true }, function(err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    fs.rename('./uploads/' + file.filename, req.body.folder_name + file.filename, function(err) {
+                        console.log(err);
+                    });
+                }
+            })
+        }
+    })
 
 
       message = "Successfully! uploaded";
-      res.json({ message: message, status: 'success', filepath: req.body.folder_name.replace('./uploads/', '') + file.filename });
+    //   res.json({ message: message, status: 'success', filepath: req.body.folder_name.replace('./uploads/', '') + file.filename });
+    res.json({ message: message, status: 'success', filepath: req.body.folder_name.replace('./uploads/', '') + file.filename, 'file_name': file.filename});
   }
 
     

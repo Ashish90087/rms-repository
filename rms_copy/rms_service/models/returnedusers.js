@@ -1,11 +1,8 @@
 var db = require('../dbconnection');
-
-
-var users = 
-{
+var returnedusers = {
   
 
-    issueAndUpdateStock:function(data, callback) 
+    ReturnAndUpdateStock:function(data, callback) 
   {     
       console.log("Rohit");
     
@@ -19,61 +16,51 @@ var users =
           throw err;
         }
         var query = "insert into ?? set ?";       
-        connection.query(query, ['issued_details', data], function (error, result, fields) {
+        connection.query(query, ['returned_stock_details', data], function (error, result, fields) {
             if (err) {
                 return connection.rollback(function () {
                   callback(err);
                   throw err;
                 });
               }
-          connection.query(`update stock_receive_mas set status_id=? where stock_id = '${data.stock_id}'`, [2], function (err, results) {
+          connection.query(`update stock_receive_mas set status_id=? where stock_id = '${data.stock_id}'`, [5], function (err, results) {
             if (err) {
               return connection.rollback(function () {
                 callback(err);
                 throw err;
+                
               });
             }
+            console.log(data);
             var CURRENT_TIMESTAMP = { toSqlString: function() { return 'CURRENT_TIMESTAMP()'; } };
                  
-            connection.query( "insert into stock_transaction_details set ? ",{stock_id:data.stock_id,transaction_date:CURRENT_TIMESTAMP,status:'2'}, function (error, result, fields) {
-              if (err) {
-                  return connection.rollback(function () {
-                    callback(err);
-                    throw err;
-                    console.log(result.stock_id);
-                  });
-                }
+          connection.query( "insert into stock_transaction_details set ? ",{stock_id:data.stock_id,transaction_date:CURRENT_TIMESTAMP,status:'5'}, function (error, result, fields) {
+            if (err) {
+                return connection.rollback(function () {
+                  callback(err);
+                  throw err;
+                  console.log(result.stock_id);
+                });
+              }
+              console.log(data.stock_id);
             connection.commit(function (err) {
               if (err) {
                 connection.rollback(function () {
                   callback(err);
                 });
               }
-              return callback(result);
+              return callback(result)
             });
-           });
+          });
           });
         });
       });
     });
   },
-
+  
   //////////////////////////////////////////////// 
-
-}//last bracket
-
-
-
-
-module.exports = users;
-// module.exports = returnedusers;
-
-
-
-
-
-
-
-
-
-
+  
+  }
+  
+  
+  module.exports = returnedusers;
