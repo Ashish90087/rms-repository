@@ -42,7 +42,16 @@ saveMap(functionName: any, data: any) {
 }
 
 getFunction(functionName: any) {
+  console.log(functionName);
   return this.http.get(environment.rootUrl + functionName).pipe(tap(res => res), catchError(e => {
+
+      throw new Error(e);
+  }));
+}
+
+getFun(functionName: any,data:any) {
+  console.log(data,"yahi wala");
+  return this.http.get(environment.rootUrl + functionName,data).pipe(tap(res => res), catchError(e => {
 
       throw new Error(e);
   }));

@@ -120,13 +120,16 @@ export class WeeklyWorkDoneComponent implements OnInit {
       });
     }
 
-    getApplication() {
-      this.cms.getFunction('app_info').subscribe((res:any) => {
-        this.app_data= res;
-       // console.log(this.department);
 
-      });
-    }
+    getApplication() {
+
+        this.cms.getFunction('task' +"/"+this.taskForm.value.user_id).subscribe((res:any) => {
+          this.app_data= res;
+       //   console.log(this.hospital);
+         // this.disabledropdown = false;
+        });
+      }
+
 
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -139,7 +142,6 @@ export class WeeklyWorkDoneComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDeptDetails();
-    this.getApplication();
     let user = this.authservice.currentUser;
     this.taskForm.patchValue({
       user_id : user.userid
@@ -149,6 +151,7 @@ export class WeeklyWorkDoneComponent implements OnInit {
     this.role=user.role
     console.log(user.user_name);
     console.log(this.taskForm.value.user_id);
+    this.getApplication();
   }
 
   public temp: any = []

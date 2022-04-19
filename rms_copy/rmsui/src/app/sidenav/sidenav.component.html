@@ -1,8 +1,4 @@
 <mat-nav-list>
-  <!-- <div class="logo py-4">
-    //<img src="./assets/logo.svg" alt="Company Logo" />
-  </div> -->
-
 
 
   <div  *ngIf="role == '1'">
@@ -52,7 +48,8 @@
     <mat-icon>add_box</mat-icon>Weekly Work Update
   </a>
   </div>
-  <div  *ngIf="role == '2'">
+
+  <div *ngIf="role == '2'">
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/employee">
       <mat-icon>home</mat-icon> Home
     </a>

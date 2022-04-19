@@ -313,6 +313,18 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/task/:user_id', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('select mau.app_id,ma.app_name from map_app_user mau join mas_app ma on ma.app_id=mau.app_id WHERE mau.user_id=?', [req.params.user_id] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
 
   router.post('/dept', function (req, res) {
   

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
 import { FormsComponent } from './forms/forms.component';
 import { TestComponent } from './test/test.component';
 import { UserComponent } from './user/user.component';
@@ -27,17 +28,18 @@ const routes: Routes = [
 { path: 'dashboard', component: DashboardComponent ,
  children: [
 
-  { path: 'user', component: UserComponent },
-  { path: 'department', component: DepartmentComponent },
-  { path: 'application', component: ApplicationComponent },
-  { path : 'database' , component: DatabaseComponent},
-  { path : 'map-app-user' , component: MapAppUserComponent},
-  { path : 'receive' , component: ReceiveFormComponent},
-  { path : 'server' , component: ServerComponent},
-  { path : 'emp' , component: EmployeeComponent},
-  { path : 'mapwo' , component: MapUserWorkorderComponent},
-  { path : 'issue' , component: IssueFormComponent},
-  { path : 'task' , component: WeeklyWorkDoneComponent},
+  { path: 'user', component: UserComponent , canActivate: [AuthGuard]},
+  { path: 'department', component: DepartmentComponent ,canActivate: [AuthGuard] },
+  { path: 'application', component: ApplicationComponent,canActivate: [AuthGuard] },
+  { path : 'database' , component: DatabaseComponent ,canActivate: [AuthGuard]},
+  { path : 'map-app-user' , component: MapAppUserComponent ,canActivate: [AuthGuard]},
+  { path : 'receive' , component: ReceiveFormComponent ,canActivate: [AuthGuard]},
+  { path : 'server' , component: ServerComponent,canActivate: [AuthGuard]},
+  { path : 'emp' , component: EmployeeComponent,canActivate: [AuthGuard]},
+  { path : 'mapwo' , component: MapUserWorkorderComponent ,canActivate: [AuthGuard]},
+  { path : 'issue' , component: IssueFormComponent ,canActivate: [AuthGuard]},
+  { path : 'return' , component: ReturnStockComponent ,canActivate: [AuthGuard]},
+  { path : 'task' , component: WeeklyWorkDoneComponent ,canActivate: [AuthGuard]},
   { path : 'admin' , component: WelcomeAdminComponent},
   { path : 'employee' , component: WelcomeUserComponent},
   { path : 'return' , component: ReturnStockComponent},
@@ -53,6 +55,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }
