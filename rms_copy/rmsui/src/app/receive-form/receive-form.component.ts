@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { CommonService } from '../services/common.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-receive-form',
   templateUrl: './receive-form.component.html',
@@ -155,8 +155,8 @@ export class ReceiveFormComponent implements OnInit {
     formData.append('file', this.wo);
     formData.append('folder_name', this.folder_location);
     formData.append('prev_file_name', this.file_name);
-
-    this.http.post<any>('http://localhost:3000/upload/file', formData).subscribe(res => {
+    //  'http://localhost:3000/upload/file'
+    this.http.post<any>('environment.rooturl+upload+/file', formData).subscribe(res => {
       console.log(res);
       this.temp_file = res;
       this.file_name = res.file_name;
