@@ -156,7 +156,8 @@ export class ReceiveFormComponent implements OnInit {
     formData.append('folder_name', this.folder_location);
     formData.append('prev_file_name', this.file_name);
     //  'http://localhost:3000/upload/file'
-    this.http.post<any>('environment.rooturl+upload+/file', formData).subscribe(res => {
+    //'environment.rooturl+upload+/file'
+    this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
       console.log(res);
       this.temp_file = res;
       this.file_name = res.file_name;
