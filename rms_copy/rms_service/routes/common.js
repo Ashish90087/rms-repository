@@ -325,6 +325,39 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/appcount', function(req, res, next) {
+    return db.query('select count(*) as x from mas_app ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/empcount', function(req, res, next) {
+    return db.query('select count(*) as x from mas_user ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/servercount', function(req, res, next) {
+    return db.query('select count(*) as x from mas_server ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
 
   router.post('/dept', function (req, res) {
   

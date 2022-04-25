@@ -42,7 +42,7 @@ saveMap(functionName: any, data: any) {
 }
 
 getFunction(functionName: any) {
-  console.log(functionName);
+  //console.log(functionName);
   return this.http.get(environment.rootUrl + functionName).pipe(tap(res => res), catchError(e => {
 
       throw new Error(e);

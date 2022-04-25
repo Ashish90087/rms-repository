@@ -128,13 +128,15 @@ selectWorkOrder(event:any) {
     const file = event.target.files[0];
     this.wo = file;
     this.folder_location = './uploads/' + 'work_order' + '/';
+    console.log('environment.rootUrl+upload+/file');
+
 
   }
   const formData = new FormData();
   formData.append('file', this.wo);
   formData.append('folder_name', this.folder_location);
 
-  this.http.post<any>('environment.rooturl+upload+/file', formData).subscribe(res => {
+  this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
     console.log(res);
     this.temp_file = res;
     console.log(this.temp_file.path);
@@ -163,7 +165,7 @@ selectPI(event:any) {
   formData.append('file', this.pi);
   formData.append('folder_name', this.folder_location);
 
-  this.http.post<any>('environment.rooturl+upload+/file', formData).subscribe(res => {
+  this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
     console.log(res);
     this.temp_file = res;
     console.log(this.temp_file.path);
@@ -188,7 +190,7 @@ selectPEF(event:any) {
   formData.append('file', this.pef);
   formData.append('folder_name', this.folder_location);
 
-  this.http.post<any>('environment.rooturl+upload+/file', formData).subscribe(res => {
+  this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
     console.log(res);
     this.temp_file = res;
     console.log(this.temp_file.path);
