@@ -107,7 +107,7 @@ router.get('/hardwares', function(req, res, next) {
 });
 router.get('/stock', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('SELECT  s.stock_id,m.dept_name,s.dept,s.received_date,u.name,s.cpu_sno, s.monitor_sno,s.keyboard_sno,s.mouse_sno,b.brand_name,b.brand_id,s.issued_to , s.issued_date, s.marked_no,s.remark,s.i_form_no,s.g_form_no  FROM  stock_db s INNER JOIN mas_dept m ON s.dept=m.dept_code INNER JOIN user_mas u ON s.issued_to=u.user_id INNER JOIN brand_mas b ON s.brand_id=b.brand_id' ,function(err,rows1){
+  return db.query('SELECT * from stock_receive_mas' ,function(err,rows1){
     if(err){
       return res.json(err);
     }

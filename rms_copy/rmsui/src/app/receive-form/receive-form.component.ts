@@ -25,7 +25,7 @@ export class ReceiveFormComponent implements OnInit {
   public stockData:any=[];
   public status:any=[];
   dataSource:any=[];
-  displayedColumns:string[] =['dept_id','hardware_id','received_date','cpu_sno','monitor_sno','keyboard_sno','mouse_sno','make_model_id','i_form_no','woPDF','status_id','remarks' ];
+  displayedColumns:string[] =['dept_id','hardware_id','received_date','cpu_sno','monitor_sno','keyboard_sno','mouse_sno','make_model_id','i_form_no','woPDF','status_id','remarks','action' ];
   user_data: any=[];
   public id1 : any=0;
   public hardwares:any=[];
@@ -192,7 +192,7 @@ export class ReceiveFormComponent implements OnInit {
 
   }
   public deptdata: any = [];
-   onEdit(stock_id: any,event:any) {
+   onEdit(stock_id: any) {
      this.id1=stock_id;
     console.log("Which ID is this :",stock_id);
     console.log("Inside stock update form", );
@@ -208,13 +208,20 @@ export class ReceiveFormComponent implements OnInit {
       this.receiveForm.patchValue({
 
       stock_id:this.deptdata.stock_id,
-      dept: this.deptdata.dept,
+      dept_id: this.deptdata.dept_id,
+      hardware_id:this.deptdata.hardware_id,
       received_date:this.deptdata.received_date,
       cpu_sno:this.deptdata.cpu_sno,
       monitor_sno:this.deptdata.monitor_sno,
       keyboard_sno:this.deptdata.keyboard_sno,
       mouse_sno:this.deptdata.mouse_sno,
-      brand_id:this.deptdata.brand_id
+      brand_id:this.deptdata.brand_id,
+      make_model_id:this.deptdata.make_model_id,
+      remarks:this.deptdata.remarks,
+      status_id:this.deptdata.status_id,
+      i_form_no:this.deptdata.i_form_no,
+      ilocation:this.deptdata.ilocation
+
       })
       console.log("Which ID is this :" ,stock_id);
       console.log("Stock Update insert ID is :" ,this.receiveForm.value.insertId);
