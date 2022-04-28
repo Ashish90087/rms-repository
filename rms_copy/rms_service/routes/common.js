@@ -358,6 +358,28 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/project', function(req, res, next) {
+    return db.query('select mad.* , ma.app_name from mas_app_desc mad join mas_app ma on mad.app_id=ma.app_id ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/weekly/:user_id', function(req, res, next) {
+    return db.query('select mw.work_done,mw.app_id, ma.app_name, concat(mw.start, " - " ,mw.end) week from mas_weekly_task mw join mas_app ma on mw.app_id=ma.app_id WHERE mw.user_id=?', [req.params.user_id] ,function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
 
   router.post('/dept', function (req, res) {
   
@@ -471,6 +493,18 @@ router.post('/task', function (req, res) {
   });
 });
 
+router.post('/project', function (req, res) {
+  
+  return db.query('insert into mas_app_desc (app_id,start_date,app_details) values (?,?,?)',[req.body.app_id,req.body.start_date,req.body.app_details], function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
+
 
 router.put('/user', function (req, res) {
   return db.query('update mas_user mu set mu.name = ? ,mu.dept_code = ?, mu.mobile_no = ? , mu.address = ?, mu.machine_ip = ?, mu.emp_type_id = ? , mu.joining_date = ?, mu.email_id = ? where mu.user_id=?', [req.body.name,req.body.dept_code,req.body.mobile_no,req.body.address,req.body.machine_ip,req.body.emp_type_id,req.body.joining_date,req.body.email_id,req.body.user_id], function (err, rows1) {
@@ -503,6 +537,13 @@ router.put('/db', function (req, res) {
 
 router.put('/apps', function (req, res) {
   return db.query('update mas_app ma set ma.app_name = ?, ma.plateform_id = ?, ma.platform_version = ?, ma.server_id = ?, ma.dept_code = ?, ma.public_ip = ?, ma.url = ?, ma.ssl_expiry = ? where ma.app_id = ?', [req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url,req.body.ssl_expiry,req.body.app_id], function (err, rows1) {
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+});
+
+router.put('/project', function (req, res) {
+  return db.query('update mas_app_desc md set md.app_details= ? ,md.start_date = ? where md.app_id=?', [req.body.app_details,req.body.start_date,req.body.app_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });

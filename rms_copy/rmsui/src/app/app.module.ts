@@ -47,7 +47,9 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
 import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
+import { AppDescriptionComponent } from './app-description/app-description.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
@@ -78,7 +80,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     LoginComponent,
     DashboardComponent,
     WelcomeAdminComponent,
-    WelcomeUserComponent
+    WelcomeUserComponent,
+    AppDescriptionComponent
   ],
   imports: [
     NgbDatepickerModule,

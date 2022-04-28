@@ -16,9 +16,11 @@ mat-toolbar {
   }
   .user {
     font-size: 14px;
+    color: #f2f5f7;
   }
   mat-toolbar {
-    background: #f7f7f7;
+    //background: #f7f7f7;
+    background: #2c3344 !important;
   }
   .user-image {
     border-radius: 50%;
