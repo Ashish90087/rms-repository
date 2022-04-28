@@ -47,6 +47,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
 import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
+import { AppDescriptionComponent } from './app-description/app-description.component';
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -78,7 +79,8 @@ import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
     LoginComponent,
     DashboardComponent,
     WelcomeAdminComponent,
-    WelcomeUserComponent
+    WelcomeUserComponent,
+    AppDescriptionComponent
   ],
   imports: [
     NgbDatepickerModule,

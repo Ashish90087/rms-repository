@@ -20,6 +20,7 @@ import { WeeklyWorkDoneComponent } from './weekly-work-done/weekly-work-done.com
 import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
 import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
 import { ReturnStockComponent } from './return-stock/return-stock.component';
+import { AppDescriptionComponent } from './app-description/app-description.component';
 
 const routes: Routes = [
 
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent , canActivate: [AuthGuard]},
   { path: 'department', component: DepartmentComponent ,canActivate: [AuthGuard] },
   { path: 'application', component: ApplicationComponent,canActivate: [AuthGuard] },
+  { path: 'project', component: AppDescriptionComponent,canActivate: [AuthGuard] },
   { path : 'database' , component: DatabaseComponent ,canActivate: [AuthGuard]},
   { path : 'map-app-user' , component: MapAppUserComponent ,canActivate: [AuthGuard]},
   { path : 'receive' , component: ReceiveFormComponent ,canActivate: [AuthGuard]},

@@ -27,9 +27,9 @@ export class WeeklyWorkDoneComponent implements OnInit {
   })
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  displayedColumns: string[] = ['sn', 'dept_name', 'remarks','action'];
+  displayedColumns: string[] = ['sn', 'week','app_name', 'work_done','action'];
   constructor(private fB : FormBuilder,private cms : CommonService,private authservice: AuthService) { }
-  public department: any = [];
+  public task_data: any = [];
   dataSource: any = [];
   public app_data: any = [];
   x:any=[];
@@ -110,12 +110,13 @@ export class WeeklyWorkDoneComponent implements OnInit {
  }
 }
 
-  getDeptDetails() {
-        this.cms.getFunction('users').subscribe((res: any) => {
+  getWorkDetails() {
+        this.cms.getFunction('weekly'+"/"+this.taskForm.value.user_id).subscribe((res: any) => {
+          console.log(res);
 
         if (res.length) {
-          this.department = res;
-          this.dataSource = new MatTableDataSource(this.department);
+          this.task_data = res;
+          this.dataSource = new MatTableDataSource(this.task_data);
           this.dataSource.paginator = this.paginator;
         }
       });
@@ -142,7 +143,7 @@ export class WeeklyWorkDoneComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.getDeptDetails();
+    this.getWorkDetails();
     let user = this.authservice.currentUser;
     this.taskForm.patchValue({
       user_id : user.userid
