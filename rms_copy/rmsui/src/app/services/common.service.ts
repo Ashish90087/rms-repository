@@ -201,7 +201,7 @@ save_users(data: any){
         }));
 
       }
-  // updateStock(data : any){
+  // updateStocks(data : any){
   //   return this.http.put('http://localhost:3000/users/stock',data).pipe(tap(res=>{res}),
   //   catchError(e=>{
   //     throw new Error(e);
@@ -261,6 +261,13 @@ save_users(data: any){
         throw new Error(e);
       }));
 
+    }
+   
+    updateIssueStock(data : any){
+      return this.http.get('http://localhost:3000/users/issuestocks',data).pipe(tap(res=>{res}),
+      catchError(e=>{
+        throw new Error(e);
+      }));
     }
 
 }

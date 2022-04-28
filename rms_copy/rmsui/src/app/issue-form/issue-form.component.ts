@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,10 +22,11 @@ export class IssueFormComponent implements OnInit {
 
   temp_file :any;
   dataSource:any=[];
-  displayedColumns:string[] =['issued_to','stock_id','issued_date','marked_no','remark','status_id' ];
+  displayedColumns:string[] =['issued_to','stock_id','issued_date','marked_no','remark','status_id','action' ];
   user_data: any=[];
   public hardwares:any=[];
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
+  @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   constructor(private fb:FormBuilder,private http: HttpClient ,private commonservice: CommonService,private datePipe: DatePipe) {
 
     this.issueForm = this.fb.group({
@@ -112,6 +113,7 @@ public stat:any=[];
     });
       console.log("inside submit",this.issueForm.value);
       this.stat=this.issueForm.value;
+      if(this.id1==0){
       console.log("status field is ",this.stat.status_id);
 
       this.commonservice.saveDetails('users/issueAndUpdateStock',this.issueForm.value).subscribe((res:any)=>
@@ -123,6 +125,18 @@ public stat:any=[];
                   Swal.fire({icon:'success',text:'saved successfully',timer:2000});
                 }
         });
+      }
+      else{
+        this.commonservice.updateFunction('users/issues',this.issueForm.value).subscribe((res:any)=>{
+          console.log("I entered inside save");
+          if(res['affectedRows']){
+            this.refresh();
+            this.issueForm.reset();
+            Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+          }
+        });
+
+      }
         // this.commonservice.updateStatusInStockReceive('users/updateStatus',this.stat).subscribe((res:any)=>
         // {
         //       if(res['affectedRows'])
@@ -154,6 +168,41 @@ public stat:any=[];
          this.dataSource.paginator=this.paginator;
        }
     })
+  }
+  public id1 : any=0;
+  public deptdata: any = [];
+   onEdit(issued_to: any) {
+    this.scroll.nativeElement.scrollIntoView();
+     this.id1=issued_to;
+    console.log("Which ID is this :",issued_to);
+    console.log("Inside stock update form", );
+    this.commonservice.updateIssueStock(issued_to).subscribe((res: any)=>{
+      console.log("result of response is res",res);
+      for(let i=0;i<res.length;i++){
+        if(res[i].stock_id==issued_to){
+          console.log("res i is ",res[i]);
+          this.deptdata=res[i];
+        }
+      }
+      console.log("result of stock_id dept data is",this.deptdata);
+      this.issueForm.patchValue({
+
+      issued_to:this.deptdata.issued_to,
+      stock_id: this.deptdata.stock_id,
+      issued_date:this.deptdata.issued_date,
+      marked_no:this.deptdata.marked_no,
+      remark:this.deptdata.remark,
+      status_id:this.deptdata.status_id,
+
+      })
+      console.log("Which ID is this :" ,issued_to);
+      console.log("Stock Update insert ID is :" ,this.issueForm.value.insertId);
+      console.log("Indide stock update form", this.issueForm.value);
+    });
+
+  }
+  scrollToTop(){
+    document.body.scrollTop=document.documentElement.scrollTop=0;
   }
 }
 

@@ -107,7 +107,7 @@ router.get('/hardwares', function(req, res, next) {
 });
 router.get('/stock', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('SELECT * from stock_receive_mas' ,function(err,rows1){
+  return db.query('SELECT s.*,DATE_FORMAT(s.received_date,"%Y-%m-%d") as r_date from stock_receive_mas s' ,function(err,rows1){
     if(err){
       return res.json(err);
     }
@@ -138,11 +138,24 @@ router.put('/dummy/update', function (req, res) {
     return res.json(rows1);
   });
 });
-router.put('/stocks/update', function (req, res) {
+// router.put('/stocks/update', function (req, res) {
+//   console.log("Rohit ");
+
+//   // return db.query('update dummy set dept_id=?, user_id=?, cpu_sno=? ',[req.params.dept_id,req.params.user_id,req.params.cpu_sno], function (err, rows1) {
+//     return db.query('Update stock_db set dept=?, received_date=?,cpu_sno=?, monitor_sno=?,keyboard_sno=?,mouse_sno=?,brand_id=?,issued_to=?,issued_date=?,marked_no=?,remark=?,i_form_no=?,g_form_no=? where stock_id=?',[req.body.dept,req.body.received_date,req.body.cpu_sno,req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.brand_id,req.body.issued_to,req.body.issued_date,req.body.marked_no,req.body.remark,req.body.i_form_no,req.body.g_form_no,req.body.stock_id], function (err, rows1) { 
+//   if (err) {
+//       console.error('error connecting: ' + err);
+//       return res.json(err);
+//     }
+//     //req.session.destroy(); 
+//     return res.json(rows1);
+//   });
+// });
+router.put('/stocks', function (req, res) {
   console.log("Rohit ");
 
   // return db.query('update dummy set dept_id=?, user_id=?, cpu_sno=? ',[req.params.dept_id,req.params.user_id,req.params.cpu_sno], function (err, rows1) {
-    return db.query('Update stock_db set dept=?, received_date=?,cpu_sno=?, monitor_sno=?,keyboard_sno=?,mouse_sno=?,brand_id=?,issued_to=?,issued_date=?,marked_no=?,remark=?,i_form_no=?,g_form_no=? where stock_id=?',[req.body.dept,req.body.received_date,req.body.cpu_sno,req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.brand_id,req.body.issued_to,req.body.issued_date,req.body.marked_no,req.body.remark,req.body.i_form_no,req.body.g_form_no,req.body.stock_id], function (err, rows1) { 
+    return db.query('Update stock_receive_mas set dept_id=?,hardware_id=?, received_date=?,cpu_sno=?, monitor_sno=?,keyboard_sno=?,mouse_sno=?,make_model_id=?,status_id=?,i_form_no=?,ilocation=?,remarks=? where stock_id=?',[req.body.dept_id,req.body.hardware_id,req.body.received_date,req.body.cpu_sno,req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.make_model_id,req.body.status_id,req.body.i_form_no,req.body.ilocation,req.body.remarks,req.body.stock_id], function (err, rows1) { 
   if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -323,6 +336,17 @@ router.get('/returnstocks', function(req, res, next) {
 router.put('/updateStatus', function (req, res) {
   
   return db.query('Update stock_receive_mas set status_id=? where stock_id=?',[req.body.status_id,req.body.stock_id] , function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
+router.put('/issues', function (req, res) {
+  
+  return db.query('Update issued_details set issued_date=?,marked_no=?,remark=?,stock_id=?,status_id=? where issued_to=?',[req.body.issued_date,req.body.marked_no,req.body.remark,req.body.stock_id,req.body.issued_to] , function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);

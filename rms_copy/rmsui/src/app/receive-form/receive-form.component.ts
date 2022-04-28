@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -30,6 +30,7 @@ export class ReceiveFormComponent implements OnInit {
   public id1 : any=0;
   public hardwares:any=[];
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
+  @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   file: any;
   file_name: any = 'NA';
 
@@ -193,6 +194,7 @@ export class ReceiveFormComponent implements OnInit {
   }
   public deptdata: any = [];
    onEdit(stock_id: any) {
+    this.scroll.nativeElement.scrollIntoView();
      this.id1=stock_id;
     console.log("Which ID is this :",stock_id);
     console.log("Inside stock update form", );
@@ -210,7 +212,7 @@ export class ReceiveFormComponent implements OnInit {
       stock_id:this.deptdata.stock_id,
       dept_id: this.deptdata.dept_id,
       hardware_id:this.deptdata.hardware_id,
-      received_date:this.deptdata.received_date,
+      received_date:this.deptdata.r_date,
       cpu_sno:this.deptdata.cpu_sno,
       monitor_sno:this.deptdata.monitor_sno,
       keyboard_sno:this.deptdata.keyboard_sno,
