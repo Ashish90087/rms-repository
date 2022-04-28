@@ -4,6 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { CommonService } from '../services/common.service';
 
@@ -64,7 +65,7 @@ export class IssueFormComponent implements OnInit {
   getStocks(){
     this.commonservice.getFunction('users/getStocks').subscribe((res:any)=>{
       this.stocks=res;
-      console.log(this.stocks);
+      console.log("stocks are",this.stocks);
     })
   }
   print(){
@@ -81,7 +82,7 @@ export class IssueFormComponent implements OnInit {
     formData.append('file', this.wo);
     formData.append('folder_name', this.folder_location);
 
-    this.http.post<any>('http://localhost:3000/upload/file', formData).subscribe(res => {
+    this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
       console.log(res);
       this.temp_file = res;
       console.log(this.temp_file.path);
@@ -174,12 +175,13 @@ public stat:any=[];
    onEdit(issued_to: any) {
     this.scroll.nativeElement.scrollIntoView();
      this.id1=issued_to;
-    console.log("Which ID is this :",issued_to);
-    console.log("Inside stock update form", );
+    console.log("Which user is this :",issued_to);
+    console.log("Which ID is this :",this.id1);
+    console.log("Inside Issue update form", );
     this.commonservice.updateIssueStock(issued_to).subscribe((res: any)=>{
       console.log("result of response is res",res);
       for(let i=0;i<res.length;i++){
-        if(res[i].stock_id==issued_to){
+        if(res[i].issued_to==issued_to){
           console.log("res i is ",res[i]);
           this.deptdata=res[i];
         }
@@ -189,7 +191,7 @@ public stat:any=[];
 
       issued_to:this.deptdata.issued_to,
       stock_id: this.deptdata.stock_id,
-      issued_date:this.deptdata.issued_date,
+      issued_date:this.deptdata.i_date,
       marked_no:this.deptdata.marked_no,
       remark:this.deptdata.remark,
       status_id:this.deptdata.status_id,
@@ -197,7 +199,7 @@ public stat:any=[];
       })
       console.log("Which ID is this :" ,issued_to);
       console.log("Stock Update insert ID is :" ,this.issueForm.value.insertId);
-      console.log("Indide stock update form", this.issueForm.value);
+      console.log("Indide Issue update form", this.issueForm.value);
     });
 
   }

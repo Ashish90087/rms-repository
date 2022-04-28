@@ -22,7 +22,7 @@ export class ReturnStockComponent implements OnInit {
   public hardware:any=[];
   public status:any=[];
   dataSource:any=[];
-  displayedColumns:string[] =['stock_id','was_issued_to','returned_date','serial_no','dept_id','status_id','g_form_no','woPDF','remarks' ];
+  displayedColumns:string[] =['stock_id','was_issued_to','returned_date','serial_no','dept_id','status_id','g_form_no','woPDF','remarks','action' ];
   public user_data: any=[];
   public id1 : any=0;
   public hardwares:any=[];
@@ -76,50 +76,7 @@ export class ReturnStockComponent implements OnInit {
                   Swal.fire({icon:'success',text:'saved successfully',timer:2000});
                 }
               })
-
-
    }
-   //refresh():void{
-    // this.cms.getFunction4('cms/getFunction4').subscribe((res:any)=>{
-    //    if(res.length){
-    //      this.user_data=res;
-    //      this.dataSource=new MatTableDataSource(this.user_data);
-    //      this.dataSource.paginator=this.paginator;
-    //    }
-    // })
-  //   this.cms.getFunction4('cms/getFunction4').subscribe((res:any)=>{
-  //     if(res.length){
-  //       this.user_data=res;
-  //       this.dataSource=new MatTableDataSource(this.user_data);
-  //       this.dataSource.paginator=this.paginator;
-  //     }
-  //  })
-  // }
-  // getDepartment(){
-  //   this.cms.getFunction1('cms/getFunction1').subscribe((res:any)=>{
-  //     this.department=res;
-  //     console.log(this.department);
-  //   })
-  // }
-  // getHardware(){
-  //   this.cms.getHardwares('cms/getHardwares').subscribe((res:any)=>{
-  //     this.hardwares=res;
-  //     console.log(this.hardwares);
-  //   })
-  // }
-  // getBrand(){
-  //   this.cms.getFunction3('cms/getFunction3').subscribe((res:any)=>{
-  //     this.brands=res;
-  //     console.log(this.brands);
-  //   })
-  // }
-  // getUsers(){
-  //   this.cms.getFunction2('cms/getFunction2').subscribe((res:any)=>{
-  //     this.users=res;
-  //     console.log(this.users);
-  //   })
-
- // }
   getStatus(){
     this.cms.getFunction7('cms/getFunction7').subscribe((res:any)=>{
       this.status=res;
@@ -220,13 +177,12 @@ export class ReturnStockComponent implements OnInit {
       this.returnForm.patchValue({
 
       stock_id:this.deptdata.stock_id,
-      dept: this.deptdata.dept,
-      received_date:this.deptdata.received_date,
-      cpu_sno:this.deptdata.cpu_sno,
-      monitor_sno:this.deptdata.monitor_sno,
-      keyboard_sno:this.deptdata.keyboard_sno,
-      mouse_sno:this.deptdata.mouse_sno,
-      brand_id:this.deptdata.brand_id
+      serial_no: this.deptdata.serial_no,
+      dept_id:this.deptdata.dept_id,
+      remark:this.deptdata.remark,
+      status_id:this.deptdata.re,
+      returned_date:this.deptdata.returned_date,
+      g_form_no:this.deptdata.g_form_no
       })
       console.log("Which ID is this :" ,stock_id);
       console.log("Stock Update insert ID is :" ,this.returnForm.value.insertId);

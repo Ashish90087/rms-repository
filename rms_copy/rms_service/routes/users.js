@@ -248,7 +248,7 @@ router.get('/issuestocks1', function(req, res, next) {
 });
 router.get('/issuestocks', function(req, res, next) {
   //res.send('respond with a resource');
-  return db.query('SELECT id.*, m.name  from issued_details id INNER JOIN mas_user m ON id.issued_to=m.user_id  ' ,function(err,rows1){
+  return db.query('SELECT id.*, m.name, DATE_FORMAT(id.issued_date,"%Y-%m-%d") as i_date  from issued_details id INNER JOIN mas_user m ON id.issued_to=m.user_id  ' ,function(err,rows1){
     if(err){
       return res.json(err);
     }
@@ -346,7 +346,7 @@ router.put('/updateStatus', function (req, res) {
 });
 router.put('/issues', function (req, res) {
   
-  return db.query('Update issued_details set issued_date=?,marked_no=?,remark=?,stock_id=?,status_id=? where issued_to=?',[req.body.issued_date,req.body.marked_no,req.body.remark,req.body.stock_id,req.body.issued_to] , function (err, rows1) {
+  return db.query('Update issued_details set issued_date=?,marked_no=?,remark=?,stock_id=?,status_id=? where issued_to=?',[req.body.issued_date,req.body.marked_no,req.body.remark,req.body.stock_id,req.body.status_id,req.body.issued_to] , function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
