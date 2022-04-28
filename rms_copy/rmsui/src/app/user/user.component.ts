@@ -61,11 +61,12 @@ export class UserComponent implements OnInit {
 
   onSubmit(){
 
-    console.log(this.userForm.value);
+
     this.userForm.patchValue({
       joining_date : this.datePipe.transform(this.userForm.get("joining_date")?.value, "yyyy-MM-dd"),
       resigning_date : this.datePipe.transform(this.userForm.get("resigning_date")?.value, "yyyy-MM-dd"),
     })
+    console.log("Just checking",this.userForm.value);
     if(this.x==0) {
     this.cms.saveDetails('users',this.userForm.value).subscribe((res:any) => {
       console.log(res);

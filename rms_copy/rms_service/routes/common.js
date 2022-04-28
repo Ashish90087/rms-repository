@@ -370,7 +370,7 @@ router.get('/user', function(req, res, next) {
   });
 
   router.get('/weekly/:user_id', function(req, res, next) {
-    return db.query('select mw.work_done,mw.app_id, ma.app_name, concat(mw.start,'-',mw.end) as week from mas_weekly_task mw join mas_app ma on mw.app_id=ma.app_id WHERE mw.user_id=?', [req.params.user_id] ,function (err, rows1) {
+    return db.query('select mw.work_done,mw.app_id, ma.app_name, concat(mw.start, " - " ,mw.end) week from mas_weekly_task mw join mas_app ma on mw.app_id=ma.app_id WHERE mw.user_id=?', [req.params.user_id] ,function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);

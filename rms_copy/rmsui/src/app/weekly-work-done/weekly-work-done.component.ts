@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { DatePipe } from '@angular/common';
 import { CommonService } from '../services/common.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -28,7 +29,7 @@ export class WeeklyWorkDoneComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   displayedColumns: string[] = ['sn', 'week','app_name', 'work_done','action'];
-  constructor(private fB : FormBuilder,private cms : CommonService,private authservice: AuthService) { }
+  constructor(private fB : FormBuilder,private cms : CommonService,private authservice: AuthService, private datePipe : DatePipe) { }
   public task_data: any = [];
   dataSource: any = [];
   public app_data: any = [];
@@ -61,26 +62,26 @@ export class WeeklyWorkDoneComponent implements OnInit {
 
 
 
-  dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-    console.log(dateRangeStart.value);
-    this.temp1 =dateRangeStart.value;
-    console.log(dateRangeEnd.value);
-    this.temp2 =dateRangeEnd.value;
-    //this.taskForm.value.week =this.temp1+'-'+this.temp2;
-    this.taskForm.value.week.start=this.temp1;
-    this.taskForm.value.week.end=this.temp2;
-    console.log(this.taskForm.value);
-    this.taskForm.value.week = this.taskForm.value.week.start+'-'+this.taskForm.value.week.end
-  }
+  // dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
+  //   //console.log(dateRangeStart.value);
+  //   this.temp1 =dateRangeStart.value;
+  //  // console.log(dateRangeEnd.value);
+  //   this.temp2 =dateRangeEnd.value;
+  //   //this.taskForm.value.week =this.temp1+'-'+this.temp2;
+  //   this.taskForm.value.week.start=this.temp1;
+  //   this.taskForm.value.week.end=this.temp2;
+  //   //console.log(this.taskForm.value);
+  //   this.taskForm.value.week = this.taskForm.value.week.start+'-'+this.taskForm.value.week.end
+  // }
 
 
   onSubmit(){
 
-    // this.taskForm.patchValue({
-    //   work_order_from : this.datePipe.transform(this.empForm.get("work_order_from")?.value, "yyyy-MM-dd"),
-    //   work_order_to : this.datePipe.transform(this.empForm.get("work_order_to")?.value, "yyyy-MM-dd"),
-    // })
-    console.log(this.taskForm.value.user_id);
+    this.taskForm.patchValue({
+      start : this.datePipe.transform(this.taskForm.get("start")?.value, "yyyy-MM-dd"),
+      end : this.datePipe.transform(this.taskForm.get("end")?.value, "yyyy-MM-dd"),
+    })
+    console.log(this.taskForm.value);
     let d:any=[];
     this.data=this.taskForm.value;
     console.log("i am here");
@@ -143,7 +144,6 @@ export class WeeklyWorkDoneComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.getWorkDetails();
     let user = this.authservice.currentUser;
     this.taskForm.patchValue({
       user_id : user.userid
@@ -154,6 +154,7 @@ export class WeeklyWorkDoneComponent implements OnInit {
     console.log(user.user_name);
     console.log(this.taskForm.value.user_id);
     this.getApplication();
+    this.getWorkDetails();
   }
 
   public temp: any = []
