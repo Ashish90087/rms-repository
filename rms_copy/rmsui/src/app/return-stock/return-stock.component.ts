@@ -67,7 +67,7 @@ export class ReturnStockComponent implements OnInit {
     console.log("I am inside submit and id is: ",this.id1);
     //console.log("Hi I am inside on submit for edit functionality", this.id1);
 
-
+    if(this.id1==0){
         console.log("I entered inside for update",this.returnForm.value);
         this.cms.returnStocks(this.returnForm.value).subscribe((res:any)=>{
                 if(res['affectedRows']){
@@ -76,6 +76,18 @@ export class ReturnStockComponent implements OnInit {
                   Swal.fire({icon:'success',text:'saved successfully',timer:2000});
                 }
               })
+            }
+            else{
+              this.cms.updateFunction('users/returns',this.returnForm.value).subscribe((res:any)=>{
+                console.log("I entered inside save");
+                if(res['affectedRows']){
+                  this.refresh();
+                  this.returnForm.reset();
+                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+                }
+              });
+            }
+
    }
   getStatus(){
     this.cms.getFunction7('cms/getFunction7').subscribe((res:any)=>{
