@@ -58,7 +58,7 @@ router.get('/patchIssueStocks', function(req, res, next) {
   });
 });
 router.get('/patchReturnStocks', function(req, res, next) {
-  return db.query('SELECT r.*,DATE_FORMAT(r.returned_date,"%Y-%m-%d") as r_date from returned_stock_details r' ,function(err,rows1){
+  return db.query('SELECT r.*, DATE_FORMAT(r.returned_date,"%Y-%m-%d") as r_date from returned_stock_details r' ,function(err,rows1){
     if(err){
       return res.json(err);
     }

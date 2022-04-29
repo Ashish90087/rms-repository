@@ -186,7 +186,7 @@ export class ReturnStockComponent implements OnInit {
           this.deptdata=res[i];
         }
       }
-      console.log("result of stock_id dept data is",this.deptdata);
+      console.log("result of stock_id dept data is",res);
       this.returnForm.patchValue({
 
       stock_id:this.deptdata.stock_id,
