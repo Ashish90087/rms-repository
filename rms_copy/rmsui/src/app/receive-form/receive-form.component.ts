@@ -95,7 +95,7 @@ export class ReceiveFormComponent implements OnInit {
     this.receiveForm.patchValue({
       received_date: this.datePipe.transform(this.receiveForm.get("received_date")?.value, "yyyy-MM-dd")
     });
-    console.log("I am inside submit and id is: ",this.id1);
+    //console.log("I am inside submit and id is: ",this.id1);
       if(this.id1==0)
       {
         console.log("I entered inside for update",this.id1);
@@ -111,7 +111,7 @@ export class ReceiveFormComponent implements OnInit {
               })
       }
     else {
-      this.commonservice.updateFunction('users/stocks',this.receiveForm.value).subscribe((res:any)=>{
+      this.commonservice.updateFunction('users/receiving_stocks',this.receiveForm.value).subscribe((res:any)=>{
       console.log("I entered inside save");
       if(res['affectedRows']){
         this.refresh();
@@ -196,9 +196,9 @@ export class ReceiveFormComponent implements OnInit {
    onEdit(stock_id: any) {
     this.scroll.nativeElement.scrollIntoView();
      this.id1=stock_id;
-    console.log("Which ID is this :",stock_id);
-    console.log("Inside stock update form", );
-    this.commonservice.updateStock(stock_id).subscribe((res: any)=>{
+    // console.log("Which ID is this :",stock_id);
+    // console.log("Inside stock update form", );
+    this.commonservice.updateStock('users/patch_stock').subscribe((res: any)=>{
       console.log("result of response is res",res);
       for(let i=0;i<res.length;i++){
         if(res[i].stock_id==stock_id){
