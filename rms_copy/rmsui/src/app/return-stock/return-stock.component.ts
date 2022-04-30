@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { CommonService } from '../services/common.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-return-stock',
@@ -55,7 +56,7 @@ export class ReturnStockComponent implements OnInit {
     //this.getHardware();
     this.getStatus();
     this.refresh();
-    this.getIssuedUsersStocks();
+    //this.getIssuedUsersStocks();
     this.getReturnedStocks();
     this.stocksToreturn();
   }
@@ -69,7 +70,7 @@ export class ReturnStockComponent implements OnInit {
 
     if(this.id1==0){
         console.log("I entered inside for update",this.returnForm.value);
-        this.cms.returnStocks(this.returnForm.value).subscribe((res:any)=>{
+        this.cms.returnStocks('users/ReturnAndUpdateStock',this.returnForm.value).subscribe((res:any)=>{
                 if(res['affectedRows']){
                   this.refresh();
                   this.returnForm.reset();
@@ -90,28 +91,28 @@ export class ReturnStockComponent implements OnInit {
 
    }
   getStatus(){
-    this.cms.getFunction7('cms/getFunction7').subscribe((res:any)=>{
+    this.cms.getFunction('users/status').subscribe((res:any)=>{
       this.status=res;
       console.log(this.status);
     })
   }
-  getIssuedUsersStocks(){
-    this.cms.getIssueStocks1('cms/getIssueStocks1').subscribe((res:any)=>{
-      this.user_data=res;
-      console.log("Issued users and stocks", this.user_data);
-      console.log("username is:" ,this.user_data[0].name);
-    })
-  }
+  // getIssuedUsersStocks(){
+  //   this.cms.getIssueStocks1('cms/getIssueStocks1').subscribe((res:any)=>{
+  //     this.user_data=res;
+  //     console.log("Issued users and stocks", this.user_data);
+  //     console.log("username is:" ,this.user_data[0].name);
+  //   })
+  // }
   public toReturn:any=[];
   stocksToreturn(){
-    this.cms.getStocksToReturn('cms/getStocksToReturn').subscribe((res:any)=>{
+    this.cms.getStocksToReturn('users/stockstoreturn').subscribe((res:any)=>{
       this.toReturn=res;
       console.log("stocks which can be returned",this.toReturn);
     })
   }
   public returned_data:any=[];
   getReturnedStocks(){
-    this.cms.returnedStocks('cms/returnedStocks',this.returnForm.value).subscribe((res:any)=>{
+    this.cms.returnedStocks('users/returnstocks',this.returnForm.value).subscribe((res:any)=>{
       this.returned_data=res;
       console.log("Returned users and stocks",this.returned_data);
 
@@ -126,7 +127,7 @@ export class ReturnStockComponent implements OnInit {
     }
   }
   refresh():void{
-    this.cms.returnedStocks('cms/returnedStocks',this.returnForm.value).subscribe((res:any)=>{
+    this.cms.returnedStocks('users/returnstocks',this.returnForm.value).subscribe((res:any)=>{
       console.log("now show the returned item from db",res);
        if(res.length){
          this.user_data=res;
@@ -147,7 +148,7 @@ export class ReturnStockComponent implements OnInit {
     formData.append('file', this.wo);
     formData.append('folder_name', this.folder_location);
 
-    this.http.post<any>('http://localhost:3000/upload/file', formData).subscribe(res => {
+    this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
       console.log(res);
       this.temp_file = res;
       console.log(this.temp_file.path);
@@ -177,7 +178,7 @@ export class ReturnStockComponent implements OnInit {
      this.id1=stock_id;
     console.log("Which ID is this :",stock_id);
     console.log("Inside stock update form", );
-    this.cms.updateStock(stock_id).subscribe((res: any)=>{
+    this.cms.updateStock('users/patchReturnStocks').subscribe((res: any)=>{
       console.log("result of response is res",res);
       for(let i=0;i<res.length;i++){
         if(res[i].stock_id==stock_id){

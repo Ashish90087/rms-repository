@@ -178,7 +178,7 @@ public stat:any=[];
     console.log("Which user is this :",issued_to);
     console.log("Which ID is this :",this.id1);
     console.log("Inside Issue update form", );
-    this.commonservice.updateIssueStock(issued_to).subscribe((res: any)=>{
+    this.commonservice.updateIssueStock('users/patchIssueStocks').subscribe((res: any)=>{
       console.log("result of response is res",res);
       for(let i=0;i<res.length;i++){
         if(res[i].issued_to==issued_to){
