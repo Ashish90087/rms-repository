@@ -248,7 +248,7 @@ router.get('/user', function(req, res, next) {
   });
 
   router.get('/db', function(req, res, next) {
-    return db.query('select mdb.*,ma.app_name,mu.name,md.dept_name from mas_db mdb  join mas_user mu on mdb.user_id=mu.user_id join mas_app ma on mdb.app_id=ma.app_id join mas_dept md on mdb.dept_code=md.dept_code', function (err, rows1) {
+    return db.query('select mdb.*,ma.app_name,mu.name,md.dept_name from mas_db mdb join mas_app ma on mdb.app_id=ma.app_id join mas_dept md on mdb.dept_code=md.dept_code', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -358,6 +358,30 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/dbcount', function(req, res, next) {
+    return db.query('select count(*) as x from mas_db ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/stockcount', function(req, res, next) {
+    return db.query('select count(*) as x from stock_receive_mas ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+
+
   router.get('/project', function(req, res, next) {
     return db.query('select mad.* , ma.app_name from mas_app_desc mad join mas_app ma on mad.app_id=ma.app_id ', function (err, rows1) {
       if (err) {
@@ -370,7 +394,31 @@ router.get('/user', function(req, res, next) {
   });
 
   router.get('/weekly/:user_id', function(req, res, next) {
-    return db.query('select mw.work_done,mw.app_id, ma.app_name, concat(mw.start, " - " ,mw.end) week from mas_weekly_task mw join mas_app ma on mw.app_id=ma.app_id WHERE mw.user_id=?', [req.params.user_id] ,function (err, rows1) {
+    return db.query('select mw.work_done,mw.app_id, ma.app_name, concat(DATE_FORMAT(mw.start,"%d/%m/%Y"), " - " ,DATE_FORMAT(mw.end,"%d/%m/%Y")) week from mas_weekly_task mw join mas_app ma on mw.app_id=ma.app_id WHERE mw.user_id=?', [req.params.user_id] ,function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/app_report/:dept_code', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('select ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp ,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id WHERE ma.dept_code=?', [req.params.dept_code] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/app_report2/:plateform_id', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('select ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp ,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id WHERE ma.plateform_id=?', [req.params.plateform_id] , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -459,7 +507,7 @@ router.post('/wodetails', function (req, res) {
 
 router.post('/db', function (req, res) {
   
-  return db.query('insert into mas_db (db_name,db_type,server_id,dept_code,user_id,app_id) values (?,?,?,?,?,?)',[req.body.db_name,req.body.db_type,req.body.server_id,req.body.dept_code,req.body.user_id,req.body.app_id], function (err, rows1) {
+  return db.query('insert into mas_db (db_name,db_type,server_id,dept_code,app_id) values (?,?,?,?,?)',[req.body.db_name,req.body.db_type,req.body.server_id,req.body.dept_code,req.body.app_id], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
