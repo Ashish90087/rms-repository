@@ -11,31 +11,31 @@ import jspdf, { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
 
-
 @Component({
-  selector: 'app-app-report',
-  templateUrl: './app-report.component.html',
-  styleUrls: ['./app-report.component.scss']
+  selector: 'app-db-report',
+  templateUrl: './db-report.component.html',
+  styleUrls: ['./db-report.component.scss']
 })
-export class AppReportComponent implements OnInit {
+export class DbReportComponent implements OnInit {
 
-  appReportForm : FormGroup =  this.fB.group({
-    app_id: [''],
+  dbReportForm : FormGroup =  this.fB.group({
+    db_id: [''],
     dept_code: [''],
     dept_name :[''],
-    plateform_id: [''],
-    app_name:[''],
+    server_id:[''],
+    server_ip:[''],
+    db_name:[''],
   })
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   @ViewChild('htmlData') htmlData!: ElementRef;
 
-  displayedColumns: string[] = ['sn', 'app_name', 'plateform', 'server', 'public ip',  'department' ,'url', 'ssl_expiry'];
+  displayedColumns: string[] = ['sn', 'db_name', 'db_type', 'app_name', 'dept_name', 'db_server' ];
 
   constructor(private fB : FormBuilder,private cms : CommonService,private datePipe : DatePipe) { }
   public department: any = [];
   dataSource: any = [];
-  app_data:any=[];
+  db_data:any=[];
   platform:any=[];
   project_details:any=[];
   x:any=[];
@@ -54,12 +54,12 @@ export class AppReportComponent implements OnInit {
     console.log(event.value);
     if(this.selected=="Y") {
   
-      this.cms.getFunction('apps').subscribe((res: any) => {
+      this.cms.getFunction('db').subscribe((res: any) => {
         console.log(res)
     
         if (res.length) {
-          this.app_data = res;
-          this.dataSource = new MatTableDataSource(this.app_data);
+          this.db_data = res;
+          this.dataSource = new MatTableDataSource(this.db_data);
           this.dataSource.paginator = this.paginator;
         }
       });
@@ -67,12 +67,12 @@ export class AppReportComponent implements OnInit {
   
    else {
   
-    this.cms.getFunction('app_report'+"/"+this.appReportForm.value.dept_code).subscribe((res: any) => {
+    this.cms.getFunction('db_report'+"/"+this.dbReportForm.value.dept_code).subscribe((res: any) => {
       console.log(res)
   
       if (res.length) {
-        this.app_data = res;
-        this.dataSource = new MatTableDataSource(this.app_data);
+        this.db_data = res;
+        this.dataSource = new MatTableDataSource(this.db_data);
         this.dataSource.paginator = this.paginator;
       }
     });
@@ -80,14 +80,14 @@ export class AppReportComponent implements OnInit {
   
    }
 
-   getApps(event:any) {
+   getDb(event:any) {
 
-    this.cms.getFunction('app_report2'+"/"+this.appReportForm.value.plateform_id).subscribe((res: any) => {
+    this.cms.getFunction('db_report2'+"/"+this.dbReportForm.value.server_id).subscribe((res: any) => {
       console.log(res)
   
       if (res.length) {
-        this.app_data = res;
-        this.dataSource = new MatTableDataSource(this.app_data);
+        this.db_data = res;
+        this.dataSource = new MatTableDataSource(this.db_data);
         this.dataSource.paginator = this.paginator;
       }
     });
@@ -102,12 +102,6 @@ export class AppReportComponent implements OnInit {
     });
   }
 
-  getPlateform() {
-    this.cms.getFunction('plateform_info').subscribe((res:any) => {
-      this.platform= res;
-  
-    });
-  }
 
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -123,17 +117,17 @@ export class AppReportComponent implements OnInit {
       html2canvas(DATA).then((canvas) => {
         let fileWidth = 208;
         let fileHeight = (canvas.height * fileWidth) / canvas.width;
-        const FILEURI = canvas.toDataURL('image/png');
+        const FILEURI = canvas.toDataURL('image/jpeg');
         let PDF = new jsPDF('p', 'mm', 'a4');
         let position = 0;
-        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+        PDF.addImage(FILEURI, 'JPEG', 0, position, fileWidth, fileHeight);
         PDF.save('angular-demo.pdf');
       });
     }
 
   ngOnInit(): void {
    this.getDepartment();
-   this.getPlateform();
+   
   } 
 
 }

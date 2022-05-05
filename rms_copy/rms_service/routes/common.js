@@ -248,7 +248,7 @@ router.get('/user', function(req, res, next) {
   });
 
   router.get('/db', function(req, res, next) {
-    return db.query('select mdb.*,ma.app_name,mu.name,md.dept_name from mas_db mdb join mas_app ma on mdb.app_id=ma.app_id join mas_dept md on mdb.dept_code=md.dept_code', function (err, rows1) {
+    return db.query('select mdb.*,ms.server_ip,ma.app_name,md.dept_name from mas_db mdb join mas_app ma on mdb.app_id=ma.app_id join mas_dept md on mdb.dept_code=md.dept_code join mas_server ms on mdb.server_id=ms.server_id', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -419,6 +419,42 @@ router.get('/user', function(req, res, next) {
   router.get('/app_report2/:plateform_id', function(req, res, next) {
     console.log("hi",req.params);
     return db.query('select ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp ,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id WHERE ma.plateform_id=?', [req.params.plateform_id] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/db_report/:dept_code', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('select mdb.*,ms.server_ip,ma.app_name,md.dept_name from mas_db mdb join mas_app ma on mdb.app_id=ma.app_id join mas_dept md on mdb.dept_code=md.dept_code join mas_server ms on mdb.server_id=ms.server_id WHERE mdb.dept_code=?', [req.params.dept_code] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/db_report2/:server_id', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('select mdb.*,ms.server_ip,ma.app_name,md.dept_name from mas_db mdb join mas_app ma on mdb.app_id=ma.app_id join mas_dept md on mdb.dept_code=md.dept_code join mas_server ms on mdb.server_id=ms.server_id WHERE mdb.server_id=?', [req.params.server_id] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/emp_report/:dept_code', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('select mu.*,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj ,md.dept_name,met.emp_type,md.dept_code,mu.mobile_no,mu.email_id from mas_user mu join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id WHERE mu.dept_code=?', [req.params.dept_code] , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);

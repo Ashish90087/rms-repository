@@ -52,6 +52,8 @@ import { AppDescriptionComponent } from './app-description/app-description.compo
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReportsComponent } from './reports/reports.component';
 import { AppReportComponent } from './app-report/app-report.component';
+import { DbReportComponent } from './db-report/db-report.component';
+import { EmpReportComponent } from './emp-report/emp-report.component';
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -86,7 +88,9 @@ import { AppReportComponent } from './app-report/app-report.component';
     WelcomeUserComponent,
     AppDescriptionComponent,
     ReportsComponent,
-    AppReportComponent
+    AppReportComponent,
+    DbReportComponent,
+    EmpReportComponent
   ],
   imports: [
     NgbDatepickerModule,

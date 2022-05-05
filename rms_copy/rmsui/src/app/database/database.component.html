@@ -42,8 +42,7 @@
          <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
               <mat-label>Choose Department</mat-label>
-              <mat-select formControlName="dept_code" placeholder="Department"
-              >
+              <mat-select formControlName="dept_code" placeholder="Department">
               <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                 {{dept.dept_name }}
               </mat-option>
@@ -54,8 +53,7 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
               <mat-label>Database Server</mat-label>
-              <mat-select formControlName="server_id" placeholder="DB Server"
-              >
+              <mat-select formControlName="server_id" placeholder="DB Server">
               <mat-option *ngFor="let i of server_data" [value]="i.server_id">
                 {{i.server_ip }}
               </mat-option>

@@ -22,6 +22,8 @@ import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
 import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
 import { AppDescriptionComponent } from './app-description/app-description.component';
 import { AppReportComponent } from './app-report/app-report.component';
+import { DbReportComponent } from './db-report/db-report.component';
+import { EmpReportComponent } from './emp-report/emp-report.component';
 
 const routes: Routes = [
 
@@ -47,6 +49,8 @@ const routes: Routes = [
   { path : 'employee' , component: WelcomeUserComponent},
   { path : 'return' , component: ReturnStockComponent},
   { path : 'appreport' , component: AppReportComponent },
+  { path : 'dbreport' , component: DbReportComponent },
+  { path : 'empreport' , component: EmpReportComponent },
 
  ]
 
