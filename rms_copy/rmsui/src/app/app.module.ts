@@ -22,6 +22,7 @@ import { UserComponent } from './user/user.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import {NgxPrintModule} from 'ngx-print';
 import { DepartmentComponent } from './department/department.component'
 import { ApplicationComponent } from './application/application.component';
 import { DatabaseComponent } from './database/database.component';
@@ -110,6 +111,7 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
     MatTableModule,
     MatPaginatorModule,
     MatTableExporterModule,
+    NgxPrintModule,
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,

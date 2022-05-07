@@ -29,9 +29,9 @@ export class EmpReportComponent implements OnInit {
   })
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  @ViewChild('htmlData') htmlData!: ElementRef;
+  
 
-  displayedColumns: string[] = ['sn', 'name', 'dept_name', 'mobile_no', 'email_id', 'machine_ip','address'];
+  displayedColumns: string[] = ['sn', 'name', 'dept_name', 'mobile_no', 'email_id', 'machine_ip','apps_working','address'];
 
   constructor(private fB : FormBuilder,private cms : CommonService,private datePipe : DatePipe) { }
   public department: any = [];
@@ -113,18 +113,6 @@ export class EmpReportComponent implements OnInit {
       }
     }
 
-    public openPDF(): void {
-      let DATA: any = document.getElementById('htmlData');
-      html2canvas(DATA).then((canvas) => {
-        let fileWidth = 208;
-        let fileHeight = (canvas.height * fileWidth) / canvas.width;
-        const FILEURI = canvas.toDataURL('image/jpeg');
-        let PDF = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'JPEG', 0, position, fileWidth, fileHeight);
-        PDF.save('angular-demo.pdf');
-      });
-    }
 
   ngOnInit(): void {
    this.getDepartment();

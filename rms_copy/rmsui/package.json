@@ -30,6 +30,7 @@
     "mat-file-upload": "^11.1.2",
     "mat-table-exporter": "^10.2.4",
     "ng2-pdf-viewer": "^9.0.0",
+    "ngx-print": "^1.2.1",
     "propellerkit-datetimepicker": "^1.2.0",
     "rxjs": "~6.6.0",
     "swal": "^0.1.0",

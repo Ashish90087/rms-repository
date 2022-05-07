@@ -28,7 +28,7 @@ export class DbReportComponent implements OnInit {
   })
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  @ViewChild('htmlData') htmlData!: ElementRef;
+  
 
   displayedColumns: string[] = ['sn', 'db_name', 'db_type', 'app_name', 'dept_name', 'db_server' ];
 
@@ -112,18 +112,6 @@ export class DbReportComponent implements OnInit {
       }
     }
 
-    public openPDF(): void {
-      let DATA: any = document.getElementById('htmlData');
-      html2canvas(DATA).then((canvas) => {
-        let fileWidth = 208;
-        let fileHeight = (canvas.height * fileWidth) / canvas.width;
-        const FILEURI = canvas.toDataURL('image/jpeg');
-        let PDF = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'JPEG', 0, position, fileWidth, fileHeight);
-        PDF.save('angular-demo.pdf');
-      });
-    }
 
   ngOnInit(): void {
    this.getDepartment();

@@ -454,7 +454,7 @@ router.get('/user', function(req, res, next) {
 
   router.get('/emp_report/:dept_code', function(req, res, next) {
     console.log("hi",req.params);
-    return db.query('select mu.*,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj ,md.dept_name,met.emp_type,md.dept_code,mu.mobile_no,mu.email_id from mas_user mu join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id WHERE mu.dept_code=?', [req.params.dept_code] , function (err, rows1) {
+    return db.query('select mu.*,mau.app_id,ma.app_name,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj ,GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as projects,md.dept_name,met.emp_type,md.dept_code,mu.mobile_no,mu.email_id from mas_user mu join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id join map_app_user mau on mu.user_id=mau.user_id WHERE mu.dept_code=?', [req.params.dept_code] , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
