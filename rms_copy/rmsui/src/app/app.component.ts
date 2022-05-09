@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ExcelService } from './services/excel.service';
 
 @Component({
   selector: 'app-root',

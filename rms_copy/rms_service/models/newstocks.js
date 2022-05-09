@@ -1,11 +1,11 @@
 var db = require('../dbconnection');
 
 
-var users = 
+var newstocks = 
 {
   
 
-    issueAndUpdateStock:function(data, callback) 
+    receiveNewStock:function(data, callback) 
   {     
       console.log("Rohit Inserting issued details");
     
@@ -19,24 +19,18 @@ var users =
           throw err;
         }
         var query = "insert into ?? set ?";       
-        connection.query(query, ['issued_details', data], function (error, result, fields) {
+        connection.query(query, ['stock_receive_mas', data], function (error, result, fields) {
             if (err) {
                 return connection.rollback(function () {
                   callback(err);
                   throw err;
                 });
               }
-              console.log("rohit Updating Stock_receive_mas")
-          connection.query(`update stock_receive_mas set status_id=? where stock_id = '${data.stock_id}'`, [2], function (err, results) {
-            if (err) {
-              return connection.rollback(function () {
-                callback(err);
-                throw err;
-              });
-            }
+              console.log("rohit inserting Stock_receive_mas")
+         
             var CURRENT_TIMESTAMP = { toSqlString: function() { return 'CURRENT_TIMESTAMP()'; } };
             console.log("rohit inserting Stock_transaction_details")
-            connection.query( "insert into stock_transaction_details set ? ",{stock_id:data.stock_id,transaction_date:CURRENT_TIMESTAMP,status:'2'}, function (error, result, fields) {
+            connection.query( "insert into stock_transaction_details set ? ",{stock_id:data.stock_id,transaction_date:CURRENT_TIMESTAMP,status:'1'}, function (error, result, fields) {
               if (err) {
                   return connection.rollback(function () {
                     callback(err);
@@ -52,7 +46,7 @@ var users =
               }
               return callback(result);
             });
-           });
+           
           });
         });
       });
@@ -66,15 +60,5 @@ var users =
 
 
 
-module.exports = users;
+module.exports = newstocks;
 // module.exports = returnedusers;
-
-
-
-
-
-
-
-
-
-

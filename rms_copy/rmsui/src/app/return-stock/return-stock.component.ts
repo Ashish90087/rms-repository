@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -8,6 +8,11 @@ import Swal from 'sweetalert2';
 import { CommonService } from '../services/common.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import * as XLSX from 'xlsx'; 
+import {jsPDF} from 'jspdf';  
+import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-return-stock',
@@ -16,6 +21,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ReturnStockComponent implements OnInit {
   returnForm : FormGroup;
+  fileName= 'ExcelSheet.xlsx';
   public stocks: any =[];
   public users:any=[];
   public department:any=[];
@@ -32,7 +38,10 @@ export class ReturnStockComponent implements OnInit {
 
   public temp_file :any;
   @ViewChild(MatPaginator) paginator : MatPaginator| undefined;
-  constructor(private fb:FormBuilder ,private cms: CommonService,private datePipe: DatePipe, private http: HttpClient) {
+  @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
+  @ViewChild('content', { static: false }) content!: ElementRef<any>;  
+ 
+  constructor(private fb:FormBuilder ,private cms: CommonService,private datePipe: DatePipe, private http: HttpClient, private element: ElementRef) {
 
     this.returnForm = this.fb.group({
       stock_id:[],
@@ -60,6 +69,75 @@ export class ReturnStockComponent implements OnInit {
     this.getReturnedStocks();
     this.stocksToreturn();
   }
+
+public convertToPDF()
+{
+console.log(document.getElementById('excel-table'));
+html2canvas(document.body).then(canvas => {
+// Few necessary setting options
+ 
+const contentDataURL = canvas.toDataURL('image/png')
+let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+var width = pdf.internal.pageSize.getWidth();
+var height = canvas.height * width / canvas.width;
+pdf.addImage(contentDataURL, 'PNG', 0, 0, width, height)
+pdf.save('output.pdf'); // Generated PDF
+});
+}
+
+  download_pdf(){
+    const doc = new jsPDF();
+    doc.text("stodent details",10,10);
+  }
+  
+
+  public SavePDF(): void {  
+    let content=this.content.nativeElement;  
+    // let document = new Document() ;
+    let doc = new jsPDF('l','pt','a3'); 
+    doc.text('My PDF Table is:', 11, 8);
+    doc.setFontSize(11); 
+    doc.html(content,{
+      callback:(doc)=>{
+        autoSize:true;
+        doc.text('My PDF Table is:', 11, 8);
+        doc.setFontSize(11);
+        doc.save('test.pdf'); 
+      }
+    })
+    console.log("content is ",document.getElementById("excel-table"));
+    console.log("doc is ",doc);
+
+    // let _elementHandlers =  
+    // {  
+    //   '#editor':function(element: any,renderer: any){  
+    //     return true  
+    //   }  
+    // };  
+    // doc.html(content.innerHTML,{  
+  
+    //   'width':190,  
+    //   'elementHandlers': _elementHandlers
+      
+    // });  
+  
+    // doc.save('test.pdf');  
+  }  
+  exportexcel(): void 
+    {
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+			
+    }
+
   onSubmit(){
     this.returnForm.patchValue({
       returned_date: this.datePipe.transform(this.returnForm.get("returned_date")?.value, "yyyy-MM-dd"),
@@ -172,10 +250,18 @@ export class ReturnStockComponent implements OnInit {
   //console.log(url);
 
   }
+  public stock_id:any;
+  selectedStock(id :any){
+
+    console.log("event is ",id);
+    this.stock_id=id;
+    this.stock_details(this.stock_id);
+  }
 
   public deptdata: any = [];
    onEdit(stock_id: any) {
      this.id1=stock_id;
+     this.scroll.nativeElement.scrollIntoView();
     console.log("Which ID is this :",stock_id);
     console.log("Inside stock update form", );
     this.cms.updateStock('users/patchReturnStocks').subscribe((res: any)=>{
@@ -186,13 +272,13 @@ export class ReturnStockComponent implements OnInit {
           this.deptdata=res[i];
         }
       }
-      console.log("result of stock_id dept data is",res);
+      console.log("result of stock_id dept data is",this.deptdata);
       this.returnForm.patchValue({
 
       stock_id:this.deptdata.stock_id,
       serial_no: this.deptdata.serial_no,
       dept_id:this.deptdata.dept_id,
-      remark:this.deptdata.remark,
+      remarks:this.deptdata.remarks,
       status_id:this.deptdata.re,
       returned_date:this.deptdata.returned_date,
       g_form_no:this.deptdata.g_form_no
@@ -203,13 +289,7 @@ export class ReturnStockComponent implements OnInit {
     });
 
   }
-  public stock_id:any;
-  selectedStock(id :any){
 
-    console.log("event is ",id);
-    this.stock_id=id;
-    this.stock_details(this.stock_id);
-  }
   public dept:any;
   public was_issued_to:any;
   public serial_no:any;
@@ -225,14 +305,10 @@ export class ReturnStockComponent implements OnInit {
       }
 
     }
-    // this.was_issued_to= this.user_data[1].name;
-    // this.serial_no = this.user_data[1].monitor_sno;
-
-    // if(stock_id==this.user_data[1].stock_id){
-    //   console.log("serial number",this.serial_no);
-    //   console.log("was issued to",this.was_issued_to);
-    //   //console.log("serial number");
-    // }
+  
+  }
+  scrollToTop(){
+    document.body.scrollTop=document.documentElement.scrollTop=0;
   }
 
 }

@@ -3,6 +3,7 @@ var router = express.Router();
 var db = require('../dbconnection');
 const users = require('../models/users');
 const returnedusers = require('../models/returnedusers');
+const newstocks = require('../models/newstocks');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -132,9 +133,9 @@ router.get('/stockstoreturn', function(req, res, next) {
 });
 
 router.get('/returnstocks', function(req, res, next) {
-  return db.query('SELECT * from returned_stock_details' ,function(err,rows1){
+  return db.query('SELECT r.*, i.issued_to,m.name  FROM returned_stock_details r LEFT JOIN  issued_details i ON r.stock_id=i.stock_id LEFT JOIN mas_user m ON m.user_id=i.issued_to' ,function(err,rows1){
     if(err){
-      return res.json(err);
+      return res.json(err); 
     }
     return res.json(rows1);
   });
@@ -177,17 +178,30 @@ router.post('/usermas', function (req, res) {
   });
 });
 
-router.post('/receiving_stocks', function (req, res) {
+// router.post('/receiving_stocks', function (req, res) {
   
-  return db.query('insert into stock_receive_mas (stock_id, dept_id,hardware_id,received_date ,cpu_sno, monitor_sno,keyboard_sno,mouse_sno,make_model_id,remarks,i_form_no,ilocation,status_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.stock_id, req.body.dept_id,req.body.hardware_id,req.body.received_date,req.body.cpu_sno, req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.make_model_id,req.body.remarks,req.body.i_form_no,req.body.ilocation,req.body.status_id], function (err, rows1) {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return res.json(err);
-    }
-    return res.json(rows1);
-  });
-});
+//   return db.query('insert into stock_receive_mas (stock_id, dept_id,hardware_id,received_date ,cpu_sno, monitor_sno,keyboard_sno,mouse_sno,make_model_id,remarks,i_form_no,ilocation,status_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.stock_id, req.body.dept_id,req.body.hardware_id,req.body.received_date,req.body.cpu_sno, req.body.monitor_sno,req.body.keyboard_sno,req.body.mouse_sno,req.body.make_model_id,req.body.remarks,req.body.i_form_no,req.body.ilocation,req.body.status_id], function (err, rows1) {
+//     if (err) {
+//       console.error('error connecting: ' + err);
+//       return res.json(err);
+//     }
+//     return res.json(rows1);
+//   });
+// });
 
+router.post('/receiveNewStock', function (req, res) 
+{
+  
+    console.log("Helooo");
+    newstocks.receiveNewStock(req.body, function (err, result) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(result);
+      }
+    });
+    console.log("transaction succuessful")
+});
 
 router.post('/issueAndUpdateStock', function (req, res) 
 {
@@ -200,6 +214,7 @@ router.post('/issueAndUpdateStock', function (req, res)
         res.json(result);
       }
     });
+    console.log("transaction succuessful")
 });
 
 router.post('/ReturnAndUpdateStock', function (req, res) 

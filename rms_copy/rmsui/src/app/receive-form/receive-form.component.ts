@@ -99,7 +99,7 @@ export class ReceiveFormComponent implements OnInit {
       if(this.id1==0)
       {
         console.log("I entered inside for update",this.id1);
-        this.commonservice.saveDetails('users/receiving_stocks',this.receiveForm.value).subscribe((res:any)=>{
+        this.commonservice.saveDetails('users/receiveNewStock',this.receiveForm.value).subscribe((res:any)=>{
                 if(res['affectedRows']){
                   this.refresh();
                   this.receiveForm.reset();

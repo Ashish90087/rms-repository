@@ -50,7 +50,6 @@ import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
 import { AppDescriptionComponent } from './app-description/app-description.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
-
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
 
@@ -122,8 +121,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   ],
   providers: [DatePipe,{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }] ,
+    useClass: HashLocationStrategy,
+
+  }
+] ,
   bootstrap: [AppComponent],
 })
 export class AppModule { }
