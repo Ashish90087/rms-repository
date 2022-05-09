@@ -55,7 +55,7 @@ export class EmpReportComponent implements OnInit {
     console.log(event.value);
     if(this.selected=="Y") {
   
-      this.cms.getFunction('user').subscribe((res: any) => {
+      this.cms.getFunction('user_report').subscribe((res: any) => {
         console.log(res)
     
         if (res.length) {

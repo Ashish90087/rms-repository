@@ -13,4 +13,8 @@
 .form-container{
     margin: 10px;
 }
-
+td , th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
+}

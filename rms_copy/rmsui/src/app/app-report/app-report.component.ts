@@ -30,7 +30,7 @@ export class AppReportComponent implements OnInit {
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
 
 
-  displayedColumns: string[] = ['sn', 'app_name', 'plateform', 'server', 'public ip',  'department' ,'url', 'ssl_expiry'];
+  displayedColumns: string[] = ['sn', 'app_name', 'plateform', 'server', 'public ip',  'department' ,'url', 'ssl_expiry','employees'];
 
   constructor(private fB : FormBuilder,private cms : CommonService,private datePipe : DatePipe) { }
   public department: any = [];
@@ -54,7 +54,7 @@ export class AppReportComponent implements OnInit {
     console.log(event.value);
     if(this.selected=="Y") {
   
-      this.cms.getFunction('apps').subscribe((res: any) => {
+      this.cms.getFunction('apps_report').subscribe((res: any) => {
         console.log(res)
     
         if (res.length) {

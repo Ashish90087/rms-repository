@@ -404,9 +404,23 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/apps_report', function(req, res, next) {
+    //console.log("hi",req.params);
+    return db.query('select mau.*,ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp, GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as employees,ms.server_ip,md.dept_name,mp.plateform_name from map_app_user mau JOIN mas_user mu ON mau.user_id=mu.user_id right JOIN mas_app ma ON mau.app_id = ma.app_id join mas_dept md on ma.dept_code=md.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id group by ma.app_id', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
   router.get('/app_report/:dept_code', function(req, res, next) {
     console.log("hi",req.params);
-    return db.query('select ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp ,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id WHERE ma.dept_code=?', [req.params.dept_code] , function (err, rows1) {
+    return db.query(`select mau.*,ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp, GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as employees,ms.server_ip,md.dept_name,mp.plateform_name
+    from map_app_user mau JOIN mas_user mu ON mau.user_id=mu.user_id right JOIN mas_app ma ON mau.app_id = ma.app_id join mas_dept md on ma.dept_code=md.dept_code join mas_server ms on 
+    ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id  WHERE ma.dept_code=? GROUP BY ma.app_id`, [req.params.dept_code] , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -418,7 +432,9 @@ router.get('/user', function(req, res, next) {
 
   router.get('/app_report2/:plateform_id', function(req, res, next) {
     console.log("hi",req.params);
-    return db.query('select ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp ,ms.server_ip,md.dept_name,mp.plateform_name from mas_app ma  join mas_dept md on md.dept_code=ma.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id WHERE ma.plateform_id=?', [req.params.plateform_id] , function (err, rows1) {
+    return db.query(`select mau.*,ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp, GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as employees,ms.server_ip,md.dept_name,mp.plateform_name
+    from map_app_user mau JOIN mas_user mu ON mau.user_id=mu.user_id right JOIN mas_app ma ON mau.app_id = ma.app_id join mas_dept md on ma.dept_code=md.dept_code join mas_server ms on 
+    ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id  WHERE ma.plateform_id=? GROUP BY ma.app_id`, [req.params.plateform_id] , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -452,9 +468,21 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/user_report', function(req, res, next) {
+    //console.log("hi",req.params);
+    return db.query('select mau.*,mu.*,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj, GROUP_CONCAT(Distinct ma.app_name order  by ma.app_name asc separator " , ") as projects,md.dept_name,met.emp_type from map_app_user mau JOIN mas_app ma ON mau.app_id=ma.app_id right JOIN mas_user mu ON mau.user_id = mu.user_id join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id group by mu.user_id', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
   router.get('/emp_report/:dept_code', function(req, res, next) {
     console.log("hi",req.params);
-    return db.query('select mu.*,mau.app_id,ma.app_name,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj ,GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as projects,md.dept_name,met.emp_type,md.dept_code,mu.mobile_no,mu.email_id from mas_user mu join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id join map_app_user mau on mu.user_id=mau.user_id WHERE mu.dept_code=?', [req.params.dept_code] , function (err, rows1) {
+    return db.query('select mau.*,mu.*,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj, GROUP_CONCAT(Distinct ma.app_name order  by ma.app_name asc separator " , ") as projects,md.dept_name,met.emp_type from map_app_user mau JOIN mas_app ma ON mau.app_id=ma.app_id right JOIN mas_user mu ON mau.user_id = mu.user_id join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id WHERE mu.dept_code=? group by mu.user_id ', [req.params.dept_code] , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
