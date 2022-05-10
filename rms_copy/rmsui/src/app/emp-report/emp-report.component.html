@@ -1,0 +1,105 @@
+<form [formGroup]="empReportForm" class="form-container" #scroll>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Employee Report</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Choose Department</mat-label>
+                    <mat-select formControlName="dept_code" placeholder="Choose Department"  (selectionChange)="getDept($event)">
+                    <mat-option value="Y">All</mat-option>
+                    <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
+                      {{dept.dept_name }}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+            </div>
+
+            <!-- <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Choose DB Server</mat-label>
+                    <mat-select formControlName="server_id" placeholder="Choose Db Server" (selectionChange)="getDb($event)">
+                    <mat-option value="6">10.132.0.201</mat-option>
+                    <mat-option value="18">10.132.33.172</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+              </div> -->
+            </div>
+
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+  <mat-card class="mt-3">
+    <mat-card-header>
+        <mat-card-title>
+            Employees List
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field appearance="standard">
+            <mat-label class="required">Filter</mat-label>
+            <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+        <button type="button" mat-raised-button style="margin-left:76%;background-color: forestgreen;color: aliceblue;"   (click)="exporter.exportTable('xlsx', {fileName:'app_report', sheet: 'app_sheet'})">Excel</button>
+        <button type="button" mat-raised-button style="margin-left: 1%;margin-right: 1%; background-color: crimson;color: aliceblue;" printSectionId="print-section" ngxPrint >Pdf/Print</button>
+        <div class="mat-elevation-z8" id="print-section">
+            <table mat-table #table [dataSource]="dataSource" matTableExporter #exporter="matTableExporter" class="mat-elevation-z8" style="width: 100%;">
+                <ng-container matColumnDef="sn">
+                    <th mat-header-cell *matHeaderCellDef> # </th>
+                    <td mat-cell *matCellDef="let row;let i=index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dept_name">
+                    <th mat-header-cell *matHeaderCellDef>Department Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.dept_name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mobile_no">
+                    <th mat-header-cell *matHeaderCellDef>Mobile No.</th>
+                    <td mat-cell *matCellDef="let row"> {{row.mobile_no}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email_id">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let row"> {{row.email_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="machine_ip">
+                  <th mat-header-cell *matHeaderCellDef> System IP </th>
+                  <td mat-cell *matCellDef="let row"> {{row.machine_ip}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="apps_working">
+                <th mat-header-cell *matHeaderCellDef> Projects Working On </th>
+                <td mat-cell *matCellDef="let row"> {{row.projects}} </td>
+            </ng-container>
+
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+            </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[100]"></mat-paginator>
+        </div>
+        
+    </mat-card-content>
+</mat-card>
+
+
+
+

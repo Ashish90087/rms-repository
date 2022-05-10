@@ -1,0 +1,23 @@
+.full-width{
+    width: 100%;
+}
+
+.top-padding{
+    padding-top: 3px;
+}
+
+.margin-left mat-radio-button:not(:first-child){
+    margin-left:10px;
+}
+
+.form-container{
+    margin: 10px;
+}
+td , th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
+}
+.highlight{
+    background: #c90f09; /* red*/
+  }

@@ -32,7 +32,7 @@ export class DatabaseComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  displayedColumns: string[] = ['sn', 'db_name', 'db_type', 'app_name', 'dept_name', 'name' ,'action'];
+  displayedColumns: string[] = ['sn', 'db_name', 'db_type', 'app_name', 'dept_name', 'db_server' ,'action'];
 
   constructor(private fB : FormBuilder,private cms : CommonService) { }
 

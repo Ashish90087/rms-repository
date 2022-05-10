@@ -42,8 +42,7 @@
          <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
               <mat-label>Choose Department</mat-label>
-              <mat-select formControlName="dept_code" placeholder="Department"
-              >
+              <mat-select formControlName="dept_code" placeholder="Department">
               <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                 {{dept.dept_name }}
               </mat-option>
@@ -54,8 +53,7 @@
           <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
               <mat-label>Database Server</mat-label>
-              <mat-select formControlName="server_id" placeholder="DB Server"
-              >
+              <mat-select formControlName="server_id" placeholder="DB Server">
               <mat-option *ngFor="let i of server_data" [value]="i.server_id">
                 {{i.server_ip }}
               </mat-option>
@@ -63,7 +61,7 @@
             </mat-form-field>
           </div>
 
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 80%;">
                   <mat-label>Responsible Employee</mat-label>
                   <mat-select formControlName="user_id" placeholder="User Name">
@@ -72,7 +70,7 @@
                   </mat-option>
                 </mat-select>
                 </mat-form-field>
-              </div>
+              </div> -->
         </div>
 
       </mat-card-content>
@@ -122,9 +120,9 @@
                 </ng-container>
 
 
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Responsible person</th>
-                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                <ng-container matColumnDef="db_server">
+                    <th mat-header-cell *matHeaderCellDef>Db Server</th>
+                    <td mat-cell *matCellDef="let row"> {{row.server_ip}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="action">

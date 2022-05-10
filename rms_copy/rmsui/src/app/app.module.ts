@@ -21,6 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserComponent } from './user/user.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import {NgxPrintModule} from 'ngx-print';
 import { DepartmentComponent } from './department/department.component'
 import { ApplicationComponent } from './application/application.component';
 import { DatabaseComponent } from './database/database.component';
@@ -49,6 +51,10 @@ import { WelcomeAdminComponent } from './welcome-admin/welcome-admin.component';
 import { WelcomeUserComponent } from './welcome-user/welcome-user.component';
 import { AppDescriptionComponent } from './app-description/app-description.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ReportsComponent } from './reports/reports.component';
+import { AppReportComponent } from './app-report/app-report.component';
+import { DbReportComponent } from './db-report/db-report.component';
+import { EmpReportComponent } from './emp-report/emp-report.component';
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
@@ -80,7 +86,11 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     DashboardComponent,
     WelcomeAdminComponent,
     WelcomeUserComponent,
-    AppDescriptionComponent
+    AppDescriptionComponent,
+    ReportsComponent,
+    AppReportComponent,
+    DbReportComponent,
+    EmpReportComponent
   ],
   imports: [
     NgbDatepickerModule,
@@ -99,6 +109,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
+    MatTableExporterModule,
+    NgxPrintModule,
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,

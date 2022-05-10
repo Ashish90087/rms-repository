@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
+import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class MapAppUserComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   displayedColumns: string[] = ['sn', 'app_name', 'name'];
+ 
 
   constructor(private fB : FormBuilder,private cms : CommonService) { }
 
@@ -35,6 +37,8 @@ export class MapAppUserComponent implements OnInit {
   dataSource: any = [];
   public data:any;
   public user:any=[];
+  selected = this.app_data; 
+
 
 
   onSubmit(){
@@ -101,6 +105,7 @@ export class MapAppUserComponent implements OnInit {
     this.getApplication();
     this.getUser();
     this.getMapDetails();
+    
   }
 
 }
