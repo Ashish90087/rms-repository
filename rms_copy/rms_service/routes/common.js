@@ -380,6 +380,17 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/sslcount', function(req, res, next) {
+    return db.query('select count(*) as x from mas_app ma WHERE ma.ssl_expiry<CURDATE() ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
 
 
   router.get('/project', function(req, res, next) {

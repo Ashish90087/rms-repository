@@ -10,6 +10,7 @@ import { MatTableExporterDirective } from 'mat-table-exporter';
 import jspdf, { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
 
 
 @Component({
@@ -39,9 +40,13 @@ export class AppReportComponent implements OnInit {
   platform:any=[];
   project_details:any=[];
   x:any=[];
+  public today:any = '';
+  
 
   selected = '' ;
   selectedType = '';
+  cur_date='';
+  selectedOption='Y';
 
   // onChange(event :any) {
   //   this.selected = event.source.triggerValue;
@@ -121,6 +126,10 @@ export class AppReportComponent implements OnInit {
     
 
   ngOnInit(): void {
+   this.today = new Date();
+   let momentVariable = moment(this.today, 'MM-DD-YYYY');
+   this.cur_date = momentVariable.format('YYYY-MM-DD');
+   console.log(this.today);
    this.getDepartment();
    this.getPlateform();
   } 

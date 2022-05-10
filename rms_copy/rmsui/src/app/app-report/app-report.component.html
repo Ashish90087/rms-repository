@@ -9,8 +9,8 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Choose Department</mat-label>
-                    <mat-select formControlName="dept_code" placeholder="Choose Department"  (selectionChange)="getDept($event)">
-                    <mat-option value="Y">All</mat-option>
+                    <mat-select formControlName="dept_code" selected ="Y" placeholder="Choose Department" (selectionChange)="getDept($event)" >
+                    <mat-option value="Y" >All</mat-option>
                     <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                       {{dept.dept_name }}
                     </mat-option>
@@ -98,7 +98,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="{ 'highlight': entry.exp < cur_date }"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
