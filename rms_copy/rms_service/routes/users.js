@@ -124,7 +124,7 @@ router.get('/getStocks', function(req, res, next) {
   });
 });
 router.get('/stockstoreturn', function(req, res, next) {
-  return db.query('SELECT s.*, m.dept_name from stock_receive_mas s INNER JOIN mas_dept m ON s.dept_id=m.dept_code' ,function(err,rows1){
+  return db.query('SELECT s.*, m.dept_name from stock_receive_mas s INNER JOIN mas_dept m ON s.dept_id=m.dept_code AND s.status_id!=5; ' ,function(err,rows1){
     if(err){
       return res.json(err);
     }
