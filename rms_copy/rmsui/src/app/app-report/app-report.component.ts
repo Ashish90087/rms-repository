@@ -22,7 +22,7 @@ export class AppReportComponent implements OnInit {
 
   appReportForm : FormGroup =  this.fB.group({
     app_id: [''],
-    dept_code: [''],
+    dept_code: ['Y'],
     dept_name :[''],
     plateform_id: [''],
     app_name:[''],
@@ -85,6 +85,19 @@ export class AppReportComponent implements OnInit {
   
    }
 
+   getApplication(){
+    this.cms.getFunction('apps_report').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.app_data = res;
+        this.dataSource = new MatTableDataSource(this.app_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+
+   }
+
    getApps(event:any) {
 
     this.cms.getFunction('app_report2'+"/"+this.appReportForm.value.plateform_id).subscribe((res: any) => {
@@ -132,6 +145,8 @@ export class AppReportComponent implements OnInit {
    console.log(this.today);
    this.getDepartment();
    this.getPlateform();
+   this.getApplication();
+   
   } 
 
 }
