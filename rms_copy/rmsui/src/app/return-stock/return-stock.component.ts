@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx'; 
 import {jsPDF} from 'jspdf';  
-import 'jspdf-autotable';
+// import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 
 
