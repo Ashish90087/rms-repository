@@ -56,7 +56,6 @@ import { AppReportComponent } from './app-report/app-report.component';
 import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
 
-
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
 
@@ -134,8 +133,10 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
   ],
   providers: [DatePipe,{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }] ,
+    useClass: HashLocationStrategy,
+
+  }
+] ,
   bootstrap: [AppComponent],
 })
 export class AppModule { }
