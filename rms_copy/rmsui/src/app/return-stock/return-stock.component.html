@@ -151,10 +151,10 @@
     <a style="cursor: pointer" (click)="exportexcel()">
       <mat-icon> cloud_download</mat-icon>
     </a>
-    <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  
+    <!-- <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  
     <div style="text-align: center;">
       <input type="button" class="btn btn-danger" value="Convert" (click)="convertToPDF()" />
-    </div>
+    </div> -->
   </mat-card>
 </form>
 
@@ -165,7 +165,7 @@
           Returned Stocks List
       </mat-card-title>
   </mat-card-header>
-  <mat-card-content style="border:5px solid red">
+  <mat-card-content >
       <mat-form-field appearance="standard">
           <mat-label class="required">Filter</mat-label>
           <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
@@ -175,8 +175,8 @@
       <!-- <a style="cursor: pointer" (click)="exportexcel()" >
         <mat-icon> cloud_download</mat-icon>
       </a> -->
-      <input type="button" value="Download Excel" class="btn btn-success" (click)="exportexcel()" style="margin-right: 10px;"> 
-      <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()"> 
+      <!-- <input type="button" value="Download Excel" class="btn btn-success" (click)="exportexcel()" style="margin-right: 10px;"> 
+      <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  -->
     </div> 
       <div class="mat-elevation-z8 container" id="content" #content >
           <table mat-table #table [dataSource]="returned_data" class="mat-elevation-z8" style="width: 100%;" id="excel-table">

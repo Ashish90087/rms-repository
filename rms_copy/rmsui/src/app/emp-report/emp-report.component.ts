@@ -20,7 +20,7 @@ export class EmpReportComponent implements OnInit {
 
   empReportForm : FormGroup =  this.fB.group({
     name: [''],
-    dept_code: [''],
+    dept_code: ['Y'],
     dept_name :[''],
     server_id:[''],
     server_ip:[''],
@@ -102,6 +102,18 @@ export class EmpReportComponent implements OnInit {
   
     });
   }
+   
+  getEmployees(){
+    this.cms.getFunction('user_report').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.db_data = res;
+        this.dataSource = new MatTableDataSource(this.db_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+  }
 
 
     applyFilter(event: Event): void {
@@ -116,6 +128,7 @@ export class EmpReportComponent implements OnInit {
 
   ngOnInit(): void {
    this.getDepartment();
+   this.getEmployees();
    
   } 
 

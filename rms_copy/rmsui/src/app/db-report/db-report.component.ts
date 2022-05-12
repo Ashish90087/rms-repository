@@ -20,7 +20,7 @@ export class DbReportComponent implements OnInit {
 
   dbReportForm : FormGroup =  this.fB.group({
     db_id: [''],
-    dept_code: [''],
+    dept_code: ['Y'],
     dept_name :[''],
     server_id:[''],
     server_ip:[''],
@@ -102,6 +102,19 @@ export class DbReportComponent implements OnInit {
     });
   }
 
+  getDatabase(){
+    this.cms.getFunction('db').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.db_data = res;
+        this.dataSource = new MatTableDataSource(this.db_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+
+  }
+
 
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -115,6 +128,7 @@ export class DbReportComponent implements OnInit {
 
   ngOnInit(): void {
    this.getDepartment();
+   this.getDatabase();
    
   } 
 

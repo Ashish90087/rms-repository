@@ -24,6 +24,7 @@ import { AppDescriptionComponent } from './app-description/app-description.compo
 import { AppReportComponent } from './app-report/app-report.component';
 import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
 
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path : 'appreport' , component: AppReportComponent },
   { path : 'dbreport' , component: DbReportComponent },
   { path : 'empreport' , component: EmpReportComponent },
+  { path : 'report' , component: ReportsComponent },
 
  ]
 

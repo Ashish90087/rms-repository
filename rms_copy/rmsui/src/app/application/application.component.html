@@ -46,8 +46,7 @@
             <div class="col-md-3">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Choose Department</mat-label>
-                <mat-select formControlName="dept_code" placeholder="Department"
-                >
+                <mat-select formControlName="dept_code" placeholder="Department">
                 <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                   {{dept.dept_name }}
                 </mat-option>
@@ -58,8 +57,7 @@
             <div class="col-md-3">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Choose Server IP</mat-label>
-                <mat-select formControlName="server_id" placeholder="Server IP"
-                >
+                <mat-select formControlName="server_id" placeholder="Server IP">
                 <mat-option *ngFor="let i of server_data" [value]="i.server_id">
                   {{i.server_ip }}
                 </mat-option>
