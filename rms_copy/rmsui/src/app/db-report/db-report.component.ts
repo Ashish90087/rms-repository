@@ -42,6 +42,8 @@ export class DbReportComponent implements OnInit {
 
   selected = '' ;
   selectedType = '';
+  selectedElement='';
+  selected2Element='';
 
   // onChange(event :any) {
   //   this.selected = event.source.triggerValue;
@@ -50,6 +52,8 @@ export class DbReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
+
+    this.dataSource = '';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
@@ -82,6 +86,7 @@ export class DbReportComponent implements OnInit {
 
    getDb(event:any) {
 
+    this.dataSource = '';
     this.cms.getFunction('db_report2'+"/"+this.dbReportForm.value.server_id).subscribe((res: any) => {
       console.log(res)
   
@@ -113,6 +118,17 @@ export class DbReportComponent implements OnInit {
       }
     });
 
+  }
+
+  clearserver(){
+    
+    this.selected2Element = '';
+       
+  
+  }
+
+  cleardept(){
+    this.selectedElement = '';
   }
 
 

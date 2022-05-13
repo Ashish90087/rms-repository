@@ -9,7 +9,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Choose Department</mat-label>
-                    <mat-select formControlName="dept_code" placeholder="Choose Department"  (selectionChange)="getDept($event)">
+                    <mat-select formControlName="dept_code" [(ngModel)]="selectedElement" placeholder="Choose Department"  (selectionChange)="getDept($event);clearserver()">
                     <mat-option value="Y">All</mat-option>
                     <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                       {{dept.dept_name }}
@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Choose DB Server</mat-label>
-                    <mat-select formControlName="server_id" placeholder="Choose Db Server" (selectionChange)="getDb($event)">
+                    <mat-select formControlName="server_id" placeholder="Choose Db Server" (selectionChange)="getDb($event);cleardept()">
                     <mat-option value="6">10.132.0.201</mat-option>
                     <mat-option value="18">10.132.33.172</mat-option>
                   </mat-select>

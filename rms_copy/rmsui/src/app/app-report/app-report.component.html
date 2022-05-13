@@ -9,7 +9,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Choose Department</mat-label>
-                    <mat-select formControlName="dept_code" selected ="Y" placeholder="Choose Department" (selectionChange)="getDept($event)" >
+                    <mat-select formControlName="dept_code" [(ngModel)]="selectedElement" placeholder="Choose Department" (selectionChange)="getDept($event);clearplatform()" >
                     <mat-option value="Y" >All</mat-option>
                     <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                       {{dept.dept_name }}
@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Choose Platform</mat-label>
-                    <mat-select formControlName="plateform_id" placeholder="Choose Platform" (selectionChange)="getApps($event)">
+                    <mat-select formControlName="plateform_id" [(ngModel)]="selected2Element" placeholder="Choose Platform" (selectionChange)="getApps($event);cleardept()">
                     <mat-option *ngFor="let i of platform" [value]="i.plateform_id">
                       {{i.plateform_name }}
                     </mat-option>

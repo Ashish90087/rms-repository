@@ -51,6 +51,7 @@ export class EmpReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
+    this.dataSource='';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
@@ -79,20 +80,6 @@ export class EmpReportComponent implements OnInit {
     });
    }
   
-   }
-
-   getDb(event:any) {
-
-    this.cms.getFunction('db_report2'+"/"+this.empReportForm.value.server_id).subscribe((res: any) => {
-      console.log(res)
-  
-      if (res.length) {
-        this.db_data = res;
-        this.dataSource = new MatTableDataSource(this.db_data);
-        this.dataSource.paginator = this.paginator;
-      }
-    });
-
    }
 
    getDepartment() {

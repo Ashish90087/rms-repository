@@ -47,6 +47,8 @@ export class AppReportComponent implements OnInit {
   selectedType = '';
   cur_date='';
   selectedOption='Y';
+  selectedElement='';
+  selected2Element='';
 
   // onChange(event :any) {
   //   this.selected = event.source.triggerValue;
@@ -55,6 +57,7 @@ export class AppReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
+    this.dataSource = '';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
@@ -100,6 +103,7 @@ export class AppReportComponent implements OnInit {
 
    getApps(event:any) {
 
+    this.dataSource = '';
     this.cms.getFunction('app_report2'+"/"+this.appReportForm.value.plateform_id).subscribe((res: any) => {
       console.log(res)
   
@@ -125,6 +129,17 @@ export class AppReportComponent implements OnInit {
       this.platform= res;
   
     });
+  }
+
+  clearplatform(){
+    
+    this.selected2Element = '';
+       
+  
+  }
+
+  cleardept(){
+    this.selectedElement = '';
   }
 
     applyFilter(event: Event): void {
