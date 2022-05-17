@@ -1,33 +1,35 @@
-<div style="padding-top: 10%;">
-  <div class="card2 card border-8 px-4 py-3" style="height: 250px;">
-<form  [formGroup]="loginForm" (ngSubmit)="login()" >
-
-  <div class="form-group">
-    <!-- <mat-form-field  appearance="fill">
-      <mat-label>UserName</mat-label>
-      <input matInput formControlName="username">
-    </mat-form-field> -->
-    <label for="username" style="color: rgb(13, 13, 85); font-size: 15px;">UserID</label>
-    <input type="text" class="form-control" formControlName="userid" placeholder="Enter userid">
-   </div>
-
-   <div class="form-group" style="padding-top: 5%;">
-      <!-- <mat-form-field  appearance="fill">
-        <mat-label class="fw-semibold">Password</mat-label>
-        <input matInput  type="password" class="form-control" formControlName="password">
-      </mat-form-field> -->
-      <label for="userpassword" style="color: rgb(13, 13, 85); font-size: 15px;">Password</label>
-      <input type="password" class="form-control"  formControlName="password" placeholder="Enter password">
- </div>
-
- <div class="row align-items-center" style="padding-top: 5%;">
-  <div class="col-6">
-      <div class="text-end">
-        <button type="submit" class="btn btn-primary b-btn">Log In</button>
-      </div>
+<div class="container-fluid">
+  <div class="row no-gutter">
+      <!-- The image half -->
+      <div class="col-md-6 d-none d-md-flex bg-image"></div>
+      <!-- The content half -->
+      <div class="col-md-6 bg-light">
+          <div class="login d-flex align-items-center py-5">
+              <!-- Demo content-->
+              <div class="container">
+                  <div class="row">
+                      <div class="col-lg-10 col-xl-7 mx-auto">
+                          <h3 class="display-4">Split page!</h3>
+                          <p class="text-muted mb-4">Create a login split page using Bootstrap 4.</p>
+                          <form [formGroup]="loginForm" (ngSubmit)="login()">
+                              <div class="form-group mb-3">
+                                  <input id="inputEmail" type="email" formControlName="userid" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                              </div>
+                              <div class="form-group mb-3">
+                                  <input id="inputPassword" type="password" formControlName="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                              </div>
+                              <div class="custom-control custom-checkbox mb-3">
+                                  <input id="customCheck1" type="checkbox" checked class="custom-control-input">
+                                  <label for="customCheck1" class="custom-control-label">Remember password</label>
+                              </div>
+                              <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Log In</button>
+                              <div class="text-center d-flex justify-content-between mt-4"><p>Code by <a href="#" class="font-italic text-muted"> 
+                                      <u>Jassa</u></a></p></div>
+                          </form>
+                      </div>
+                  </div>
+              </div><!-- End -->
+          </div>
+      </div><!-- End -->
   </div>
- </div>
-</form>
 </div>
-</div>
-

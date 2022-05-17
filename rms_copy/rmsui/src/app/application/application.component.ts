@@ -48,7 +48,7 @@ export class ApplicationComponent implements OnInit {
   onSubmit(){
     //console.log(this.testForm.value);
     this.appForm.patchValue({
-      work_order_from : this.datePipe.transform(this.appForm.get("ssl_expiry")?.value, "yyyy-MM-dd")
+      ssl_expiry : this.datePipe.transform(this.appForm.get("ssl_expiry")?.value, "yyyy-MM-dd")
       })
     if(this.x==0){
     this.cms.saveDetails('apps',this.appForm.value).subscribe((res:any) => {

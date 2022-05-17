@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         }
 
       } else {
-        alert('please give valid inputs.2');
+        alert('WRONG CREDENTIALS');
       }
 
     });
