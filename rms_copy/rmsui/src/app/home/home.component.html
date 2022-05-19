@@ -1,10 +1,140 @@
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Home
-      <a routerLink="/login"> <button type="button" mat-raised-button color="primary" style="margin-left: 80%;height:fit-content">Login</button></a>
+    <div class="d-flex justify-content-between page__box p-3 mt-2" style="align-items:center ;"><b>Resource Management System (Home)</b>
+    <div>
+     <a routerLink="/login"> <button type="button" mat-raised-button color="primary"  style="height:fit-content;color:black;background-color:aliceblue;"><b>Login</b></button></a>
     </div>
-    <div class="page__content shadow p-3 position-relative">
-      <div class="page__content-data position-absolute text-center">
-        Resource Management System
+    </div>
+    <div class="col-md-12 " style="margin-top: 2%;">
+      <div class="row ">
+          <div class="col-xl-4 col-lg-6">
+              <div class="card l-bg-blue-dark">
+                      <div class="card-statistic-3 p-4">
+                      <div class="mb-4">
+                          <h3 class="card-title mb-0">Total Applications</h3>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  {{app_count}}
+                              </h2>
+                          </div>
+  
+                      </div>
+                      <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+              <div class="card l-bg-blue-dark">
+                  <div class="card-statistic-3 p-4">
+                      <div class="mb-4">
+                          <h3 class="card-title mb-0">Total Employees</h3>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  {{emp_count}}
+                              </h2>
+                          </div>
+  
+                      </div>
+                      <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="col-xl-4 col-lg-6">
+              <div class="card l-bg-blue-dark">
+                  <div class="card-statistic-3 p-4">
+                      <div class="mb-4">
+                          <h3 class="card-title mb-0">Total Servers</h3>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  {{server_count}}
+                              </h2>
+                          </div>
+  
+                      </div>
+                      <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
       </div>
-    </div>
+  
+      <div class="row ">
+          <div class="col-xl-4 col-lg-6">
+              <div class="card l-bg-blue-dark">
+                  <div class="card-statistic-3 p-4">
+                      <div class="mb-4">
+                          <h3 class="card-title mb-0">Total Databases</h3>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  {{db_count}}
+                              </h2>
+                          </div>
+  
+                      </div>
+                      <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+              <div class="card l-bg-blue-dark">
+                  <div class="card-statistic-3 p-4">
+                      <div class="mb-4">
+                          <h3 class="card-title mb-0">Total Stock</h3>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  {{stock_count}}
+                              </h2>
+                          </div>
+  
+                      </div>
+                      <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="col-xl-4 col-lg-6">
+              <a routerLink="/dashboard/appreport" style="text-decoration: none;">
+              <div class="card l-bg-blue-dark">
+                  <div class="card-statistic-3 p-4">
+                      <div class="mb-4">
+                          <h3 class="card-title mb-0">SSL Expired Apps</h3>
+                      </div>
+                      <div class="row align-items-center mb-2 d-flex">
+                          <div class="col-8">
+                              <h2 class="d-flex align-items-center mb-0">
+                                  {{ssl_count}}
+                              </h2>
+                          </div>
+  
+                      </div>
+                      <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                      </div>
+                  </div>
+              </div>
+             </a>
+          </div>
+          </div>
+  </div>
+    
   </div>
