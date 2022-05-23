@@ -286,7 +286,7 @@ router.put('/issues', function (req, res) {
 });
 router.put('/returns', function (req, res) {
   
-  return db.query('Update returned_stock_details set serial_no=?,dept_id=?,returned_date=?,g_form_no=?,remark=?  where stock_id=?',[req.body.serial_no,req.body.dept_id,req.body.returned_date,req.body.g_form_no,req.body.remark,req.body.stock_id] , function (err, rows1) {
+  return db.query('Update returned_stock_details set serial_no=?,dept_id=?,returned_date=?,g_form_no=?,remarks=?  where stock_id=?',[req.body.serial_no,req.body.dept_id,req.body.returned_date,req.body.g_form_no,req.body.remarks,req.body.stock_id] , function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);

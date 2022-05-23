@@ -224,7 +224,6 @@ export class ReturnStockComponent implements OnInit {
       serial_no: this.deptdata.serial_no,
       dept_id:this.deptdata.dept_id,
       remarks:this.deptdata.remarks,
-      status_id:this.deptdata.re,
       returned_date:this.deptdata.returned_date,
       g_form_no:this.deptdata.g_form_no
       })
