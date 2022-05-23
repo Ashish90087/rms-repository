@@ -7,8 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableExporterDirective } from 'mat-table-exporter';
-import jspdf, { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +18,7 @@ export class DbReportComponent implements OnInit {
 
   dbReportForm : FormGroup =  this.fB.group({
     db_id: [''],
-    dept_code: [''],
+    dept_code: ['Y'],
     dept_name :[''],
     server_id:[''],
     server_ip:[''],
@@ -42,6 +40,8 @@ export class DbReportComponent implements OnInit {
 
   selected = '' ;
   selectedType = '';
+  selectedElement='';
+  selected2Element='';
 
   // onChange(event :any) {
   //   this.selected = event.source.triggerValue;
@@ -50,6 +50,8 @@ export class DbReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
+
+    this.dataSource = '';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
@@ -82,6 +84,7 @@ export class DbReportComponent implements OnInit {
 
    getDb(event:any) {
 
+    this.dataSource = '';
     this.cms.getFunction('db_report2'+"/"+this.dbReportForm.value.server_id).subscribe((res: any) => {
       console.log(res)
   
@@ -102,6 +105,30 @@ export class DbReportComponent implements OnInit {
     });
   }
 
+  getDatabase(){
+    this.cms.getFunction('db').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.db_data = res;
+        this.dataSource = new MatTableDataSource(this.db_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+
+  }
+
+  clearserver(){
+    
+    this.selected2Element = '';
+       
+  
+  }
+
+  cleardept(){
+    this.selectedElement = '';
+  }
+
 
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -115,6 +142,7 @@ export class DbReportComponent implements OnInit {
 
   ngOnInit(): void {
    this.getDepartment();
+   this.getDatabase();
    
   } 
 

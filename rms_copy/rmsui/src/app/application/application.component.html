@@ -46,8 +46,7 @@
             <div class="col-md-3">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Choose Department</mat-label>
-                <mat-select formControlName="dept_code" placeholder="Department"
-                >
+                <mat-select formControlName="dept_code" placeholder="Department">
                 <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
                   {{dept.dept_name }}
                 </mat-option>
@@ -58,8 +57,7 @@
             <div class="col-md-3">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Choose Server IP</mat-label>
-                <mat-select formControlName="server_id" placeholder="Server IP"
-                >
+                <mat-select formControlName="server_id" placeholder="Server IP">
                 <mat-option *ngFor="let i of server_data" [value]="i.server_id">
                   {{i.server_ip }}
                 </mat-option>
@@ -77,10 +75,20 @@
 
           <div class="col-md-3">
             <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>SSL Expiry Date</mat-label>
+                <input formControlName="ssl_expiry" matInput [matDatepicker]="picker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+          </div>
+
+          <!-- <div class="col-md-3">
+            <mat-form-field appearance="outline" style="width: 100%;">
               <mat-label>SSL Expiry Date</mat-label>
               <input type="date" formControlName="ssl_expiry" matInput>
             </mat-form-field>
-          </div>
+          </div> -->
         </div>
 
         <!-- <div class="row">

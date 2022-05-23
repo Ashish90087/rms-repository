@@ -7,8 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableExporterDirective } from 'mat-table-exporter';
-import jspdf, { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +18,7 @@ export class EmpReportComponent implements OnInit {
 
   empReportForm : FormGroup =  this.fB.group({
     name: [''],
-    dept_code: [''],
+    dept_code: ['Y'],
     dept_name :[''],
     server_id:[''],
     server_ip:[''],
@@ -51,6 +49,7 @@ export class EmpReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
+    this.dataSource='';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
@@ -81,9 +80,16 @@ export class EmpReportComponent implements OnInit {
   
    }
 
-   getDb(event:any) {
-
-    this.cms.getFunction('db_report2'+"/"+this.empReportForm.value.server_id).subscribe((res: any) => {
+   getDepartment() {
+    this.cms.getFunction('dept').subscribe((res:any) => {
+      this.department= res;
+      console.log(this.department);
+  
+    });
+  }
+   
+  getEmployees(){
+    this.cms.getFunction('user_report').subscribe((res: any) => {
       console.log(res)
   
       if (res.length) {
@@ -91,15 +97,6 @@ export class EmpReportComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.db_data);
         this.dataSource.paginator = this.paginator;
       }
-    });
-
-   }
-
-   getDepartment() {
-    this.cms.getFunction('dept').subscribe((res:any) => {
-      this.department= res;
-      console.log(this.department);
-  
     });
   }
 
@@ -116,6 +113,7 @@ export class EmpReportComponent implements OnInit {
 
   ngOnInit(): void {
    this.getDepartment();
+   this.getEmployees();
    
   } 
 

@@ -85,13 +85,19 @@
             <input formControlName="was_issued_to" matInput placeholder="was issued to" [ngModel]="was_issued_to">
           </mat-form-field>
         </div> -->
+
         <div class="col-md-4">
-          <mat-form-field appearance="outline" style="width: 80%;">
+          <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
             <mat-label>Returned Date</mat-label>
-            <input formControlName="returned_date" type="date" matInput placeholder=" returned date" >
+            <input formControlName="returned_date" matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
+
+
       <div class="row">
         
         <div class="col-md-4">
@@ -148,10 +154,7 @@
     <mat-card-actions>
       <button mat-raised-button color="primary" style="margin-left: 40%;">Save</button>
     </mat-card-actions>
-    <!-- <a style="cursor: pointer" (click)="exportexcel()">
-      <mat-icon> cloud_download</mat-icon>
-    </a>
-    <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  
+    <!-- <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  
     <div style="text-align: center;">
       <input type="button" class="btn btn-danger" value="Convert" (click)="convertToPDF()" />
     </div> -->
@@ -171,15 +174,8 @@
           <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
           
       </mat-form-field>
-      <div id="excelfile">
-      <!-- <a style="cursor: pointer" (click)="exportexcel()" >
-        <mat-icon> cloud_download</mat-icon>
-      </a> -->
-      <!-- <input type="button" value="Download Excel" class="btn btn-success" (click)="exportexcel()" style="margin-right: 10px;"> 
-      <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  -->
-    </div> 
-      <div class="mat-elevation-z8 container" id="content" #content >
-          <table mat-table #table [dataSource]="returned_data" class="mat-elevation-z8" style="width: 100%;" id="excel-table">
+      <div class="mat-elevation-z8">
+          <table mat-table #table [dataSource]="returned_data" class="mat-elevation-z8" style="width: 100%;" >
               <ng-container matColumnDef="sn">
                   <th mat-header-cell *matHeaderCellDef> # </th>
                   <td mat-cell *matCellDef="let row;let i=index"> {{i+1}} </td>
@@ -194,7 +190,7 @@
                   <td mat-cell *matCellDef="let row"> {{row.serial_no}} </td>
               </ng-container>
               <ng-container matColumnDef="was_issued_to">
-                  <th mat-header-cell *matHeaderCellDef>Was Issued TO </th>
+                  <th mat-header-cell *matHeaderCellDef>Was Issued To </th>
                   <td mat-cell *matCellDef="let row"> {{row.name}} </td>
               </ng-container>
               <ng-container matColumnDef="returned_date">

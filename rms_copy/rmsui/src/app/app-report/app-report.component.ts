@@ -7,8 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableExporterDirective } from 'mat-table-exporter';
-import jspdf, { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 
@@ -22,7 +20,7 @@ export class AppReportComponent implements OnInit {
 
   appReportForm : FormGroup =  this.fB.group({
     app_id: [''],
-    dept_code: [''],
+    dept_code: ['Y'],
     dept_name :[''],
     plateform_id: [''],
     app_name:[''],
@@ -47,6 +45,8 @@ export class AppReportComponent implements OnInit {
   selectedType = '';
   cur_date='';
   selectedOption='Y';
+  selectedElement='';
+  selected2Element='';
 
   // onChange(event :any) {
   //   this.selected = event.source.triggerValue;
@@ -55,6 +55,7 @@ export class AppReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
+    this.dataSource = '';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
@@ -85,8 +86,22 @@ export class AppReportComponent implements OnInit {
   
    }
 
+   getApplication(){
+    this.cms.getFunction('apps_report').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.app_data = res;
+        this.dataSource = new MatTableDataSource(this.app_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+
+   }
+
    getApps(event:any) {
 
+    this.dataSource = '';
     this.cms.getFunction('app_report2'+"/"+this.appReportForm.value.plateform_id).subscribe((res: any) => {
       console.log(res)
   
@@ -114,6 +129,17 @@ export class AppReportComponent implements OnInit {
     });
   }
 
+  clearplatform(){
+    
+    this.selected2Element = '';
+       
+  
+  }
+
+  cleardept(){
+    this.selectedElement = '';
+  }
+
     applyFilter(event: Event): void {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -132,6 +158,8 @@ export class AppReportComponent implements OnInit {
    console.log(this.today);
    this.getDepartment();
    this.getPlateform();
+   this.getApplication();
+   
   } 
 
 }
