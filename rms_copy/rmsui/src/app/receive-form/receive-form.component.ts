@@ -99,6 +99,7 @@ export class ReceiveFormComponent implements OnInit {
       if(this.id1==0)
       {
         console.log("I entered inside for update",this.id1);
+        console.log(this.receiveForm.value);
         this.commonservice.saveDetails('users/receiveNewStock',this.receiveForm.value).subscribe((res:any)=>{
                 if(res['affectedRows']){
                   this.refresh();
@@ -233,5 +234,14 @@ export class ReceiveFormComponent implements OnInit {
   }
   scrollToTop(){
     document.body.scrollTop=document.documentElement.scrollTop=0;
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

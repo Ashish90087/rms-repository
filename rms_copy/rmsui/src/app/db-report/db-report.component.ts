@@ -7,8 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableExporterDirective } from 'mat-table-exporter';
-import jspdf, { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
 
 @Component({

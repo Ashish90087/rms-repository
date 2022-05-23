@@ -25,13 +25,15 @@ import { AppReportComponent } from './app-report/app-report.component';
 import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
 import { ReportsComponent } from './reports/reports.component';
+import { LoginGuard } from './services/login.guard';
 
 const routes: Routes = [
 
 { path: '', redirectTo: 'home', pathMatch: 'full' },
 { path: 'home', component: HomeComponent },
-{ path: 'dashboard', component: DashboardComponent ,
- children: [
+{ path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard],
+ 
+children: [
 
   { path: 'user', component: UserComponent , canActivate: [AuthGuard]},
   { path: 'department', component: DepartmentComponent ,canActivate: [AuthGuard] },
@@ -46,26 +48,26 @@ const routes: Routes = [
   { path : 'issue' , component: IssueFormComponent ,canActivate: [AuthGuard]},
   { path : 'return' , component: ReturnStockComponent ,canActivate: [AuthGuard]},
   { path : 'task' , component: WeeklyWorkDoneComponent ,canActivate: [AuthGuard]},
-  { path : 'admin' , component: WelcomeAdminComponent},
-  { path : 'employee' , component: WelcomeUserComponent},
-  { path : 'return' , component: ReturnStockComponent},
-  { path : 'appreport' , component: AppReportComponent },
-  { path : 'dbreport' , component: DbReportComponent },
-  { path : 'empreport' , component: EmpReportComponent },
-  { path : 'report' , component: ReportsComponent },
+  { path : 'admin' , component: WelcomeAdminComponent,canActivate: [AuthGuard]},
+  { path : 'employee' , component: WelcomeUserComponent,canActivate: [AuthGuard]},
+  { path : 'return' , component: ReturnStockComponent,canActivate: [AuthGuard]},
+  { path : 'appreport' , component: AppReportComponent,canActivate: [AuthGuard] },
+  { path : 'dbreport' , component: DbReportComponent,canActivate: [AuthGuard] },
+  { path : 'empreport' , component: EmpReportComponent,canActivate: [AuthGuard] },
+  { path : 'report' , component: ReportsComponent,canActivate: [AuthGuard] },
 
  ]
 
 },
 
 
-{ path : 'login' , component: LoginComponent},
+{ path : 'login' , component: LoginComponent,canActivate: [LoginGuard]},
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard,LoginGuard]
 })
 export class AppRoutingModule { }

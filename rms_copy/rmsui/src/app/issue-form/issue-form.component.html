@@ -28,13 +28,16 @@
             </mat-form-field>
         </div>
 
-
         <div class="col-md-4">
-            <mat-form-field appearance="outline" style="width: 80%;">
-            <mat-label for="issueddate">Issue Date</mat-label>
-            <input formControlName="issued_date" matInput id="issueddate" type="date">
-            </mat-form-field>
+          <mat-form-field appearance="outline" class="mat-form-field" style="width: 80%;">
+            <mat-label>Issue Date</mat-label>
+            <input formControlName="issued_date" matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
+        
       </div>
 
       <div class="row" >
@@ -96,7 +99,7 @@
     <!-- <div class="col-md-4">Upload I form
       <input type="file" name="image" (change)="selectWorkOrder($event)" style="margin-top: 15px;" />
     </div> -->
-    <button mat-raised-button type="submit" color="primary" >Save</button>
+    <button mat-raised-button type="submit" color="primary" style="margin-left: 40%;" >Save</button>
    <!-- <button mat-raised-button type="submit" color="primary" (click)="onEdit(dept, received_date, username, cpu_sno, monitor_sno, keyboard_sno, mouse_sno, brand, user, issued_date, marked_no, remark, i_form_no, g_form_no)">Edit</button> -->
   </mat-card-content>
 </mat-card>

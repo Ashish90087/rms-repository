@@ -9,9 +9,7 @@ import { CommonService } from '../services/common.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as XLSX from 'xlsx'; 
-import {jsPDF} from 'jspdf';  
-//import 'jspdf-autotable';
-import html2canvas from 'html2canvas';
+
 
 
 @Component({
@@ -70,59 +68,7 @@ export class ReturnStockComponent implements OnInit {
     this.stocksToreturn();
   }
 
-public convertToPDF()
-{
-console.log(document.getElementById('excel-table'));
-html2canvas(document.body).then(canvas => {
-// Few necessary setting options
- 
-const contentDataURL = canvas.toDataURL('image/png')
-let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
-var width = pdf.internal.pageSize.getWidth();
-var height = canvas.height * width / canvas.width;
-pdf.addImage(contentDataURL, 'PNG', 0, 0, width, height)
-pdf.save('output.pdf'); // Generated PDF
-});
-}
 
-  download_pdf(){
-    const doc = new jsPDF();
-    doc.text("stodent details",10,10);
-  }
-  
-
-  public SavePDF(): void {  
-    let content=this.content.nativeElement;  
-    // let document = new Document() ;
-    let doc = new jsPDF('l','pt','a3'); 
-    doc.text('My PDF Table is:', 11, 8);
-    doc.setFontSize(11); 
-    doc.html(content,{
-      callback:(doc)=>{
-        autoSize:true;
-        doc.text('My PDF Table is:', 11, 8);
-        doc.setFontSize(11);
-        doc.save('test.pdf'); 
-      }
-    })
-    console.log("content is ",document.getElementById("excel-table"));
-    console.log("doc is ",doc);
-
-    // let _elementHandlers =  
-    // {  
-    //   '#editor':function(element: any,renderer: any){  
-    //     return true  
-    //   }  
-    // };  
-    // doc.html(content.innerHTML,{  
-  
-    //   'width':190,  
-    //   'elementHandlers': _elementHandlers
-      
-    // });  
-  
-    // doc.save('test.pdf');  
-  }  
   exportexcel(): void 
     {
        /* table id is passed over here */   
