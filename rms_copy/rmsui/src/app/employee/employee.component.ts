@@ -43,6 +43,8 @@ export class EmployeeComponent implements OnInit {
   dataSource: any = [];
   designation: any=[];
   department : any=[];
+  temp:any=[];
+  temp2:any=[];
   vendor : any=[];
   user_data: any = [];
   work_data: any =[];
@@ -75,33 +77,24 @@ export class EmployeeComponent implements OnInit {
 
 
   onSubmit(){
-
-    this.empForm.patchValue({
-      work_order_from : this.datePipe.transform(this.empForm.get("work_order_from")?.value, "yyyy-MM-dd"),
-      work_order_to : this.datePipe.transform(this.empForm.get("work_order_to")?.value, "yyyy-MM-dd"),
-    })
-
+    // this.temp=this.empForm.get('work_order.0.work_order_from')?.value;
+    // console.log("lets see",this.temp);
+    // this.temp2=this.datePipe.transform(this.temp,"yyyy-MM-dd");
+    // console.log("ab dekhte",this.temp2);
+     
+    
     this.cms.saveDetails('workorder',this.empForm.value).subscribe((res:any) => {
-      console.log(res);
+      //console.log(res);
     });
-
-    let d:any=[];
+    
+    
+    for(let i=0;i<this.empForm.value.work_order.length;i=i+1){
+    
     this.data=this.empForm.value;
-    console.log("i am here");
-    console.log(this.data);
-    for(let i=0;i<this.data.work_order.length;i++){
-
-      // console.log({"dept_code": this.data.dept_code, "project_no":this.data.project_no,
-      // "project_name":this.data.project_name, "vendor_id":this.data.vendor_id,"work_order_no" : this.data.work_order_no ,
-      //  "work_order_location" : this.data.work_order_location , "design_id": this.data.work_order[i].design_id,
-      //  "work_order_from": this.data.work_order[i].work_order_from , "work_order_to" : this.data.work_order[i].work_order_to,
-      //  "pi" : this.data.pi , "pi_location":this.data.pi_location, "pef_location":this.data.pef_location,
-      //  "pef": this.data.pef })
-
-
+    console.log("data",this.data);
 
      this.cms.saveDetails('wodetails',{"work_order_no" : this.data.work_order_no , "design_id": this.data.work_order[i].design_id,
-      "work_order_from": this.data.work_order[i].work_order_from , "work_order_to" : this.data.work_order[i].work_order_to, }).subscribe((res:any) => {
+      "work_order_from": this.datePipe.transform(this.data.work_order[i].work_order_from,"yyyy-MM-dd") , "work_order_to" : this.datePipe.transform(this.data.work_order[i].work_order_to,"yyyy-MM-dd") }).subscribe((res:any) => {
       console.log(res);
       if (res['affectedRows']) {
          this.getEmpDetails();
@@ -110,8 +103,12 @@ export class EmployeeComponent implements OnInit {
 
       }
      });
+   
 
- }
+ 
+ 
+        }
+ 
 }
 
 
@@ -269,6 +266,7 @@ getEmpDetails() {
   }
 
   ngOnInit(): void {
+    
    // this.getUser();
     //this.getUser();
     this.getDesignType();

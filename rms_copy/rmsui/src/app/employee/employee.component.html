@@ -108,15 +108,30 @@
             <div class="col-md-3">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Work Order From</mat-label>
-                <input type="date" formControlName="work_order_from" matInput>
+                <input formControlName="work_order_from" matInput [matDatepicker]="picker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
+              <!-- <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Work Order From</mat-label>
+                <input type="date" formControlName="work_order_from" matInput>
+              </mat-form-field> -->
             </div>
             <div class="col-md-3">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Work Order To</mat-label>
-                <input type="date" formControlName="work_order_to" matInput>
+                <input formControlName="work_order_to" matInput [matDatepicker]="picker2">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
+              <!-- <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Work Order To</mat-label>
+                <input type="date" formControlName="work_order_to" matInput>
+              </mat-form-field> -->
             </div>
+
             <div class="col-md-3">
               <button type="button" mat-mini-fab color color="primary" (click)="addNew()" style="margin-right: 5px;" >
                 <mat-icon> add_circle </mat-icon></button>
