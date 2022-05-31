@@ -68,7 +68,7 @@ export class AppDescriptionComponent implements OnInit {
   getApplication() {
     this.cms.getFunction('app_info').subscribe((res:any) => {
       this.app_data= res;
-     // console.log(this.department);
+     console.log(this.app_data);
 
     });
   }

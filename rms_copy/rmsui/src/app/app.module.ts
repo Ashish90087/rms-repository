@@ -13,6 +13,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -55,6 +56,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { AppReportComponent } from './app-report/app-report.component';
 import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
+
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
@@ -102,6 +104,7 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatAutocompleteModule,
     MatRadioModule,
     MatCardModule,
     MatButtonModule,

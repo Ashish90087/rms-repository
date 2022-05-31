@@ -98,14 +98,15 @@ export class IssueFormComponent implements OnInit {
 
 
   }
-  woPDF(ilocation:any){
-    console.log("I am WO PDF");
-    console.log(ilocation)
-  const url= ('http://localhost:3000/' + ilocation );
-  window.open(url);
-  //console.log(url);
+  // woPDF(ilocation:any){
+  //   console.log("I am WO PDF");
+  //   console.log(ilocation)
+  // const url= ('http://localhost:3000/' + ilocation );
+  // window.open(url);
+  // console.log(url);
 
-  }
+  // }
+
 public stat:any=[];
   onSubmit(){
     this.issueForm.patchValue({

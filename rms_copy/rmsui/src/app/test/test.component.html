@@ -21,17 +21,24 @@
 <mat-radio-button value="female"> Female </mat-radio-button>
 </mat-radio-group><br><br>
 
-<div class="col-md-3">
+<div>
   <mat-form-field appearance="fill">
   <mat-label>Choose one</mat-label>
-  <mat-select formControlName="dept_code" placeholder="Department"
-  >
+  <mat-autocomplete formControlName="dept_code" placeholder="Department" #auto="matAutocomplete">
+  <!-- <mat-select formControlName="dept_code" placeholder="Department"> -->
   <mat-option *ngFor="let dept of department" [value]="dept.dept_code">
     {{dept.dept_name }} 
   </mat-option>
-</mat-select>
+</mat-autocomplete>
+<!-- </mat-select> -->
 </mat-form-field>
 </div>
+
+<!-- <mat-autocomplete formControlName="dept_code" placeholder="Department" #auto="matAutocomplete">
+  <mat-option *ngFor="let option of options" [value]="option">
+    {{option}}
+  </mat-option>
+</mat-autocomplete> -->
 <br><br>
  <div class="example-button-row">
     <button mat-raised-button color="success" >

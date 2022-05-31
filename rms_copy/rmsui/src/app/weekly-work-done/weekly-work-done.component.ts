@@ -132,12 +132,22 @@ export class WeeklyWorkDoneComponent implements OnInit {
 
     getApplication() {
 
+      if(this.role==1){
+        this.cms.getFunction('app_info').subscribe((res:any) => {
+          this.app_data= res;
+        });
+      
+      }
+      else{
         this.cms.getFunction('task' +"/"+this.taskForm.value.user_id).subscribe((res:any) => {
           this.app_data= res;
        //   console.log(this.hospital);
          // this.disabledropdown = false;
         });
       }
+
+      }
+        
 
 
     applyFilter(event: Event): void {

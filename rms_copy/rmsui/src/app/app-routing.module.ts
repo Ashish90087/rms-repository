@@ -31,6 +31,7 @@ const routes: Routes = [
 
 { path: '', redirectTo: 'home', pathMatch: 'full' },
 { path: 'home', component: HomeComponent },
+{ path: 'test', component: TestComponent },
 { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard],
  
 children: [

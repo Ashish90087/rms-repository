@@ -280,6 +280,17 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  router.get('/mapwo', function(req, res, next) {
+    return db.query('select mew.wo_details_id,mwd.work_order_no, GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as Employees from map_emp_wo mew JOIN mas_wo_details mwd ON mew.wo_details_id=mwd.wo_details_id JOIN mas_user mu ON mew.user_id = mu.user_id group by mwd.work_order_no', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
   router.get('/server', function(req, res, next) {
     return db.query('select * from mas_server', function (err, rows1) {
       if (err) {
@@ -316,6 +327,17 @@ router.get('/user', function(req, res, next) {
   router.get('/task/:user_id', function(req, res, next) {
     console.log("hi",req.params);
     return db.query('select mau.app_id,ma.app_name from map_app_user mau join mas_app ma on ma.app_id=mau.app_id WHERE mau.user_id=?', [req.params.user_id] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/weekTask', function(req, res, next) {
+    return db.query('select ma.app_id , ma.app_name from mas_app ma ', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
