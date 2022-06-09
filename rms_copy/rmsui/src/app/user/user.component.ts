@@ -2,10 +2,12 @@ import { Component, ElementRef, OnInit , ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../services/common.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
@@ -36,6 +38,7 @@ export class UserComponent implements OnInit {
     resigning_date : [''],
     //project_no : [''],
     address : [''],
+    ol_location : [''],
     action : ['']
   })
 
@@ -43,20 +46,53 @@ export class UserComponent implements OnInit {
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   displayedColumns: string[] = ['sn', 'name', 'dept_name', 'mobile_no', 'email_id', 'machine_ip','action'];
 
-  constructor(private fB : FormBuilder,private cms : CommonService, private datePipe : DatePipe) { }
+  constructor(private fB : FormBuilder,private cms : CommonService, private datePipe : DatePipe,private http: HttpClient) { }
 
   public department: any = [];
   dataSource: any = [];
   user_data: any = [];
   public x : any = 0;
   public emp : any = [];
-  public designation : any = []
+  public designation : any = [];
+  public folder_location:any='';
+  ol :any='';
+  temp_file:any='';
 
   selectedType = '' ;
 
   onChange(event :any) {
     this.selectedType = event;
     console.log(this.selectedType);
+  }
+
+  selectOfferLetter(event:any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.ol = file;
+      this.folder_location = './uploads/' + 'offer_letter' + '/';
+      console.log('environment.rootUrl+upload+/file');
+  
+  
+    }
+    const formData = new FormData();
+    formData.append('file', this.ol);
+    formData.append('folder_name', this.folder_location);
+  
+    this.http.post<any>(environment.rootUrl+'upload'+'/file', formData).subscribe(res => {
+      console.log(res);
+      this.temp_file = res;
+      console.log(this.temp_file.path);
+  
+      this.userForm.patchValue({
+       ol_location: this.temp_file.filepath,
+      }
+  
+    );
+    console.log(this.userForm.value.ol_location)
+  
+    });
+  
+  
   }
 
   onSubmit(){
@@ -69,7 +105,7 @@ export class UserComponent implements OnInit {
     console.log("Just checking",this.userForm.value);
     if(this.x==0) {
     this.cms.saveDetails('users',this.userForm.value).subscribe((res:any) => {
-      console.log(res);
+      console.log("Posting",res);
       if (res['affectedRows']) {
          this.getUserDetails();
          this.userForm.reset();
@@ -81,7 +117,7 @@ export class UserComponent implements OnInit {
     else
     {
       this.cms.updateFunction('user',this.userForm.value).subscribe((res:any) => {
-        console.log(res);
+        console.log("updating",res);
         if (res['affectedRows']) {
            this.getUserDetails();
            this.userForm.reset();
@@ -134,7 +170,8 @@ export class UserComponent implements OnInit {
       dept_name: this.temp.dept_name,
       email_id: this.temp.email_id,
       address: this.temp.address,
-      machine_ip : this.temp.machine_ip
+      machine_ip : this.temp.machine_ip,
+      ol_location : this.temp.ol_location
       })
       console.log("Which ID is this :" ,user_id);
       console.log("Stock Update insert ID is :" ,this.userForm.value.insertId);

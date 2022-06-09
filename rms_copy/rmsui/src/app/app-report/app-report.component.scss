@@ -23,8 +23,18 @@ td , th {
     //#df8a7efd
   }
 .mat-header-cell {
-    background: #2c3344bb;
+    //background: #040916e7;
+    background: #2c3344;
     color: #f2f5f7;
     font-size: medium;
+    opacity: 1;
     //background: #2c3344;
  }
+ table {
+    width: 100%;
+  }
+  .example-container {
+    height: 600px;
+    max-width: 100%;
+    overflow: auto;
+  }

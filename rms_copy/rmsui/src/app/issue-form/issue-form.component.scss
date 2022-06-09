@@ -14,8 +14,17 @@
   margin: 0 px;
 }
 .mat-header-cell {
-  background: #2c3344bb;
+  background: #2c3344fa;
   color: #f2f5f7;
   font-size: medium;
   //background: #2c3344;
+}
+
+table {
+  width: 100%;
+}
+.example-container {
+  height: 450px;
+  max-width: 100%;
+  overflow: auto;
 }

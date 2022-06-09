@@ -4,16 +4,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestComponent } from './test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsComponent } from './forms/forms.component';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -23,7 +21,7 @@ import { UserComponent } from './user/user.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableExporterModule } from 'mat-table-exporter';
-import {NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from 'ngx-print';
 import { DepartmentComponent } from './department/department.component'
 import { ApplicationComponent } from './application/application.component';
 import { DatabaseComponent } from './database/database.component';
@@ -42,7 +40,6 @@ import { ReceiveFormComponent } from './receive-form/receive-form.component';
 import { ServerComponent } from './server/server.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { MapUserWorkorderComponent } from './map-user-workorder/map-user-workorder.component';
-import { DeptDialogComponent } from './dept-dialog/dept-dialog.component';
 import { IssueFormComponent } from './issue-form/issue-form.component';
 import { ReturnStockComponent } from './return-stock/return-stock.component';
 import { WeeklyWorkDoneComponent } from './weekly-work-done/weekly-work-done.component';
@@ -66,8 +63,6 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
-    FormsComponent,
     UserComponent,
     DepartmentComponent,
     ApplicationComponent,
@@ -80,7 +75,6 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
     ServerComponent,
     EmployeeComponent,
     MapUserWorkorderComponent,
-    DeptDialogComponent,
     IssueFormComponent,
     ReturnStockComponent,
     WeeklyWorkDoneComponent,

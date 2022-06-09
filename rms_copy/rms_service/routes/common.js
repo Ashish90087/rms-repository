@@ -652,7 +652,7 @@ router.post('/project', function (req, res) {
 
 
 router.put('/user', function (req, res) {
-  return db.query('update mas_user mu set mu.name = ? ,mu.dept_code = ?, mu.mobile_no = ? , mu.address = ?, mu.machine_ip = ?, mu.emp_type_id = ? , mu.joining_date = ?, mu.email_id = ? where mu.user_id=?', [req.body.name,req.body.dept_code,req.body.mobile_no,req.body.address,req.body.machine_ip,req.body.emp_type_id,req.body.joining_date,req.body.email_id,req.body.user_id], function (err, rows1) {
+  return db.query('update mas_user mu set mu.name = ? ,mu.dept_code = ?, mu.mobile_no = ? , mu.address = ?, mu.machine_ip = ?, mu.emp_type_id = ? , mu.joining_date = ?, mu.email_id = ?, mu.ol_location = ? where mu.user_id=?', [req.body.name,req.body.dept_code,req.body.mobile_no,req.body.address,req.body.machine_ip,req.body.emp_type_id,req.body.joining_date,req.body.email_id,req.body.ol_location,req.body.user_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });

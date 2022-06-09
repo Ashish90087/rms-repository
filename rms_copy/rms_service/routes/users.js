@@ -143,7 +143,7 @@ router.get('/returnstocks', function(req, res, next) {
 
 router.post('/', function (req, res) {
   
-  return db.query('insert into mas_user (name,dept_code,emp_type_id,mobile_no,email_id,joining_date,resigning_date,address,machine_ip) values (?,?,?,?,?,?,?,?,?)',[req.body.name,req.body.dept_code,req.body.emp_type_id,req.body.mobile_no,req.body.email_id,req.body.joining_date,req.body.resigning_date,req.body.address,req.body.machine_ip], function (err, rows1) {
+  return db.query('insert into mas_user (name,dept_code,emp_type_id,mobile_no,email_id,joining_date,resigning_date,address,machine_ip,ol_location) values (?,?,?,?,?,?,?,?,?,?)',[req.body.name,req.body.dept_code,req.body.emp_type_id,req.body.mobile_no,req.body.email_id,req.body.joining_date,req.body.resigning_date,req.body.address,req.body.machine_ip,req.body.ol_location], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);

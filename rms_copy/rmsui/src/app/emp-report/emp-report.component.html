@@ -50,7 +50,7 @@
             <button type="button" mat-raised-button style="height:fit-content;background-color: crimson;color: aliceblue;" printSectionId="print-section" ngxPrint >Pdf/Print</button>
             </div> 
           </div>
-        <div class="mat-elevation-z8" id="print-section">
+        <div class="example-container mat-elevation-z8" id="print-section">
             <table mat-table #table [dataSource]="dataSource" matTableExporter #exporter="matTableExporter" class="mat-elevation-z8" style="width: 100%;">
                 <ng-container matColumnDef="sn">
                     <th mat-header-cell *matHeaderCellDef> # </th>
@@ -91,14 +91,14 @@
             </ng-container>
 
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
                 </tr>
             </table>
-            <mat-paginator [pageSizeOptions]="[100]"></mat-paginator>
+            <!-- <mat-paginator [pageSizeOptions]="[100]"></mat-paginator> -->
         </div>
         
     </mat-card-content>
