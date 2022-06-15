@@ -42,6 +42,7 @@ export class UserComponent implements OnInit {
     action : ['']
   })
 
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   displayedColumns: string[] = ['sn', 'name', 'dept_name', 'mobile_no', 'email_id', 'machine_ip','action'];
@@ -90,14 +91,11 @@ export class UserComponent implements OnInit {
     );
     console.log(this.userForm.value.ol_location)
   
-    });
-  
+    }); 
   
   }
 
   onSubmit(){
-
-
     this.userForm.patchValue({
       joining_date : this.datePipe.transform(this.userForm.get("joining_date")?.value, "yyyy-MM-dd"),
       resigning_date : this.datePipe.transform(this.userForm.get("resigning_date")?.value, "yyyy-MM-dd"),
@@ -109,6 +107,7 @@ export class UserComponent implements OnInit {
       if (res['affectedRows']) {
          this.getUserDetails();
          this.userForm.reset();
+         this.userForm.controls['ol_location'].setValue('');
          Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
 
       }
@@ -121,6 +120,7 @@ export class UserComponent implements OnInit {
         if (res['affectedRows']) {
            this.getUserDetails();
            this.userForm.reset();
+           this.userForm.value.ol_location=null;
            this.x=0;
            Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
 

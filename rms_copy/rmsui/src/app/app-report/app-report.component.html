@@ -103,6 +103,7 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="{ 'highlight': entry.exp < cur_date }"></tr>
+                <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="{ 'highlight1': entry.exp < cur_date }"></tr> -->
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
