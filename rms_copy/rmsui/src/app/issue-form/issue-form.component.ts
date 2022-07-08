@@ -124,7 +124,7 @@ public stat:any=[];
               {   console.log("inside save1",this.issueForm.value);
                   this.refresh();
                   this.issueForm.reset();
-                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+                  Swal.fire({icon:'success',text:'Saved Successfully',timer:2000});
                 }
         });
       }
@@ -134,7 +134,7 @@ public stat:any=[];
           if(res['affectedRows']){
             this.refresh();
             this.issueForm.reset();
-            Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+            Swal.fire({icon:'success',text:'Updated Successfully',timer:2000});
           }
         });
 

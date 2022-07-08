@@ -6,19 +6,13 @@
     <mat-card-content>
 
       <div class="row">
-        <div class="col-md-6">
-           <mat-form-field appearance="outline" style="width: 60%;">
-               <mat-label>Choose Application</mat-label>
-               <!-- <input type="text" placeholder="Application" aria-label="Number" matInput formControlName="app_id" [matAutocomplete]="auto">
-               <mat-autocomplete placeholder="Application" #auto="matAutocomplete"> -->
-               <mat-select formControlName="app_id" placeholder="Application">
-                 <mat-option *ngFor="let option of app_data" [value]="option.app_id">
-                   {{option.app_name }}
-                 </mat-option>
-                <!-- </mat-autocomplete> -->
-               </mat-select>
-           </mat-form-field>
-        </div>
+        <div class="col-md-6"> 
+          <ng-select  formControlName="app_id" placeholder="Choose Application" appearance="outline" style="width: 60%;">
+          <ng-option *ngFor="let i of app_data" [value]="i.app_id">
+            {{i.app_name }}
+          </ng-option>
+        </ng-select>
+      </div>
 
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">

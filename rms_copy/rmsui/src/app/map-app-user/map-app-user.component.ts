@@ -111,4 +111,8 @@ export class MapAppUserComponent implements OnInit {
     
   }
 
+  ngAfterViewInit(){
+    this.mappingForm.get('app_id')?.reset();
+  }
+
 }

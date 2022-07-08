@@ -7,7 +7,7 @@
       <mat-card-content>
 
         <div class="row">
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Choose Application</mat-label>
                     <mat-select formControlName="app_id" placeholder="Application">
@@ -16,7 +16,15 @@
                       </mat-option>
                     </mat-select>
                 </mat-form-field>
-             </div>
+             </div> -->
+
+             <div class="col-md-4"> 
+              <ng-select  formControlName="app_id" placeholder="Choose Application" appearance="outline" style="width: 100%;">
+              <ng-option *ngFor="let i of app_data" [value]="i.app_id">
+                {{i.app_name }}
+              </ng-option>
+            </ng-select>
+          </div>
              <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Start Date</mat-label>

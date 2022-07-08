@@ -24,7 +24,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
                 <mat-label>Choose Application</mat-label>
                 <mat-select formControlName="app_id" placeholder="Application">
@@ -33,7 +33,15 @@
                   </mat-option>
                 </mat-select>
             </mat-form-field>
-          </div>
+          </div> -->
+
+          <div class="col-md-4"> 
+            <ng-select  formControlName="app_id" placeholder="Choose Application" appearance="outline" style="width: 80%;">
+            <ng-option *ngFor="let i of app_data" [value]="i.app_id">
+              {{i.app_name }}
+            </ng-option>
+          </ng-select>
+        </div>
 
         </div>
 
@@ -51,6 +59,23 @@
           </div>
 
           <div class="col-md-4">
+            <mat-form-field appearance="outline" style="width: 80%;" >
+              <mat-label>Database Size</mat-label>
+              <input formControlName="current_size" matInput placeholder="Database size" >
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+               
+            <ng-select  formControlName="server_id" placeholder="Server IP" appearance="outline" style="width: 80%;">
+            <ng-option *ngFor="let i of server_data" [value]="i.server_id">
+              {{i.server_ip }}
+            </ng-option>
+          </ng-select>
+        </div>
+
+
+          <!-- <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
               <mat-label>Database Server</mat-label>
               <mat-select formControlName="server_id" placeholder="DB Server">
@@ -59,7 +84,7 @@
               </mat-option>
             </mat-select>
             </mat-form-field>
-          </div>
+          </div> -->
 
             <!-- <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 80%;">
@@ -108,6 +133,11 @@
                     <th mat-header-cell *matHeaderCellDef>DB Type</th>
                     <td mat-cell *matCellDef="let row"> {{row.db_type}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="db_size">
+                  <th mat-header-cell *matHeaderCellDef>DB Size</th>
+                  <td mat-cell *matCellDef="let row"> {{row.current_size}} </td>
+              </ng-container>
 
                 <ng-container matColumnDef="app_name">
                     <th mat-header-cell *matHeaderCellDef>Related App</th>

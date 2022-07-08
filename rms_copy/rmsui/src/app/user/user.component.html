@@ -10,6 +10,7 @@
             <mat-form-field appearance="outline" style="width: 80%;" >
               <mat-label>Employee Name</mat-label>
               <input formControlName="name" matInput placeholder="Name" >
+              <mat-error *ngIf="!userForm.controls['name'].valid">Name Mandatory</mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-4">
@@ -105,10 +106,11 @@
 
           
 
-          <div class="col-md-4" >
+          <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 80%;">
               <mat-label>Email ID</mat-label>
               <input  formControlName="email_id" matInput placeholder="Email id" >
+              <mat-error *ngIf="!userForm.controls['email_id'].errors?.email">Email Id not valid</mat-error>
             </mat-form-field>
           </div>
 

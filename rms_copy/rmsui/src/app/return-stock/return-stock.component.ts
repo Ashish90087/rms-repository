@@ -98,7 +98,7 @@ export class ReturnStockComponent implements OnInit {
                 if(res['affectedRows']){
                   this.refresh();
                   this.returnForm.reset();
-                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+                  Swal.fire({icon:'success',text:'Saved Successfully',timer:2000});
                 }
               })
             }
@@ -108,7 +108,7 @@ export class ReturnStockComponent implements OnInit {
                 if(res['affectedRows']){
                   this.refresh();
                   this.returnForm.reset();
-                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+                  Swal.fire({icon:'success',text:'Updated Successfully',timer:2000});
                 }
               });
             }
@@ -191,7 +191,8 @@ export class ReturnStockComponent implements OnInit {
   woPDF(glocation:any){
     console.log("I am WO PDF");
     console.log(glocation)
-  const url= ('http://localhost:3000/' +glocation );
+  //const url= ('http://localhost:3000/' +glocation );
+  const url= (environment.rootUrl + glocation );
   window.open(url);
   //console.log(url);
 

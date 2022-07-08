@@ -18,10 +18,21 @@ td , th {
     word-wrap: break-word;
     max-width: 200px;
 }
-.highlight{
+.highlight1{
     background-color: #ff00009a; /* red*/
     //#df8a7efd
   }
+  
+.highlight2{
+    background-color: #0dbedd9a; /* navy*/
+    //#df8a7efd
+ }
+
+ .highlight3{
+    background-color: #f2f5f7; /* green*/
+    //#df8a7efd
+ }
+
 .mat-header-cell {
     //background: #040916e7;
     background: #2c3344;
@@ -37,4 +48,26 @@ td , th {
     height: 600px;
     max-width: 100%;
     overflow: auto;
+  }
+
+  .box {
+    cursor:pointer;
+    float: left;
+    height: 20px;
+    width: 20px;
+    margin-bottom: 15px;
+    //margin-right: 1%;
+    border: 1px solid black;
+    clear: both;
+  }
+  
+  .red {
+    background-color: #ff00009a;
+  }
+  .blue{
+    background-color:#0dbedd9a ;
+  }
+
+  .white{
+    background-color:#f2f5f7 ;
   }

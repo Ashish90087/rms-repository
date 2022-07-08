@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
+import { NgSelectComponent, NgSelectConfig } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-application',
@@ -30,7 +31,6 @@ export class ApplicationComponent implements OnInit {
     action : ['']
 
   })
-
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   displayedColumns: string[] = ['sn', 'app_name', 'plateform', 'server', 'public ip',  'department' ,'url', 'action'];
@@ -45,6 +45,9 @@ export class ApplicationComponent implements OnInit {
   server_data : any =[];
   x : any = []
 
+  ngAfterViewInit(){
+    this.appForm.get('server_id')?.reset();
+  }
   onSubmit(){
     //console.log(this.testForm.value);
     this.appForm.patchValue({
@@ -70,7 +73,7 @@ export class ApplicationComponent implements OnInit {
          this.getAppDetails();
          this.appForm.reset();
          this.x=0;
-         Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
+         Swal.fire({ icon: 'success', text: "Updated Successfully.", timer: 2000 });
 
       }
     });

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+//import { NgSelectModule } from '@ng-select/ng-select';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -53,6 +54,9 @@ import { ReportsComponent } from './reports/reports.component';
 import { AppReportComponent } from './app-report/app-report.component';
 import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ServerReportComponent } from './server-report/server-report.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -86,7 +90,9 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
     ReportsComponent,
     AppReportComponent,
     DbReportComponent,
-    EmpReportComponent
+    EmpReportComponent,
+    ChangePasswordComponent,
+    ServerReportComponent
   ],
   imports: [
     NgbDatepickerModule,
@@ -115,6 +121,7 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
     MatIconModule,
     MatDividerModule,
     PdfViewerModule,
+    NgSelectModule,
 
     JwtModule.forRoot({
       config: {

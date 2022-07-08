@@ -55,14 +55,12 @@
             </div>
 
             <div class="col-md-3">
-              <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-label>Choose Server IP</mat-label>
-                <mat-select formControlName="server_id" placeholder="Server IP">
-                <mat-option *ngFor="let i of server_data" [value]="i.server_id">
+               
+                <ng-select  formControlName="server_id" placeholder="Server IP" appearance="outline">
+                <ng-option *ngFor="let i of server_data" [value]="i.server_id">
                   {{i.server_ip }}
-                </mat-option>
-              </mat-select>
-              </mat-form-field>
+                </ng-option>
+              </ng-select>
             </div>
 
 

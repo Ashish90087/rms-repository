@@ -48,7 +48,7 @@ export class DepartmentComponent implements OnInit {
          this.getDeptDetails();
          this.deptForm.reset();
          this.x=0;
-         Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
+         Swal.fire({ icon: 'success', text: "Updated Successfully.", timer: 2000 });
 
       }
     });

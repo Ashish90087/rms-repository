@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -7,31 +7,31 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableExporterDirective } from 'mat-table-exporter';
-import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-emp-report',
-  templateUrl: './emp-report.component.html',
-  styleUrls: ['./emp-report.component.scss']
+  selector: 'app-server-report',
+  templateUrl: './server-report.component.html',
+  styleUrls: ['./server-report.component.scss']
 })
-export class EmpReportComponent implements OnInit {
+export class ServerReportComponent implements OnInit {
 
-  empReportForm : FormGroup =  this.fB.group({
-    name: [''],
+  serverReportForm : FormGroup =  this.fB.group({
+    db_id: [''],
+    db_name:[''],
     dept_code: ['Y'],
     dept_name :[''],
     server_id:[''],
     server_ip:[''],
-    mobile_no:[''],
-    address :[''],
-    ol_location:['']
+    app_id:[''],
+    app_name:[''],
+    server_type:['']
   })
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   
 
-  displayedColumns: string[] = ['sn', 'name', 'dept_name', 'mobile_no', 'email_id', 'machine_ip','ol_pdf','apps_working','address'];
+  displayedColumns: string[] = ['sn', 'server_ip', 'server_type', 'dept_name', 'app_name', 'db_name' ];
 
   constructor(private fB : FormBuilder,private cms : CommonService,private datePipe : DatePipe) { }
   public department: any = [];
@@ -43,6 +43,8 @@ export class EmpReportComponent implements OnInit {
 
   selected = '' ;
   selectedType = '';
+  selectedElement='';
+  selected2Element='';
 
   // onChange(event :any) {
   //   this.selected = event.source.triggerValue;
@@ -51,12 +53,13 @@ export class EmpReportComponent implements OnInit {
   // }
 
   getDept(event:any) {
-    this.dataSource='';
+
+    this.dataSource = '';
     this.selected = event.value;
     console.log(event.value);
     if(this.selected=="Y") {
   
-      this.cms.getFunction('user_report').subscribe((res: any) => {
+      this.cms.getFunction('server_report1').subscribe((res: any) => {
         console.log(res)
     
         if (res.length) {
@@ -69,7 +72,7 @@ export class EmpReportComponent implements OnInit {
   
    else {
   
-    this.cms.getFunction('emp_report'+"/"+this.empReportForm.value.dept_code).subscribe((res: any) => {
+    this.cms.getFunction('server_report'+"/"+this.serverReportForm.value.dept_code).subscribe((res: any) => {
       console.log(res)
   
       if (res.length) {
@@ -82,6 +85,7 @@ export class EmpReportComponent implements OnInit {
   
    }
 
+
    getDepartment() {
     this.cms.getFunction('dept').subscribe((res:any) => {
       this.department= res;
@@ -89,9 +93,9 @@ export class EmpReportComponent implements OnInit {
   
     });
   }
-   
-  getEmployees(){
-    this.cms.getFunction('user_report').subscribe((res: any) => {
+
+  getServer(){
+    this.cms.getFunction('server_report1').subscribe((res: any) => {
       console.log(res)
   
       if (res.length) {
@@ -100,6 +104,18 @@ export class EmpReportComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       }
     });
+
+  }
+
+  clearserver(){
+    
+    this.selected2Element = '';
+       
+  
+  }
+
+  cleardept(){
+    this.selectedElement = '';
   }
 
 
@@ -112,15 +128,10 @@ export class EmpReportComponent implements OnInit {
       }
     }
 
-    OlPDF(pi_location:any){
-      const url= (environment.rootUrl + pi_location );
-      window.open(url);
-    }
-
 
   ngOnInit(): void {
    this.getDepartment();
-   this.getEmployees();
+   this.getServer();
    
   } 
 

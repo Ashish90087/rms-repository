@@ -107,7 +107,7 @@ export class ReceiveFormComponent implements OnInit {
                   this.file = '';
                   this.localUrl = undefined;
                   this.file_name = 'NA';
-                  Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+                  Swal.fire({icon:'success',text:'Saved Successfully',timer:2000});
                 }
               })
       }
@@ -117,7 +117,7 @@ export class ReceiveFormComponent implements OnInit {
       if(res['affectedRows']){
         this.refresh();
         this.receiveForm.reset();
-        Swal.fire({icon:'success',text:'saved successfully',timer:2000});
+        Swal.fire({icon:'success',text:'Saved Successfully',timer:2000});
       }
     });
     }
@@ -188,7 +188,8 @@ export class ReceiveFormComponent implements OnInit {
   woPDF(ilocation:any){
     console.log("I am WO PDF");
     console.log(ilocation)
-  const url= ('http://localhost:3000/' + ilocation );
+  //const url= ('http://localhost:3000/' + ilocation );
+  const url= (environment.rootUrl + ilocation );
   window.open(url);
   //console.log(url);
 

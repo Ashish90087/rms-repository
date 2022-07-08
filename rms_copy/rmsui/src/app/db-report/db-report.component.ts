@@ -20,6 +20,7 @@ export class DbReportComponent implements OnInit {
     db_id: [''],
     dept_code: ['Y'],
     dept_name :[''],
+    current_size : [''],
     server_id:[''],
     server_ip:[''],
     db_name:[''],
@@ -28,7 +29,7 @@ export class DbReportComponent implements OnInit {
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
   
 
-  displayedColumns: string[] = ['sn', 'db_name', 'db_type', 'app_name', 'dept_name', 'db_server' ];
+  displayedColumns: string[] = ['sn', 'db_name', 'db_type','db_size', 'app_name', 'dept_name', 'db_server' ];
 
   constructor(private fB : FormBuilder,private cms : CommonService,private datePipe : DatePipe) { }
   public department: any = [];

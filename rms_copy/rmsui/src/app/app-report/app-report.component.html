@@ -46,6 +46,11 @@
             <mat-label class="required">Filter</mat-label>
             <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
         </mat-form-field>
+        
+        <div><div class='box white' (click)="getApplication();"></div>All</div>
+        <div><div class='box red' (click)="getSSLExp();"></div> SSL Expired</div>
+        <div><div class='box blue' (click)="getSSLPrior();"></div> SSL About to Expire</div>
+        
         <div class="d-flex justify-content-end">
         <button type="button" mat-raised-button style="height:fit-content;background-color: forestgreen;color: aliceblue;margin-right: 2%;"   (click)="exporter.exportTable('xlsx', {fileName:'app_report', sheet: 'app_sheet'})">Excel</button>
         <button type="button" mat-raised-button style="height:fit-content;background-color: crimson;color: aliceblue;" printSectionId="print-section" ngxPrint >Pdf/Print</button>
@@ -102,8 +107,8 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="{ 'highlight': entry.exp < cur_date }"></tr>
-                <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="{ 'highlight1': entry.exp < cur_date }"></tr> -->
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="entry.exp < cur_date ? 'highlight1' : entry.exp < prior_date ? 'highlight2' : 'highlight3'"></tr>
+                <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;let entry"[ngClass]="{ 'highlight1': entry.exp < cur_date ? 'highlight2': entry.exp === prior_date ? 'highlight3'}"></tr> -->
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>

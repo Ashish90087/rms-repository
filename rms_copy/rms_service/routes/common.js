@@ -3,13 +3,72 @@ var router = express.Router();
 var db = require('../dbconnection');
 const common = require("../models/login");
 const jwt = require('jsonwebtoken');
+// const client = require('twilio')(accountSid, authToken);
+//crontab
+
+var cron = require('node-cron');
+
+cron.schedule('00 10 * * *', () => {
+  console.log('running a task everday at 10 am**');
+  try {
+    db.query('select ma.ssl_expiry,ma.url, ma.app_name, ma.app_id from mas_app ma WHERE (ma.ssl_expiry - CURDATE())< 6 AND (ma.ssl_expiry - CURDATE())>0 AND ma.is_notified = 0', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+      }
+      //req.session.destroy(); 
+      if (rows1) {
+  console.log('length**', rows1.length);
+        const wa_numbers = [
+          {
+          wa: '+917550931463',
+          accountSid: 'AC0f735bd0b89f91e09bf40df626720a3b',
+          authToken: '16be0fe3147fadff518f0eaa1ec360a4'
+        }
+        ,{
+          wa: '+919871042495',
+          accountSid: 'AC19ea265578eeb1b8f0944b6fecfb8e5e',
+          authToken: '1553fdba68f9aaaa069020452520cdb5'
+        }];
+        rows1.forEach((element, index) => {
+          wa_numbers.forEach(ele => {
+          const client = require('twilio')(ele.accountSid, ele.authToken);
+            console.log('mesg**to ', ele);
+            client.messages 
+          .create({ 
+             body: 'Your Domain is '+element.url+' And App Name is '+element.app_name+' will Expire on' +element.ssl_expiry, 
+            // body: element, 
+            from: 'whatsapp:+14155238886',       
+             to: 'whatsapp:'+ele.wa 
+           }) 
+          .then((message) => console.log('msg***',message)) 
+          .catch(e => { console.error('Got an error:', e.code, e.message); })
+          .done();
+          });
+  
+          if(rows1.length == (index+1)) {
+            console.log('update**', index);
+            db.query("UPDATE mas_app SET is_notified = 1 WHERE app_id=?",[element.app_id], function (err, rows2) {
+              if (err) {
+                console.error('error connecting: ' + err);
+              }
+            })
+          }
+        });  
+      }    
+  });
+  } catch (error) {
+    console.log('error connecting: ' + error);
+  }
+ 
+});
 
 var bcrypt = require('bcryptjs');
+var CryptoJs = require('crypto-js');
 
 router.post('/login', function (req, res) {
-  console.log('kavi');
   var userid = req.body.userid;
   var password = req.body.password;
+  console.log("yha pahucha v ki nhi");
   // var password = CryptoJS.AES.decrypt(req.body.password, key).toString(CryptoJS.enc.Utf8);
 
   common.login(userid, function (err, rows) {
@@ -27,14 +86,17 @@ router.post('/login', function (req, res) {
         let user = JSON.parse(JSON.stringify(rows[0]));
 
         bcrypt.compare(req.body.password, user.password, function (err, result) {
+          console.log("compare hua v ki nhi");
 
           if (err) {
+            console.log("compare nhi ho paya");
 
             return res.json({
               success: 0,
               message: `Wrong credential.`
             });
           } else if (result) {
+            console.log("compare ho paya");
 
             let response = {
               userid: user.user_id,
@@ -45,6 +107,7 @@ router.post('/login', function (req, res) {
             const token = jwt.sign(response, 'SECreTIsAlwaYSSecRET');
             res.json({ token: token, success: 1, role: user.role, message: 'Login Success' });
           } else {
+            console.log("nhi hua yaar");
             res.json({
               success: 0,
               message: `Wrong credential.`
@@ -292,7 +355,7 @@ router.get('/user', function(req, res, next) {
   });
 
   router.get('/server', function(req, res, next) {
-    return db.query('select * from mas_server', function (err, rows1) {
+    return db.query('select ms.*,md.dept_name from mas_server ms join mas_dept md on ms.dept_code=md.dept_code', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -413,7 +476,18 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  
 
+  router.get('/sslPriorCount', function(req, res, next) {
+    return db.query('select count(*) as x from mas_app ma WHERE (ma.ssl_expiry - CURDATE())< 6 AND (ma.ssl_expiry - CURDATE())>0; ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
 
   router.get('/project', function(req, res, next) {
     return db.query('select mad.* , ma.app_name from mas_app_desc mad join mas_app ma on mad.app_id=ma.app_id ', function (err, rows1) {
@@ -448,6 +522,31 @@ router.get('/user', function(req, res, next) {
       return res.json(rows1);
   });
   });
+
+  router.get('/ssl_exp', function(req, res, next) {
+    //console.log("hi",req.params);
+    return db.query('select mau.*,ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp, GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as employees,ms.server_ip,md.dept_name,mp.plateform_name from map_app_user mau JOIN mas_user mu ON mau.user_id=mu.user_id right JOIN mas_app ma ON mau.app_id = ma.app_id join mas_dept md on ma.dept_code=md.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id WHERE ma.ssl_expiry<CURDATE() group by ma.app_id', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/ssl_prior', function(req, res, next) {
+    //console.log("hi",req.params);
+    return db.query('select mau.*,ma.*,DATE_FORMAT(ma.ssl_expiry,"%Y-%m-%d") as exp, GROUP_CONCAT(Distinct mu.name order  by mu.name asc separator " , ") as employees,ms.server_ip,md.dept_name,mp.plateform_name from map_app_user mau JOIN mas_user mu ON mau.user_id=mu.user_id right JOIN mas_app ma ON mau.app_id = ma.app_id join mas_dept md on ma.dept_code=md.dept_code join mas_server ms on ma.server_id=ms.server_id join mas_plateform mp on ma.plateform_id=mp.plateform_id  WHERE (ma.ssl_expiry - CURDATE())< 6 AND (ma.ssl_expiry - CURDATE())>=0 group by ma.app_id', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
 
   router.get('/app_report/:dept_code', function(req, res, next) {
     console.log("hi",req.params);
@@ -516,6 +615,30 @@ router.get('/user', function(req, res, next) {
   router.get('/emp_report/:dept_code', function(req, res, next) {
     console.log("hi",req.params);
     return db.query('select mau.*,mu.*,DATE_FORMAT(mu.joining_date,"%Y-%m-%d") as doj, GROUP_CONCAT(Distinct ma.app_name order  by ma.app_name asc separator " , ") as projects,md.dept_name,met.emp_type from map_app_user mau JOIN mas_app ma ON mau.app_id=ma.app_id right JOIN mas_user mu ON mau.user_id = mu.user_id join mas_dept md on mu.dept_code=md.dept_code join mas_emp_type met on mu.emp_type_id=met.emp_type_id WHERE mu.dept_code=? group by mu.user_id ', [req.params.dept_code] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/server_report/:dept_code', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('SELECT ms.server_id,ms.server_ip,ms.server_type,md.dept_name,GROUP_CONCAT(Distinct ma.app_name order  by ma.app_name asc separator " , ") as Applications ,GROUP_CONCAT(Distinct mdb.db_name order  by mdb.db_name asc separator " , ") as DBs FROM mas_server ms JOIN mas_dept md ON ms.dept_code=md.dept_code left JOIN mas_app ma  ON ms.server_id=ma.server_id LEFT JOIN mas_db mdb ON ms.server_id=mdb.server_id WHERE md.dept_code=? GROUP BY ms.server_id ', [req.params.dept_code] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/server_report1', function(req, res, next) {
+    //console.log("hi",req.params);
+    return db.query('SELECT ms.server_id,ms.server_ip,ms.server_type,md.dept_name,GROUP_CONCAT(Distinct ma.app_name order  by ma.app_name asc separator " , ") as Applications ,GROUP_CONCAT(Distinct mdb.db_name order  by mdb.db_name asc separator " , ") as DBs FROM mas_server ms JOIN mas_dept md ON ms.dept_code=md.dept_code left JOIN mas_app ma  ON ms.server_id=ma.server_id LEFT JOIN mas_db mdb ON ms.server_id=mdb.server_id GROUP BY ms.server_id;', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -604,7 +727,7 @@ router.post('/wodetails', function (req, res) {
 
 router.post('/db', function (req, res) {
   
-  return db.query('insert into mas_db (db_name,db_type,server_id,dept_code,app_id) values (?,?,?,?,?)',[req.body.db_name,req.body.db_type,req.body.server_id,req.body.dept_code,req.body.app_id], function (err, rows1) {
+  return db.query('insert into mas_db (db_name,db_type,current_size,server_id,dept_code,app_id) values (?,?,?,?,?,?)',[req.body.db_name,req.body.db_type,req.body.current_size,req.body.server_id,req.body.dept_code,req.body.app_id], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -616,7 +739,7 @@ router.post('/db', function (req, res) {
 
 router.post('/server', function (req, res) {
   
-  return db.query('insert into mas_server (server_ip,dept_code,os,version,machine_type,ram,disk_space,physical_core,model,va,va_score) values (?,?,?,?,?,?,?,?,?,?,?)',[req.body.server_ip,req.body.dept_code,req.body.os,req.body.version,req.body.machine_type,req.body.ram,req.body.disk_space,req.body.physical_core,req.body.model,req.body.va,req.body.va_score], function (err, rows1) {
+  return db.query('insert into mas_server (server_ip,server_type,dept_code,os,version,machine_type,ram,disk_space,physical_core,model,va,va_score) values (?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.server_ip,req.body.server_type,req.body.dept_code,req.body.os,req.body.version,req.body.machine_type,req.body.ram,req.body.disk_space,req.body.physical_core,req.body.model,req.body.va,req.body.va_score], function (err, rows1) {
     if (err) {
       console.error('error connecting: ' + err);
       return res.json(err);
@@ -660,7 +783,7 @@ router.put('/user', function (req, res) {
 
 router.put('/server', function (req, res) {
   console.log(this.data);
-  return db.query('update mas_server ms set ms.server_ip = ? ,ms.dept_code = ?, ms.os = ? , ms.machine_type = ?, ms.ram=?, ms.physical_core=?,ms.model=?,ms.disk_space=?,ms.version=?,ms.va=?,ms.va_score=? where ms.server_id=?', [req.body.server_ip,req.body.dept_code,req.body.os,req.body.machine_type,req.body.ram,req.body.physical_core,req.body.model,req.body.disk_space,req.body.version,req.body.va,req.body.va_score,req.body.server_id], function (err, rows1) {
+  return db.query('update mas_server ms set ms.server_ip = ? , ms.server_type =?, ms.dept_code = ?, ms.os = ? , ms.machine_type = ?, ms.ram=?, ms.physical_core=?,ms.model=?,ms.disk_space=?,ms.version=?,ms.va=?,ms.va_score=? where ms.server_id=?', [req.body.server_ip,req.body.server_type,req.body.dept_code,req.body.os,req.body.machine_type,req.body.ram,req.body.physical_core,req.body.model,req.body.disk_space,req.body.version,req.body.va,req.body.va_score,req.body.server_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });
@@ -674,14 +797,14 @@ router.put('/dept', function (req, res) {
 });
 
 router.put('/db', function (req, res) {
-  return db.query('update mas_db mdb set mdb.db_name = ?, mdb.db_type = ?, mdb.server_id = ?, mdb.dept_code = ?, mdb.user_id = ?, mdb.app_id = ? where mdb.db_id=?', [req.body.db_name,req.body.db_type,req.body.server_id,req.body.dept_code,req.body.user_id,req.body.app_id,req.body.db_id], function (err, rows1) {
+  return db.query('update mas_db mdb set mdb.db_name = ?, mdb.db_type = ?, mdb.current_size = ?,  mdb.server_id = ?, mdb.dept_code = ?, mdb.app_id = ? where mdb.db_id=?', [req.body.db_name,req.body.db_type,req.body.current_size,req.body.server_id,req.body.dept_code,req.body.app_id,req.body.db_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });
 });
 
 router.put('/apps', function (req, res) {
-  return db.query('update mas_app ma set ma.app_name = ?, ma.plateform_id = ?, ma.platform_version = ?, ma.server_id = ?, ma.dept_code = ?, ma.public_ip = ?, ma.url = ?, ma.ssl_expiry = ? where ma.app_id = ?', [req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url,req.body.ssl_expiry,req.body.app_id], function (err, rows1) {
+  return db.query('update mas_app ma set ma.app_name = ?, ma.plateform_id = ?, ma.platform_version = ?, ma.server_id = ?, ma.dept_code = ?, ma.public_ip = ?, ma.url = ?, ma.ssl_expiry = ?, ma.is_notified=0 where ma.app_id = ?', [req.body.app_name,req.body.plateform_id,req.body.platform_version,req.body.server_id,req.body.dept_code,req.body.public_ip,req.body.url,req.body.ssl_expiry,req.body.app_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });
@@ -694,4 +817,67 @@ router.put('/project', function (req, res) {
   });
 });
 
+// router.put('/password', function (req, res) {
+//   return db.query('update mas_user mu set mu.password= ? where mu.user_id=? and mu.password=?', [req.body.password,req.body.user_id,req.body.password], function (err, rows1) {
+//       //req.session.destroy(); 
+//       return res.json(rows1);
+//   });
+// });
+
+router.put('/password', function (req, res) {
+  var userid = req.body.user_id;
+  var old_password = req.body.Password;
+  var password = req.body.New_Password
+  console.log("yha v dekhle",req.body);
+
+  // var password = CryptoJS.AES.decrypt(req.body.password, key).toString(CryptoJS.enc.Utf8);
+
+  common.changePass(userid, async function (err, rows) {
+    if (err) {
+      res.json(err);
+    } else {
+      console.log(rows);
+      if (!rows.length) {
+        res.json({
+          success: false,
+          message: `Wrong credential.`
+        })
+      } else {
+
+        let user = JSON.parse(JSON.stringify(rows[0]));
+        //console.log("check 1",user);
+
+        bcrypt.compare(req.body.Password, user.password, function (err, result) {
+          console.log("Yaha tak aaya ya nhi");
+
+          if (err) {
+             console.log("Galat hai current password");
+            return res.json({
+              success: 0,
+              message: `Wrong Current Password.`
+            });
+          } else if (result) {
+            console.log("yaha v aa gya");
+            const hashPass = CryptoJs.AES.decrypt(req.body.New_Password, 'rms_project').toString(CryptoJs.enc.Utf8);
+            console.log('hashPass***', hashPass);
+            bcrypt.hash(hashPass,10, async (err,hash)=>{
+              err ? console.log("err***",err) : console.log("hash*******",hash);
+              return db.query('update mas_user mu set mu.password= ? where mu.user_id=?', [hash,req.body.user_id], function (err, rows1) {
+                //req.session.destroy(); 
+                return res.json({'success': true});
+            });
+            });
+          } else {
+            console.log("nhi jama");
+            res.json({
+              success: 0,
+              message: `Wrong credential.`
+            })
+          }
+        });
+      }
+    }
+    
+  });
+});
 module.exports = router;

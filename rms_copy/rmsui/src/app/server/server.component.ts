@@ -18,6 +18,7 @@ export class ServerComponent implements OnInit {
     server_id:[''],
     dept_code:[''],
     server_ip: [''],
+    server_type:[''],
     os : [''],
     version : [''],
     machine_type : [''],
@@ -33,7 +34,7 @@ export class ServerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  displayedColumns: string[] = ['sn', 'server_ip', 'os', 'machine_type', 'ram', 'disk_space', 'physical_core' , 'model', 'va','va_score','action'];
+  displayedColumns: string[] = ['sn', 'server_ip', 'dept', 'os', 'machine_type', 'ram', 'disk_space', 'physical_core' , 'model', 'va','va_score','action'];
 
   constructor(private fB : FormBuilder,private cms : CommonService) { }
 
@@ -87,7 +88,7 @@ export class ServerComponent implements OnInit {
          this.getServerDetails();
          this.serverForm.reset();
          this.x=0;
-         Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
+         Swal.fire({ icon: 'success', text: "Updated Successfully.", timer: 2000 });
 
       }
     });
@@ -219,6 +220,7 @@ getServerDetails() {
       server_ip: this.temp.server_ip,
       dept_code: this.temp.dept_code,
       server_id : this.temp.server_id,
+      server_type : this.temp.server_type,
       os:this.temp.os,
       machine_type : this.temp.machine_type,
       ram : this.temp.ram,

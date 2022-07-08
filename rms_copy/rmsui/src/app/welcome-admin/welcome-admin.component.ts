@@ -17,6 +17,7 @@ export class WelcomeAdminComponent implements OnInit {
   public db_count :any;
   public stock_count :any;
   public ssl_count:any;
+  public ssl_prior:any;
 
   getAppCount() {
     this.cms.getFunction('appcount').subscribe((res:any) => {
@@ -60,6 +61,13 @@ export class WelcomeAdminComponent implements OnInit {
     });
   }
 
+  getSslPriorCount() {
+    this.cms.getFunction('sslPriorCount').subscribe((res:any) => {
+      console.log(res);
+      this.ssl_prior= res[0].x;
+    });
+  }
+
   ngOnInit(): void {
     let user = this.authservice.currentUser;
     this.user_id = user.userid;
@@ -71,6 +79,7 @@ export class WelcomeAdminComponent implements OnInit {
     this.getDbCount();
     this.getStockCount();
     this.getSslCount();
+    this.getSslPriorCount();
 
   }
 }

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~@ng-select/ng-select/themes/material.theme.css";
 
 //@import "assets/styles/table";
 html, body { height: 100%; }
@@ -24,4 +25,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-icon-button.mat-success {
   color:#155724;
+}
+
+
+.ng-select {
+  margin-top: -4px;
+}
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+  line-height: 31px;
 }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit , ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -21,11 +21,14 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 export class UserComponent implements OnInit {
 
   userForm : FormGroup =  this.fB.group({
-    name : [''],
+    name :['',[Validators.required]],
+    //name : ['',[Validators.required]],
     user_id : [''],
     dept_code: [''],
     mobile_no : [''],
-    email_id : [''],
+    email_id : ['',Validators.email],
+    //mobile_no : ['',[Validators.required, Validators.pattern('^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$')]],
+    //email_id : ['',[Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
     dept_name : [''],
     emp_type : [''],
     emp_type_id : [''],
@@ -122,7 +125,7 @@ export class UserComponent implements OnInit {
            this.userForm.reset();
            this.userForm.value.ol_location=null;
            this.x=0;
-           Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
+           Swal.fire({ icon: 'success', text: "Updated Successfully.", timer: 2000 });
 
         }
       });

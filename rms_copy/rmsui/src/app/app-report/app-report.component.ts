@@ -39,11 +39,14 @@ export class AppReportComponent implements OnInit {
   project_details:any=[];
   x:any=[];
   public today:any = '';
+  public priorDate:any = '';
   
 
   selected = '' ;
   selectedType = '';
   cur_date='';
+  prior_date='';
+  date_variable='';
   selectedOption='Y';
   selectedElement='';
   selected2Element='';
@@ -98,6 +101,34 @@ export class AppReportComponent implements OnInit {
     });
 
    }
+
+   getSSLExp(){
+    this.dataSource = '';
+    this.cms.getFunction('ssl_exp').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.app_data = res;
+        this.dataSource = new MatTableDataSource(this.app_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+   }
+
+   getSSLPrior(){
+    this.dataSource = '';
+    this.cms.getFunction('ssl_prior').subscribe((res: any) => {
+      console.log(res)
+  
+      if (res.length) {
+        this.app_data = res;
+        this.dataSource = new MatTableDataSource(this.app_data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+   }
+
+   
 
    getApps(event:any) {
 
@@ -156,6 +187,11 @@ export class AppReportComponent implements OnInit {
    let momentVariable = moment(this.today, 'MM-DD-YYYY');
    this.cur_date = momentVariable.format('YYYY-MM-DD');
    console.log(this.today);
+   console.log(this.cur_date);
+   this.priorDate = new Date(new Date().setDate(this.today.getDate() + 5));
+   momentVariable = moment(this.priorDate, 'MM-DD-YYYY');
+   this.prior_date = momentVariable.format('YYYY-MM-DD');
+   console.log(this.prior_date);
    this.getDepartment();
    this.getPlateform();
    this.getApplication();

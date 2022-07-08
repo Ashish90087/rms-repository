@@ -56,7 +56,7 @@ export class AppDescriptionComponent implements OnInit {
          this.getProjectDetails();
          this.projectForm.reset();
          this.x=0;
-         Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
+         Swal.fire({ icon: 'success', text: "Updated Successfully.", timer: 2000 });
 
       }
     });
@@ -96,6 +96,10 @@ export class AppDescriptionComponent implements OnInit {
   ngOnInit(): void {
     this.getProjectDetails();
     this.getApplication();
+  }
+
+  ngAfterViewInit(){
+    this.projectForm.get('app_id')?.reset();
   }
 
   public temp: any = []

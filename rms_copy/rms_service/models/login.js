@@ -7,6 +7,9 @@ var common = {
     login: function (userid, callback) {
         db.query(`select * from mas_user u WHERE u.email_id=?`, [userid], callback);
     },
+    changePass:function (userid, callback) {
+        db.query(`select * from mas_user u WHERE u.user_id=?`, [userid], callback);
+    },
 
 }
 

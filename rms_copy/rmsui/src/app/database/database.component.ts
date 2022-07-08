@@ -19,6 +19,7 @@ export class DatabaseComponent implements OnInit {
     db_name : [''],
     db_id : [''],
     db_type : [''],
+    current_size : [''],
     dept_code: [''],
     server_ip: [''],
     server_id: [''],
@@ -32,7 +33,7 @@ export class DatabaseComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild('scroll', {read : ElementRef}) public scroll!: ElementRef<any>;
-  displayedColumns: string[] = ['sn', 'db_name', 'db_type', 'app_name', 'dept_name', 'db_server' ,'action'];
+  displayedColumns: string[] = ['sn', 'db_name', 'db_type','db_size', 'app_name', 'dept_name', 'db_server' ,'action'];
 
   constructor(private fB : FormBuilder,private cms : CommonService) { }
 
@@ -66,7 +67,7 @@ export class DatabaseComponent implements OnInit {
          this.getDatabaseDetails();
          this.dbForm.reset();
          this.x=0;
-         Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
+         Swal.fire({ icon: 'success', text: "Updated Successfully.", timer: 2000 });
 
       }
     });
@@ -160,6 +161,7 @@ export class DatabaseComponent implements OnInit {
       this.dbForm.patchValue({
       db_id: this.temp.db_id,
       db_name: this.temp.db_name,
+      current_size : this.temp.current_size,
       user_id: this.temp.user_id,
       name : this.temp.name,
       db_type: this.temp.db_type,
@@ -184,6 +186,12 @@ export class DatabaseComponent implements OnInit {
     this.getDatabaseDetails();
     this.getServer();
     this.getDBType();
+  }
+
+  ngAfterViewInit(){
+    this.dbForm.get('app_id')?.reset();
+    this.dbForm.get('server_id')?.reset();
+
   }
 
 }

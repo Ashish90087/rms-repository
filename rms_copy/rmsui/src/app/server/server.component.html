@@ -15,6 +15,19 @@
 
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">
+            <mat-label>Server Type</mat-label>
+            <mat-select formControlName="server_type" placeholder="Server Type" >
+              <mat-option>None</mat-option>
+              <mat-option value="Database">Database</mat-option>
+              <mat-option value="Application">Application</mat-option>
+              <mat-option value="Database/Application">Database/Application</mat-option>
+              <mat-option value="Others">Others</mat-option>
+          </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" style="width: 80%;">
             <mat-label>Choose Department</mat-label>
             <mat-select formControlName="dept_code" placeholder="Department"
             >
@@ -25,6 +38,10 @@
           </mat-form-field>
         </div>
 
+        
+      </div>
+
+      <div class="row">
 
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">
@@ -37,9 +54,6 @@
           </mat-select>
           </mat-form-field>
         </div>
-      </div>
-
-      <div class="row">
 
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">
@@ -65,15 +79,17 @@
         </div>
 
 
+        
+      </div>
+
+       <div class="row">
+
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;" >
             <mat-label>RAM</mat-label>
             <input formControlName="ram" matInput placeholder="RAM" >
           </mat-form-field>
         </div>
-      </div>
-
-       <div class="row">
 
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;" >
@@ -90,20 +106,23 @@
         </mat-form-field>
       </div>
 
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" style="width: 80%;">
-              <mat-label>Choose Model</mat-label>
-              <mat-select formControlName="model" placeholder="Model">
-              <mat-option *ngFor="let i of model" [value]="i.model">
-                {{i.model }}
-              </mat-option>
-            </mat-select>
-            </mat-form-field>
-          </div>
+          
 
        </div>
 
        <div class="row">
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" style="width: 80%;">
+            <mat-label>Choose Model</mat-label>
+            <mat-select formControlName="model" placeholder="Model">
+            <mat-option *ngFor="let i of model" [value]="i.model">
+              {{i.model }}
+            </mat-option>
+          </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="col-md-4">
           <mat-form-field appearance="outline" style="width: 80%;">
             <mat-label>VA done</mat-label>
@@ -155,6 +174,10 @@
                   <th mat-header-cell *matHeaderCellDef>Server IP</th>
                   <td mat-cell *matCellDef="let row"> {{row.server_ip}} </td>
               </ng-container>
+              <ng-container matColumnDef="dept">
+                <th mat-header-cell *matHeaderCellDef>Department</th>
+                <td mat-cell *matCellDef="let row"> {{row.dept_name}} </td>
+            </ng-container>
               <ng-container matColumnDef="os">
                   <th mat-header-cell *matHeaderCellDef>OS</th>
                   <td mat-cell *matCellDef="let row"> {{row.os}} </td>

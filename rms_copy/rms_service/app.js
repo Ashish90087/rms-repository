@@ -35,6 +35,8 @@ app.use( '/rms/',express.static(path.join(__dirname, 'dist')));
 app.use('/', commonRouter);
 app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);
-
+app.use((err,req,res,next) => {
+res.status(500).send('Some Error Occured');
+});
 
 module.exports = app;

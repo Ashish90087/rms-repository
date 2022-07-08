@@ -1,13 +1,3 @@
-td , th {
-    white-space: normal;
-    word-wrap: break-word;
-    max-width: 200px;
-}
-
-textarea {
-    //width: 300px;
-    height: 100px;
-  }
 .full-width{
     width: 100%;
 }
@@ -23,15 +13,23 @@ textarea {
 .form-container{
     margin: 10px;
 }
-
+td , th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
+}
 .mat-header-cell {
-    background: #2c3344;
+    background: #2c3344fb;
     color: #f2f5f7;
     font-size: medium;
     //background: #2c3344;
  }
 
- .mat-column-action{
-    //your custom css 
-    text-align: right;
+ table {
+    width: 100%;
+  }
+  .example-container {
+    height: 600px;
+    max-width: 100%;
+    overflow: auto;
   }

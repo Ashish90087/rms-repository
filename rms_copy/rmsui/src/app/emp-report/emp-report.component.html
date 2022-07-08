@@ -80,6 +80,11 @@
                   <td mat-cell *matCellDef="let row"> {{row.machine_ip}} </td>
               </ng-container>
 
+              <ng-container matColumnDef="ol_pdf">
+                <th mat-header-cell *matHeaderCellDef> Offer Letter </th>
+                <td mat-cell *matCellDef="let row"><button mat-mini-fab color="basic" (click)="OlPDF(row.ol_location)"><mat-icon> cloud_download </mat-icon></button> </td>
+              </ng-container>
+
               <ng-container matColumnDef="apps_working">
                 <th mat-header-cell *matHeaderCellDef> Projects Working On </th>
                 <td mat-cell *matCellDef="let row"> {{row.projects}} </td>
