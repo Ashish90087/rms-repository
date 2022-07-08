@@ -23,8 +23,8 @@ export class MapUserWorkorderComponent implements OnInit {
 
   })
 
-  // @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  // displayedColumns: string[] = ['sn', 'app_name', 'name'];
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  displayedColumns: string[] = ['sn', 'workorder', 'name'];
 
   constructor(private fB : FormBuilder,private cms : CommonService) { }
 
@@ -62,17 +62,17 @@ export class MapUserWorkorderComponent implements OnInit {
 
   }
 
-  // getMapDetails() {
-  //       this.cms.getFunction('map').subscribe((res: any) => {
-  //         console.log(res);
+  getMapDetails() {
+        this.cms.getFunction('mapwo').subscribe((res: any) => {
+          console.log(res);
 
-  //       if (res.length) {
-  //         this.map_data = res;
-  //         this.dataSource = new MatTableDataSource(this.map_data);
-  //         this.dataSource.paginator = this.paginator;
-  //       }
-  //     });
-  //   }
+        if (res.length) {
+          this.map_data = res;
+          this.dataSource = new MatTableDataSource(this.map_data);
+          this.dataSource.paginator = this.paginator;
+        }
+      });
+    }
 
     getWODetails() {
       this.cms.getFunction('wodetails').subscribe((res:any) => {
@@ -120,7 +120,7 @@ export class MapUserWorkorderComponent implements OnInit {
     this.getWODetails();
     this.getWorkOrder();
     this.getUser();
-    //this.getMapDetails();
+    this.getMapDetails();
   }
 
 }

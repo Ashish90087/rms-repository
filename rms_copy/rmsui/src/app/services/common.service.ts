@@ -58,7 +58,7 @@ getFunction(functionName: any) {
 // }
 
 updateFunction(functionName: any, data: any) {
-  console.log(data)
+  //console.log(data)
   return this.http.put( environment.rootUrl + functionName, data).pipe(tap(res => { res }),
       catchError(e => {
           throw new Error(e);
