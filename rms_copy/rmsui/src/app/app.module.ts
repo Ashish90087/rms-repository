@@ -57,6 +57,9 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ServerReportComponent } from './server-report/server-report.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MachineAccessComponent } from './machine-access/machine-access.component';
+import { StockReportComponent } from './stock-report/stock-report.component';
+
 
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
@@ -92,7 +95,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     DbReportComponent,
     EmpReportComponent,
     ChangePasswordComponent,
-    ServerReportComponent
+    ServerReportComponent,
+    MachineAccessComponent,
+    StockReportComponent
   ],
   imports: [
     NgbDatepickerModule,

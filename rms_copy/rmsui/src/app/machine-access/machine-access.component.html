@@ -1,0 +1,93 @@
+<form class="form-container" [formGroup]="machineForm" (submit)="onSubmit()">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                User Machine Access information
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="mat-form-field" style="width:80%;">
+                        <mat-label for="user_id">User ID</mat-label>
+                        <mat-select formControlName="user_id">
+                            <mat-option *ngFor="let user of user_data" [value]="user.user_id" (click)="selectedUserID(user.user_id)">
+                                {{user.user_id}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="mat-form-field" style="width:80%;">
+                        <mat-label>User name</mat-label>
+                        <input formControlName="user_name" matInput placeholder="user name" [ngModel]="user_name">
+                        <!-- <mat-label for="user_name">user name</mat-label>
+                        <mat-select formControlName="user_name">
+                            <mat-option *ngFor="let user of user_data" [value]="user.name">
+                                {{user.name}}
+                                
+                            </mat-option>
+                        </mat-select> -->
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="mat-form-field" style="width:80%;">
+                        <mat-label for="server_ip">Server IP</mat-label>
+                        <mat-select formControlName="server_ip">
+                            <mat-option *ngFor="let ip of server_data" [value]="ip.server_ip">
+                               {{ip.server_ip}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" style="margin-left: 40%;">Save</button>
+        </mat-card-actions>
+    </mat-card>
+
+</form>
+<mat-card class="mt-3">
+    <mat-card-header>
+        <mat-card-title>
+          User Server Mapping List
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field appearance="standard">
+            <mat-label class="required">Filter</mat-label>
+            <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+            <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+                <ng-container matColumnDef="sn">
+                    <th mat-header-cell *matHeaderCellDef> # </th>
+                    <td mat-cell *matCellDef="let row;let i=index"> {{i+1}} </td>
+                </ng-container>
+  
+                <ng-container matColumnDef="user_id">
+                    <th mat-header-cell *matHeaderCellDef>User ID</th>
+                    <td mat-cell *matCellDef="let row"> {{row.user_id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="user_name">
+                    <th mat-header-cell *matHeaderCellDef>User Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.user_name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="server_ip">
+                    <th mat-header-cell *matHeaderCellDef>Server IP</th>
+                    <td mat-cell *matCellDef="let row"> {{row.server_ip}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+    </mat-card-content>
+  </mat-card>
+  
+  
