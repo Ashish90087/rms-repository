@@ -55,6 +55,8 @@ import { ReportsComponent } from './reports/reports.component';
 import { AppReportComponent } from './app-report/app-report.component';
 import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
+import { MachineAccessComponent } from './machine-access/machine-access.component';
+import { StockReportComponent } from './stock-report/stock-report.component';
 
 //import { AngularFileUploaderModule } from "angular-file-uploader";
 
@@ -90,7 +92,9 @@ import { EmpReportComponent } from './emp-report/emp-report.component';
     ReportsComponent,
     AppReportComponent,
     DbReportComponent,
-    EmpReportComponent
+    EmpReportComponent,
+    MachineAccessComponent,
+    StockReportComponent
   ],
   imports: [
     NgbDatepickerModule,

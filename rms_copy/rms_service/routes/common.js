@@ -503,6 +503,40 @@ router.get('/user', function(req, res, next) {
   });
   });
 
+  //rohit machine access
+  router.get('/mac_acc',function(req,res,next){
+    console.log("I am reaching here");
+    return db.query('select * from mas_server',function(err,rows1){
+      if(err){
+        console.error('error connecting:'+err);
+        return res.json(err);
+      }
+      return res.json(rows1);
+    });
+  });
+  router.get('/machine_access', function(req, res, next) {
+    return db.query('select user_id, user_name, GROUP_CONCAT(Distinct server_ip order  by server_ip asc SEPARATOR " , ") AS server_ip FROM mac_acc group BY user_id ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+  router.get('/stock_report', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('SELECT s.stock_id,s.monitor_sno, h.h_name,d.dept_name, sm.status_name,u.name FROM stock_receive_mas s INNER JOIN hardware_mas h ON s.hardware_id=h.h_id INNER JOIN mas_dept d ON s.dept_id=d.dept_code INNER JOIN status_mas sm ON s.status_id=sm.status_id LEFT JOIN issued_details i ON s.stock_id=i.stock_id LEFT JOIN mas_user u on i.issued_to =u.user_id ORDER BY s.stock_id', [req.params.dept_code] , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+
 
   router.post('/dept', function (req, res) {
   
@@ -628,6 +662,17 @@ router.post('/project', function (req, res) {
   });
 });
 
+router.post('/mac_acc', function (req, res) {
+  
+  return db.query('insert into mac_acc (user_id,user_name,server_ip) values (?,?,?)',[req.body.user_id,req.body.user_name,req.body.server_ip], function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
 
 router.put('/user', function (req, res) {
   return db.query('update mas_user mu set mu.name = ? ,mu.dept_code = ?, mu.mobile_no = ? , mu.address = ?, mu.machine_ip = ?, mu.emp_type_id = ? , mu.joining_date = ?, mu.email_id = ? where mu.user_id=?', [req.body.name,req.body.dept_code,req.body.mobile_no,req.body.address,req.body.machine_ip,req.body.emp_type_id,req.body.joining_date,req.body.email_id,req.body.user_id], function (err, rows1) {

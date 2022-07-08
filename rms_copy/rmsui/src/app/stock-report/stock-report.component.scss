@@ -1,0 +1,26 @@
+.full-width{
+    width: 100%;
+}
+
+.top-padding{
+    padding-top: 3px;
+}
+
+.margin-left mat-radio-button:not(:first-child){
+    margin-left:10px;
+}
+
+.form-container{
+    margin: 10px;
+}
+td , th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
+}
+.mat-header-cell {
+    background: #2c3344bb;
+    color: #f2f5f7;
+    font-size: medium;
+    //background: #2c3344;
+ }

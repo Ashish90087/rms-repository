@@ -26,6 +26,8 @@ import { DbReportComponent } from './db-report/db-report.component';
 import { EmpReportComponent } from './emp-report/emp-report.component';
 import { ReportsComponent } from './reports/reports.component';
 import { LoginGuard } from './services/login.guard';
+import { MachineAccessComponent } from './machine-access/machine-access.component';
+import { StockReportComponent } from './stock-report/stock-report.component';
 
 const routes: Routes = [
 
@@ -54,7 +56,9 @@ children: [
   { path : 'appreport' , component: AppReportComponent,canActivate: [AuthGuard] },
   { path : 'dbreport' , component: DbReportComponent,canActivate: [AuthGuard] },
   { path : 'empreport' , component: EmpReportComponent,canActivate: [AuthGuard] },
+  { path : 'stockreport' , component: StockReportComponent,canActivate: [AuthGuard] },
   { path : 'report' , component: ReportsComponent,canActivate: [AuthGuard] },
+  { path : 'machine-access', component:MachineAccessComponent,canActivate:[AuthGuard]}  
 
  ]
 
