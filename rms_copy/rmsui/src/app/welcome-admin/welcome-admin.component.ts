@@ -7,6 +7,7 @@ import { CommonService } from '../services/common.service';
   styleUrls: ['./welcome-admin.component.scss']
 })
 export class WelcomeAdminComponent implements OnInit {
+  
 
   constructor( private authservice: AuthService,private cms : CommonService) { }
   public user_id: any;
@@ -18,6 +19,8 @@ export class WelcomeAdminComponent implements OnInit {
   public stock_count :any;
   public ssl_count:any;
   public ssl_prior:any;
+  public stock_issued: any;
+  public stock_returned: any;
 
   getAppCount() {
     this.cms.getFunction('appcount').subscribe((res:any) => {
@@ -53,6 +56,18 @@ export class WelcomeAdminComponent implements OnInit {
       this.stock_count= res[0].x;
     });
   }
+  getIssuedCount() {
+    this.cms.getFunction('stockIssuedCount').subscribe((res:any) => {
+      console.log("stocks issued",res);
+      this.stock_issued= res[0].x;
+    });
+  }
+  getReturnedCount() {
+    this.cms.getFunction('stockReturnedCount').subscribe((res:any) => {
+      console.log(res);
+      this.stock_returned= res[0].x;
+    });
+  }
 
   getSslCount() {
     this.cms.getFunction('sslcount').subscribe((res:any) => {
@@ -80,6 +95,8 @@ export class WelcomeAdminComponent implements OnInit {
     this.getStockCount();
     this.getSslCount();
     this.getSslPriorCount();
+    this.getIssuedCount();
+    this.getReturnedCount();
 
   }
 }

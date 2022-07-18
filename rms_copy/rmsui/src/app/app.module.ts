@@ -59,6 +59,7 @@ import { ServerReportComponent } from './server-report/server-report.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MachineAccessComponent } from './machine-access/machine-access.component';
 import { StockReportComponent } from './stock-report/stock-report.component';
+import { HardwareComponent } from './hardware/hardware.component';
 
 
 
@@ -97,7 +98,8 @@ import { StockReportComponent } from './stock-report/stock-report.component';
     ChangePasswordComponent,
     ServerReportComponent,
     MachineAccessComponent,
-    StockReportComponent
+    StockReportComponent,
+    HardwareComponent
   ],
   imports: [
     NgbDatepickerModule,

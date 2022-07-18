@@ -464,7 +464,7 @@ router.get('/user', function(req, res, next) {
       return res.json(rows1);
   });
   });
-
+  
   router.get('/sslcount', function(req, res, next) {
     return db.query('select count(*) as x from mas_app ma WHERE ma.ssl_expiry<CURDATE() ', function (err, rows1) {
       if (err) {
@@ -634,6 +634,16 @@ router.get('/user', function(req, res, next) {
       return res.json(rows1);
     });
   });
+  router.get('/mac_acc', function(req, res, next) {
+    return db.query('select * from mas_server', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
   router.get('/machine_access', function(req, res, next) {
     return db.query('select user_id, user_name, GROUP_CONCAT(Distinct server_ip order  by server_ip asc SEPARATOR " , ") AS server_ip FROM mac_acc group BY user_id ', function (err, rows1) {
       if (err) {
@@ -646,7 +656,7 @@ router.get('/user', function(req, res, next) {
   });
   router.get('/stock_report', function(req, res, next) {
     console.log("hi",req.params);
-    return db.query('SELECT s.stock_id,s.monitor_sno, h.h_name,d.dept_name, sm.status_name,u.name FROM stock_receive_mas s INNER JOIN hardware_mas h ON s.hardware_id=h.h_id INNER JOIN mas_dept d ON s.dept_id=d.dept_code INNER JOIN status_mas sm ON s.status_id=sm.status_id LEFT JOIN issued_details i ON s.stock_id=i.stock_id LEFT JOIN mas_user u on i.issued_to =u.user_id ORDER BY s.stock_id', [req.params.dept_code] , function (err, rows1) {
+    return db.query('SELECT s.stock_id,s.monitor_sno, h.h_name,d.dept_name, sm.status_name,u.name FROM stock_receive_mas s INNER JOIN hardware_mas h ON s.hardware_id=h.h_id INNER JOIN mas_dept d ON s.dept_id=d.dept_code INNER JOIN status_mas sm ON s.status_id=sm.status_id LEFT JOIN issued_details i ON s.stock_id=i.stock_id LEFT JOIN mas_user u on i.issued_to =u.user_id ORDER BY s.stock_id' , function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -659,6 +669,38 @@ router.get('/user', function(req, res, next) {
   router.get('/server_report1', function(req, res, next) {
     //console.log("hi",req.params);
     return db.query('SELECT ms.server_id,ms.server_ip,ms.server_type,md.dept_name,GROUP_CONCAT(Distinct ma.app_name order  by ma.app_name asc separator " , ") as Applications ,GROUP_CONCAT(Distinct mdb.db_name order  by mdb.db_name asc separator " , ") as DBs FROM mas_server ms JOIN mas_dept md ON ms.dept_code=md.dept_code left JOIN mas_app ma  ON ms.server_id=ma.server_id LEFT JOIN mas_db mdb ON ms.server_id=mdb.server_id GROUP BY ms.server_id;', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+
+  router.get('/hardware', function(req, res, next) {
+    console.log("hi",req.params);
+    return db.query('SELECT * from hardware_mas' , function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+  router.get('/stockIssuedCount', function(req, res, next) {
+    return db.query('select count(*) as x from stock_receive_mas s WHERE s.status_id=2; ', function (err, rows1) {
+      if (err) {
+        console.error('error connecting: ' + err);
+        return res.json(err);
+      }
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+  });
+  router.get('/stockReturnedCount', function(req, res, next) {
+    return db.query('select count(*) as x from stock_receive_mas s WHERE s.status_id=5; ', function (err, rows1) {
       if (err) {
         console.error('error connecting: ' + err);
         return res.json(err);
@@ -805,6 +847,18 @@ router.post('/mac_acc', function (req, res) {
   });
 });
 
+router.post('/hardware', function (req, res) {
+  
+  return db.query('insert into hardware_mas (h_name,remarks) values (?,?)',[req.body.h_name,req.body.remarks], function (err, rows1) {
+    if (err) {
+      console.error('error connecting: ' + err);
+      return res.json(err);
+    }
+    //req.session.destroy(); 
+    return res.json(rows1);
+  });
+});
+
 router.put('/user', function (req, res) {
   return db.query('update mas_user mu set mu.name = ? ,mu.dept_code = ?, mu.mobile_no = ? , mu.address = ?, mu.machine_ip = ?, mu.emp_type_id = ? , mu.joining_date = ?, mu.email_id = ?, mu.ol_location = ? where mu.user_id=?', [req.body.name,req.body.dept_code,req.body.mobile_no,req.body.address,req.body.machine_ip,req.body.emp_type_id,req.body.joining_date,req.body.email_id,req.body.ol_location,req.body.user_id], function (err, rows1) {
       //req.session.destroy(); 
@@ -843,6 +897,13 @@ router.put('/apps', function (req, res) {
 
 router.put('/project', function (req, res) {
   return db.query('update mas_app_desc md set md.app_details= ? ,md.start_date = ? where md.app_id=?', [req.body.app_details,req.body.start_date,req.body.app_id], function (err, rows1) {
+      //req.session.destroy(); 
+      return res.json(rows1);
+  });
+});
+
+router.put('/hardware', function (req, res) {
+  return db.query('update hardware_mas h set h.h_name= ? ,h.remarks = ? where h.h_id=?', [req.body.h_name,req.body.remarks,req.body.h_id], function (err, rows1) {
       //req.session.destroy(); 
       return res.json(rows1);
   });
