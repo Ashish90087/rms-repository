@@ -18,7 +18,7 @@ export class MachineAccessComponent implements OnInit {
     
   })
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  displayedColumns: string[] = ['user_id', 'user_name', 'server_ip'];
+  displayedColumns: string[] = ['sn','user_id', 'user_name', 'server_ip'];
   constructor(private fb:FormBuilder, private cms : CommonService) { }
   public user_data:any=[];
   public data:any=[];
