@@ -51,7 +51,7 @@ export class MapUserWorkorderComponent implements OnInit {
           this.cms.saveDetails('mapwo',{"wo_details_id":this.data.wo_details_id,"user_id":this.data.user_id[i]}).subscribe((res:any) => {
             console.log(res);
             if (res['affectedRows']) {
-               //this.getMapDetails();
+               this.getMapDetails();
                this.mapForm.reset();
                Swal.fire({ icon: 'success', text: "Saved Successfully.", timer: 2000 });
 
