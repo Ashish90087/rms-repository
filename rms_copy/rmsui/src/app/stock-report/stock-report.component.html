@@ -40,7 +40,7 @@
             <button type="button" mat-raised-button style="height:fit-content;background-color: crimson;color: aliceblue;" printSectionId="print-section" ngxPrint >Pdf/Print</button>
             </div> 
           </div>
-        <div class="table-responsive dt-responsive mat-elevation-z8 mt-4" id="print-section">
+        <div class="example-container table-responsive dt-responsive mat-elevation-z8 mt-4" id="print-section">
             <table mat-table #table [dataSource]="dataSource" matTableExporter #exporter="matTableExporter" class="mat-elevation-z8 table table-bordered" style="width: 100%;">
                 <ng-container matColumnDef="sn">
                     <th mat-header-cell *matHeaderCellDef> # </th>
