@@ -29,7 +29,6 @@ import { ServerReportComponent } from './server-report/server-report.component';
 import { StockReportComponent } from './stock-report/stock-report.component';
 import { MachineAccessComponent } from './machine-access/machine-access.component';
 import { HardwareComponent } from './hardware/hardware.component';
-import { AppSecAuditComponent } from './app-sec-audit/app-sec-audit.component';
 
 
 
@@ -65,7 +64,6 @@ children: [
   { path : 'report' , component: ReportsComponent,canActivate: [AuthGuard] },
   { path : 'password' , component: ChangePasswordComponent,canActivate: [AuthGuard] },
   { path : 'machine-access', component:MachineAccessComponent,canActivate:[AuthGuard]},
-  { path : 'app-sec-audit', component:AppSecAuditComponent,canActivate:[AuthGuard]},
   { path : 'hardware', component:HardwareComponent,canActivate:[AuthGuard]}
 
  ]

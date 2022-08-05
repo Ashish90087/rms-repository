@@ -709,26 +709,7 @@ router.get('/user', function(req, res, next) {
       return res.json(rows1);
   });
   });
-  router.get('/application_access', function(req, res, next) {
-    return db.query('select * from mas_app;', function (err, rows1) {
-      if (err) {
-        console.error('error connecting: ' + err);
-        return res.json(err);
-      }
-      //req.session.destroy(); 
-      return res.json(rows1);
-  });
-  });
-  router.get('/app_sec_audit_details', function(req, res, next) {
-    return db.query('select * from app_sec_audit;', function (err, rows1) {
-      if (err) {
-        console.error('error connecting: ' + err);
-        return res.json(err);
-      }
-      //req.session.destroy(); 
-      return res.json(rows1);
-  });
-  });
+
 
   router.post('/dept', function (req, res) {
   
@@ -874,17 +855,6 @@ router.post('/hardware', function (req, res) {
       return res.json(err);
     }
     //req.session.destroy(); 
-    return res.json(rows1);
-  });
-});
-
-router.post('/app_sec_audit_details', function (req, res) {
-  
-  return db.query('insert into app_sec_audit (app_id,app_name,security_audit_cleared,server_ip,application_url,security_audit_id,audit_date,remarks,appSecLocation) values (?,?,?,?,?,?,?,?,?)',[req.body.app_id,req.body.app_name,req.body.security_audit_cleared,req.body.server_ip,req.body.application_url,req.body.security_audit_id,req.body.audit_date,req.body.remarks,req.body.appSecLocation], function (err, rows1) {
-    if (err) {
-      console.error('error connecting: ' + err);
-      return res.json(err);
-    }
     return res.json(rows1);
   });
 });
