@@ -60,6 +60,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MachineAccessComponent } from './machine-access/machine-access.component';
 import { StockReportComponent } from './stock-report/stock-report.component';
 import { HardwareComponent } from './hardware/hardware.component';
+import { AppSecAuditComponent } from './app-sec-audit/app-sec-audit.component';
 
 
 
@@ -99,7 +100,8 @@ import { HardwareComponent } from './hardware/hardware.component';
     ServerReportComponent,
     MachineAccessComponent,
     StockReportComponent,
-    HardwareComponent
+    HardwareComponent,
+    AppSecAuditComponent
   ],
   imports: [
     NgbDatepickerModule,
