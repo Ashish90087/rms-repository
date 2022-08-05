@@ -182,8 +182,8 @@
       <mat-label class="required">Filter</mat-label>
       <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
   </mat-form-field>
-    <div class="example-container mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%">
+    <div class="table-responsive dt-responsive mat-elevation-z8 mt-4">
+      <table mat-table [dataSource]="dataSource" class="table table-bordered" style="width:100%">
         <ng-container matColumnDef="dept_id">
           <th mat-header-cell *matHeaderCellDef>
             Office
